@@ -142,22 +142,50 @@ main{max-width:1200px;margin:0 auto;padding:26px 22px;}
 .empty-nivel{padding:11px 16px;font-size:12px;color:var(--muted);font-style:italic;background:var(--bg);}
 
 /* B3 */
-.brecha-card{background:#fff;border-radius:12px;overflow:hidden;border:1.5px solid var(--purple-bd);margin-bottom:13px;box-shadow:0 2px 8px rgba(109,40,217,.07);}
-.brecha-hdr{background:var(--purple-bg);padding:11px 16px;display:flex;align-items:center;gap:10px;border-bottom:1.5px solid var(--purple-bd);}
-.brecha-num{width:26px;height:26px;border-radius:50%;background:var(--purple);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.brecha-hdr-title{font-size:13px;font-weight:700;color:var(--purple);}
-.brecha-body{padding:16px;}
-.bf-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px;}
-.fg label{display:block;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px;}
 .fsel,.finp{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:8px 11px;font-family:inherit;font-size:13px;color:var(--text);background:#fafafa;outline:none;transition:border-color .2s,box-shadow .2s;appearance:none;}
 .fsel:focus,.finp:focus{border-color:var(--purple);background:#fff;box-shadow:0 0 0 3px rgba(109,40,217,.09);}
-.b-preview{background:var(--purple-bg);border:1.5px solid var(--purple-bd);border-radius:9px;padding:12px 14px;margin-top:10px;}
-.b-preview-lbl{font-size:10px;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:.06em;margin-bottom:7px;}
-.b-preview-txt{font-size:13.5px;color:var(--navy);line-height:1.6;font-style:italic;}
+.fg label{display:block;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px;}
+/* Brecha card — flujo 4 pasos */
+.brecha-card{background:#fff;border-radius:14px;overflow:hidden;border:1.5px solid var(--purple-bd);margin-bottom:16px;box-shadow:0 2px 10px rgba(109,40,217,.08);}
+.brecha-hdr{background:var(--purple);padding:11px 18px;display:flex;align-items:center;gap:10px;}
+.brecha-num{width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.25);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.brecha-hdr-title{font-size:13px;font-weight:700;color:#fff;flex:1;}
+.brecha-del{background:none;border:1px solid rgba(255,255,255,.3);border-radius:6px;padding:3px 10px;color:#fff;cursor:pointer;font-size:12px;font-family:inherit;}
+.b3-steps{display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:1.5px solid var(--purple-bd);}
+.b3-step{padding:16px 18px;border-right:1px solid var(--purple-bd);border-bottom:1px solid var(--purple-bd);}
+.b3-step:nth-child(even){border-right:none;}
+.b3-step:nth-child(3),.b3-step:nth-child(4){border-bottom:none;}
+.step-tag{display:inline-flex;align-items:center;gap:6px;background:var(--purple);color:#fff;font-size:10px;font-weight:700;padding:3px 9px;border-radius:12px;margin-bottom:8px;letter-spacing:.04em;}
+.step-q{font-size:11px;color:var(--muted);margin-bottom:8px;font-style:italic;line-height:1.5;}
+.obs-pills{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px;min-height:28px;padding:6px 8px;background:#fafafa;border:1.5px solid var(--border);border-radius:8px;}
+.obs-pill{background:var(--purple-bg);border:1px solid var(--purple-bd);color:var(--purple);font-size:11px;font-weight:600;padding:3px 8px;border-radius:10px;display:flex;align-items:center;gap:4px;animation:chipIn .18s ease;}
+.obs-pill button{background:none;border:none;cursor:pointer;color:var(--purple);font-size:12px;padding:0;line-height:1;}
+.obs-add-row{display:flex;gap:6px;margin-top:4px;}
+.obs-add-inp{flex:1;border:1.5px solid var(--border);border-radius:7px;padding:6px 10px;font-family:inherit;font-size:12px;outline:none;transition:border-color .2s;}
+.obs-add-inp:focus{border-color:var(--purple);}
+.obs-add-btn{background:var(--purple);color:#fff;border:none;border-radius:7px;padding:6px 12px;font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;}
+.cap-inst-list{display:flex;flex-direction:column;gap:5px;margin-bottom:8px;}
+.cap-inst-row{display:flex;gap:6px;align-items:center;}
+.cap-inst-inp{flex:1;border:1.5px solid var(--border);border-radius:7px;padding:6px 10px;font-family:inherit;font-size:12px;outline:none;transition:border-color .2s;}
+.cap-inst-inp:focus{border-color:var(--purple);}
+.cap-inst-del{background:none;border:none;cursor:pointer;color:var(--muted);font-size:16px;padding:0 2px;}
+.cap-add-btn{background:none;border:1.5px dashed var(--purple-bd);border-radius:7px;padding:5px 12px;font-family:inherit;font-size:11px;font-weight:600;color:var(--purple);cursor:pointer;transition:all .18s;}
+.cap-add-btn:hover{background:var(--purple-bg);}
+/* Preview brecha */
+.b-preview-full{grid-column:1/-1;padding:16px 18px;background:var(--purple-bg);border-top:1.5px solid var(--purple-bd);}
+.b-preview-lbl{font-size:10px;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;}
+.b-preview-txt{font-size:13.5px;color:var(--navy);line-height:1.7;font-style:italic;}
 .b-preview-txt .fill{color:var(--purple);font-weight:700;font-style:normal;background:rgba(109,40,217,.1);padding:1px 5px;border-radius:4px;}
 .b-preview-txt .blank{color:#bbb;}
 .add-brecha-btn{width:100%;padding:12px;border:2px dashed var(--purple-bd);border-radius:12px;background:none;cursor:pointer;font-family:inherit;font-size:13px;font-weight:600;color:var(--purple);transition:all .2s;display:flex;align-items:center;justify-content:center;gap:7px;}
 .add-brecha-btn:hover{background:var(--purple-bg);border-style:solid;}
+/* Resumen obstáculos del B2 */
+.obs-resumen{background:#fff;border:1.5px solid var(--purple-bd);border-radius:12px;padding:16px 18px;margin-bottom:18px;}
+.obs-resumen-title{font-size:11px;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;}
+.obs-resumen-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:8px;}
+.obs-dim-chip{background:var(--purple-bg);border:1px solid var(--purple-bd);border-radius:8px;padding:7px 11px;}
+.obs-dim-name{font-size:10px;font-weight:700;color:var(--purple);margin-bottom:4px;}
+.obs-dim-val{font-size:12px;color:var(--navy);font-style:italic;}
 
 /* B4 */
 .relato-brecha-box{background:var(--card);border-radius:10px;padding:13px 17px;border:1px solid var(--border);margin-bottom:16px;display:flex;gap:18px;align-items:center;flex-wrap:wrap;}
@@ -298,7 +326,7 @@ main{max-width:1200px;margin:0 auto;padding:26px 22px;}
     </div>
     <div class="btn-row">
       <button class="reset-btn" onclick="resetB2()">↺ Reiniciar</button>
-      <span class="badge" style="background:var(--orange)">12 capacidades</span>
+      <span class="badge" style="background:var(--orange)">19 capacidades</span>
     </div>
   </div>
   <div class="cap-grid" id="cap-grid"></div>
@@ -318,14 +346,23 @@ main{max-width:1200px;margin:0 auto;padding:26px 22px;}
   <div class="page-header" style="border-left-color:var(--purple)">
     <div>
       <h1>Bloque 3 · Formulación de Brechas</h1>
-      <p>Complete los campos — la brecha se redacta automáticamente.</p>
+      <p>A partir de las capacidades débiles y obstáculos del Bloque 2, formule brechas estratégicas en 4 pasos.</p>
     </div>
-    <span class="badge" style="background:var(--purple)">Plantilla automática</span>
+    <span class="badge" style="background:var(--purple)">4 pasos</span>
   </div>
+
+  <!-- Resumen obstáculos del B2 -->
+  <div class="obs-resumen">
+    <div class="obs-resumen-title">Obstáculos registrados en Bloque 2 — use estos como insumo</div>
+    <div class="obs-resumen-grid" id="obs-resumen-grid">
+      <div style="font-size:12px;color:var(--muted);font-style:italic">Cuando registre obstáculos en el Bloque 2 aparecerán aquí automáticamente.</div>
+    </div>
+  </div>
+
   <div id="brechas-cont"></div>
   <button class="add-brecha-btn" onclick="addBrecha()">＋ Agregar brecha</button>
   <div class="export-block" style="margin-top:16px">
-    <div><strong>Exportar Bloque 3</strong><p>Brechas formuladas listas para consolidar</p></div>
+    <div><strong>Exportar Bloque 3</strong><p>Brechas formuladas listas para consolidar en plenaria</p></div>
     <button class="export-btn" onclick="exportar(3)">⬇ Exportar Bloque 3</button>
   </div>
 </div>
@@ -390,18 +427,25 @@ const DIMS=[
   {id:"tal", name:"Talento y Cap. Operativa", short:"Talento"},
 ];
 const CAPS=[
-  {id:"in01",code:"IN-01",name:"Gobierno de Datos"},
-  {id:"in02",code:"IN-02",name:"Análisis de Información"},
-  {id:"in03",code:"IN-03",name:"Interoperabilidad de Información"},
-  {id:"in04",code:"IN-04",name:"Fábrica de Software / DevOps"},
-  {id:"in05",code:"IN-05",name:"Tecnologías Emergentes (pilotos)"},
-  {id:"in06",code:"IN-06",name:"Arquitectura Empresarial TI"},
-  {id:"in07",code:"IN-07",name:"Modelo de Gobierno y Gestión TI"},
-  {id:"in08",code:"IN-08",name:"Seguridad Digital"},
-  {id:"in09",code:"IN-09",name:"SI Planeación Estratégica y Operativa"},
-  {id:"in10",code:"IN-10",name:"Infraestructura Tecnológica"},
-  {id:"in11",code:"IN-11",name:"Desarrollo e Impl. de Sistemas"},
-  {id:"in12",code:"IN-12",name:"Sistema Gestión Administrativa y RRHH"},
+  {id:"cap01",name:"Gestionar la Estrategia Institucional"},
+  {id:"cap02",name:"Gestionar Proyectos de Inversión"},
+  {id:"cap03",name:"Gestionar el Conocimiento del Recurso Natural"},
+  {id:"cap04",name:"Promocionar y Fomentar Exploración y Explotación del Recurso Natural"},
+  {id:"cap05",name:"Gestionar UpStream (E&P - Generación)"},
+  {id:"cap06",name:"Gestionar el control de operaciones y fiscalización"},
+  {id:"cap07",name:"Análisis de Información de producción y reservas de hidrocarburos"},
+  {id:"cap08",name:"Gestionar Regalías y Derechos Económicos"},
+  {id:"cap09",name:"Implementar el Desarrollo Sostenible"},
+  {id:"cap10",name:"Gestionar el Talento Humano"},
+  {id:"cap11",name:"Participación Ciudadana en la Gestión Pública"},
+  {id:"cap12",name:"Gestión Presupuestal y Eficiencia del Gasto Público"},
+  {id:"cap13",name:"Gobierno y Gestión de TI"},
+  {id:"cap14",name:"Gestionar la defensa legal"},
+  {id:"cap15",name:"Gestionar Contratos y Convenios"},
+  {id:"cap16",name:"Gestionar Recursos Institucionales"},
+  {id:"cap17",name:"Gestión Documental"},
+  {id:"cap18",name:"Administrar Sistemas Integrados de Gestión"},
+  {id:"cap19",name:"Gestionar la mejora continua"},
 ];
 const MOMENTOS=[
   {n:"1",icon:"⚡",title:"Punto de Quiebre",    q:"¿Qué situación crítica evidenció que la brecha ya no podía continuar?"},
@@ -412,7 +456,7 @@ const MOMENTOS=[
   {n:"6",icon:"🏆",title:"Resultado Logrado",    q:"¿Qué mejora concreta se evidenció en la capacidad impactada?"},
 ];
 const DIM_OPTS=["— seleccionar —",...DIMS.map(d=>d.name)];
-const CAP_OPTS=["— seleccionar —",...CAPS.map(c=>`${c.code}: ${c.name}`)];
+const CAP_OPTS=["— seleccionar —",...CAPS.map(c=>c.name)];
 const NLVL={
   green:{icon:"🟢",label:"Consolidada",bg:"var(--green-bg)",bd:"var(--green-bd)",tc:"var(--green)",cls:"ng"},
   yellow:{icon:"🟡",label:"Funcional",bg:"var(--yellow-bg)",bd:"var(--yellow-bd)",tc:"var(--yellow)",cls:"ny"},
@@ -426,7 +470,10 @@ let state={semaforo:{},evidencias:{},capacidades:{},obstaculos:{},brechas:[],bre
 function persist(){
   try{
     state.brechas.forEach(b=>{
-      ['dim','cap','causa','capinst'].forEach(f=>{const e=document.getElementById(`b${b.id}-${f}`);if(e)b[f]=e.value;});
+      const causa=document.getElementById(`b${b.id}-causa`);if(causa)b.causa=causa.value;
+      const dim=document.getElementById(`b${b.id}-dim`);if(dim)b.dim=dim.value;
+      const red=document.getElementById(`b${b.id}-redaccion`);if(red)b.redaccion=red.value;
+      syncCaps(b.id);
     });
     DIMS.forEach(d=>{const e=document.getElementById(`ev-${d.id}`);if(e)state.evidencias[d.id]=e.value;});
     CAPS.forEach(c=>{const e=document.getElementById(`obs-${c.id}`);if(e)state.obstaculos[c.id]=e.value;});
@@ -442,6 +489,7 @@ function flash(){const el=document.getElementById('save-pill');el.classList.add(
 function showTab(i){
   document.querySelectorAll('.page').forEach((p,j)=>p.classList.toggle('active',j===i));
   document.querySelectorAll('.tab-btn').forEach((b,j)=>b.classList.toggle('active',j===i));
+  if(i===2)obsResumen();
   if(i===3)refrescarBrechaSel();
 }
 
@@ -507,9 +555,9 @@ function resetB1(){state.semaforo={};state.evidencias={};initB1();updateTapete()
 
 // ── B2 ──
 function initB2(){
-  document.getElementById('cap-grid').innerHTML=CAPS.map(c=>`
+  document.getElementById('cap-grid').innerHTML=CAPS.map((c,i)=>`
     <div class="cap-item" id="cap-${c.id}">
-      <div class="cap-code">${c.code}</div>
+      <div class="cap-code">${String(i+1).padStart(2,'0')}</div>
       <div class="cap-name">${c.name}</div>
       <div class="lvl-btns">
         <button class="lvl-btn lg" onclick="setCap('${c.id}','green')">🟢 Consolidada</button>
@@ -568,7 +616,6 @@ function updateResumen(){
         ?caps.map(c=>{
             const obs=state.obstaculos[c.id]||'';
             return `<div class="nivel-cap-row">
-              <span class="nivel-cap-code">${c.code}</span>
               <div style="flex:1">
                 <div class="nivel-cap-name">${c.name}</div>
                 ${obs?`<div class="nivel-cap-obs nivel-group ${n.cls}">⚠ ${obs}</div>`:`<span class="no-obs">Sin obstáculo registrado</span>`}
@@ -585,64 +632,192 @@ function updateResumen(){
 function resetB2(){state.capacidades={};state.obstaculos={};initB2();document.getElementById('prog2').style.width='0%';updateResumen();persist();showToast('Bloque 2 reiniciado');}
 
 // ── B3 ──
+const CAP_INST=[
+  'Gestionar la Estrategia Institucional',
+  'Gestionar Proyectos de Inversión',
+  'Gestionar el Conocimiento del Recurso Natural',
+  'Promocionar y Fomentar Exploración y Explotación del Recurso Natural',
+  'Gestionar UpStream (E&P - Generación)',
+  'Gestionar el control de operaciones y fiscalización',
+  'Análisis de Información de producción y reservas de hidrocarburos',
+  'Gestionar Regalías y Derechos Económicos',
+  'Implementar el Desarrollo Sostenible',
+  'Gestionar el Talento Humano',
+  'Participación Ciudadana en la Gestión Pública',
+  'Gestión Presupuestal y Eficiencia del Gasto Público',
+  'Gobierno y Gestión de TI',
+  'Gestionar la defensa legal',
+  'Gestionar Contratos y Convenios',
+  'Gestionar Recursos Institucionales',
+  'Gestión Documental',
+  'Administrar Sistemas Integrados de Gestión',
+  'Gestionar la mejora continua',
+];
+const DIM_CAPS={
+  'Alineación Estratégica':CAP_INST,
+  'Cumplimiento y Ejecución':CAP_INST,
+  'Gobierno y Gestión':CAP_INST,
+  'Arquitectura y Cap. TI':CAP_INST,
+  'Gestión de Información':CAP_INST,
+  'Talento y Cap. Operativa':CAP_INST,
+};
+
+function obsResumen(){
+  const grid=document.getElementById('obs-resumen-grid');if(!grid)return;
+  const items=CAPS.map(c=>({name:c.name,obs:state.obstaculos[c.id]||''})).filter(x=>x.obs.trim());
+  if(!items.length){grid.innerHTML='<div style="font-size:12px;color:var(--muted);font-style:italic">Cuando registre obstáculos en el Bloque 2 aparecerán aquí automáticamente.</div>';return;}
+  grid.innerHTML=items.map(x=>`<div class="obs-dim-chip"><div class="obs-dim-name">${x.name}</div><div class="obs-dim-val">"${x.obs}"</div></div>`).join('');
+}
+
 function addBrecha(restored){
   state.brechaCount++;
   const id=state.brechaCount;
   const div=document.createElement('div');
   div.className='brecha-card';div.id=`brecha-${id}`;
+  const dimOpts=Object.keys(DIM_CAPS).map(d=>`<option value="${d}">${d}</option>`).join('');
   div.innerHTML=`
     <div class="brecha-hdr">
       <div class="brecha-num">${id}</div>
       <div class="brecha-hdr-title">Brecha ${id}</div>
-      <button onclick="removeBrecha(${id})" style="margin-left:auto;background:none;border:none;cursor:pointer;color:var(--muted);font-size:16px">✕</button>
+      <button class="brecha-del" onclick="removeBrecha(${id})">✕ Eliminar</button>
     </div>
-    <div class="brecha-body">
-      <div class="bf-grid">
-        <div class="fg"><label>Dimensión</label>
-          <select class="fsel" id="b${id}-dim" onchange="previewB(${id});debouncedSave()">
-            ${DIM_OPTS.map(o=>`<option>${o}</option>`).join('')}</select></div>
-        <div class="fg"><label>Capacidad (PETI)</label>
-          <select class="fsel" id="b${id}-cap" onchange="previewB(${id});debouncedSave()">
-            ${CAP_OPTS.map(o=>`<option>${o}</option>`).join('')}</select></div>
-        <div class="fg"><label>Causa estructural</label>
-          <input class="finp" id="b${id}-causa" placeholder="Ausencia de..."
-            oninput="previewB(${id});debouncedSave()"></div>
+    <div class="b3-steps">
+      <!-- PASO 1 -->
+      <div class="b3-step">
+        <div class="step-tag">Paso 1 · Agrupar obstáculos</div>
+        <div class="step-q">Tome los obstáculos del Bloque 2. ¿Cuáles corresponden a la misma dimensión? Agréguelos aquí.</div>
+        <div class="obs-pills" id="pills-${id}"></div>
+        <div class="obs-add-row">
+          <input class="obs-add-inp" id="obs-inp-${id}" placeholder="Escribir obstáculo y Enter..." onkeydown="if(event.key==='Enter'){addPill(${id});event.preventDefault();}">
+          <button class="obs-add-btn" onclick="addPill(${id})">+ Agregar</button>
+        </div>
       </div>
-      <div class="fg" style="margin-bottom:0">
-        <label>Capacidad institucional impactada</label>
-        <input class="finp" id="b${id}-capinst" placeholder="Ej: gestionar proyectos de inversión..."
-          oninput="previewB(${id});debouncedSave()" style="margin-bottom:10px"></div>
-      <div class="b-preview">
-        <div class="b-preview-lbl">📝 Brecha formulada</div>
-        <div class="b-preview-txt" id="bpt-${id}"><span class="blank">Complete los campos...</span></div>
+      <!-- PASO 2 -->
+      <div class="b3-step">
+        <div class="step-tag">Paso 2 · Causa estructural</div>
+        <div class="step-q">¿Qué factor estructural explica todos esos obstáculos juntos? No el síntoma — la raíz.</div>
+        <div class="fg"><label>Causa estructural</label>
+          <textarea class="obs-add-inp" id="b${id}-causa" rows="3" style="width:100%;resize:none"
+            placeholder="Ej: Fragmentación tecnológica y falta de interoperabilidad entre sistemas..."
+            oninput="previewB(${id});debouncedSave()"></textarea></div>
+      </div>
+      <!-- PASO 3 -->
+      <div class="b3-step">
+        <div class="step-tag">Paso 3 · Dimensión y capacidades afectadas</div>
+        <div class="step-q">Seleccione la dimensión del PETI y las capacidades institucionales que están siendo impactadas.</div>
+        <div class="fg" style="margin-bottom:10px"><label>Dimensión del PETI</label>
+          <select class="fsel" id="b${id}-dim" onchange="onDimChange(${id});previewB(${id});debouncedSave()">
+            <option value="">— seleccionar dimensión —</option>${dimOpts}
+          </select></div>
+        <div class="fg"><label>Capacidades institucionales impactadas</label>
+          <div class="cap-inst-list" id="caplist-${id}"></div>
+          <button class="cap-add-btn" onclick="addCapInst(${id})">+ Agregar capacidad</button>
+        </div>
+      </div>
+      <!-- PASO 4 -->
+      <div class="b3-step">
+        <div class="step-tag">Paso 4 · Redacción de la brecha</div>
+        <div class="step-q">Se genera automáticamente. Puede editar el texto final si lo necesita.</div>
+        <textarea class="obs-add-inp" id="b${id}-redaccion" rows="5" style="width:100%;resize:none;font-style:italic"
+          placeholder="Se completará automáticamente al llenar los pasos anteriores..."
+          oninput="state.brechas.find(x=>x.id===${id}).redaccion=this.value;debouncedSave()"></textarea>
+      </div>
+      <!-- PREVIEW -->
+      <div class="b-preview-full">
+        <div class="b-preview-lbl">Brecha formulada</div>
+        <div class="b-preview-txt" id="bpt-${id}"><span class="blank">Complete los pasos anteriores...</span></div>
       </div>
     </div>`;
   document.getElementById('brechas-cont').appendChild(div);
-  if(!restored)state.brechas.push({id,dim:'',cap:'',causa:'',capinst:''});
+  if(!restored){
+    state.brechas.push({id, pills:[], causa:'', dim:'', caps:[], redaccion:''});
+    // Agregar 1 campo de capacidad por defecto
+    addCapInst(id);
+  }
 }
+
+function onDimChange(id){
+  previewB(id);debouncedSave();
+}
+
+function addCapInst(id, val=''){
+  const list=document.getElementById(`caplist-${id}`);if(!list)return;
+  const opts=CAP_INST.map(c=>`<option value="${c}"${c===val?' selected':''}>${c}</option>`).join('');
+  const row=document.createElement('div');
+  row.className='cap-inst-row';
+  row.innerHTML=`<select class="fsel" style="flex:1"
+    onchange="syncCaps(${id});previewB(${id});debouncedSave()">
+    <option value="">— seleccionar capacidad —</option>${opts}
+  </select>
+  <button class="cap-inst-del" onclick="this.parentElement.remove();syncCaps(${id});previewB(${id});debouncedSave()">✕</button>`;
+  list.appendChild(row);
+}
+
+function syncCaps(id){
+  const list=document.getElementById(`caplist-${id}`);if(!list)return;
+  const vals=[...list.querySelectorAll('select')].map(s=>s.value.trim()).filter(Boolean);
+  const b=state.brechas.find(x=>x.id===id);if(b)b.caps=vals;
+}
+
+function addPill(id){
+  const inp=document.getElementById(`obs-inp-${id}`);if(!inp)return;
+  const val=inp.value.trim();if(!val)return;
+  const b=state.brechas.find(x=>x.id===id);if(b&&!b.pills.includes(val))b.pills.push(val);
+  renderPills(id);
+  inp.value='';previewB(id);debouncedSave();
+}
+
+function removePill(id,val){
+  const b=state.brechas.find(x=>x.id===id);
+  if(b)b.pills=b.pills.filter(p=>p!==val);
+  renderPills(id);previewB(id);debouncedSave();
+}
+
+function renderPills(id){
+  const cont=document.getElementById(`pills-${id}`);if(!cont)return;
+  const b=state.brechas.find(x=>x.id===id);if(!b)return;
+  cont.innerHTML=b.pills.map(p=>`<span class="obs-pill">${p}<button onclick="removePill(${id},'${p.replace(/'/g,"\\'")}')">✕</button></span>`).join('');
+}
+
 function restoreBrechas(){
   state.brechaCount=0;document.getElementById('brechas-cont').innerHTML='';
   const saved=[...state.brechas];state.brechas=[];
-  if(!saved.length){addBrecha();addBrecha();return;}
+  if(!saved.length){addBrecha();return;}
   saved.forEach(b=>{
     state.brechaCount=b.id-1;addBrecha(true);state.brechas.push(b);
     setTimeout(()=>{
-      ['dim','cap','causa','capinst'].forEach(f=>{const el=document.getElementById(`b${b.id}-${f}`);if(el)el.value=b[f]||'';});
+      renderPills(b.id);
+      const causa=document.getElementById(`b${b.id}-causa`);if(causa)causa.value=b.causa||'';
+      const dim=document.getElementById(`b${b.id}-dim`);if(dim){dim.value=b.dim||'';onDimChange(b.id);}
+      const list=document.getElementById(`caplist-${b.id}`);
+      if(list){list.innerHTML='';(b.caps||[]).forEach(c=>addCapInst(b.id,c));if(!(b.caps||[]).length)addCapInst(b.id);}
+      const red=document.getElementById(`b${b.id}-redaccion`);if(red)red.value=b.redaccion||'';
       previewB(b.id);
     },0);
   });
 }
+
 function removeBrecha(id){document.getElementById(`brecha-${id}`).remove();state.brechas=state.brechas.filter(b=>b.id!==id);debouncedSave();}
+
 function previewB(id){
-  const dim=document.getElementById(`b${id}-dim`)?.value||'';
+  const b=state.brechas.find(x=>x.id===id);if(!b)return;
+  // sync state
   const causa=document.getElementById(`b${id}-causa`)?.value||'';
-  const capinst=document.getElementById(`b${id}-capinst`)?.value||'';
-  const b=state.brechas.find(x=>x.id===id);
-  if(b){b.dim=dim;b.cap=document.getElementById(`b${id}-cap`)?.value||'';b.causa=causa;b.capinst=capinst;}
+  const dim=document.getElementById(`b${id}-dim`)?.value||'';
+  b.causa=causa;b.dim=dim;
+  syncCaps(id);
+  const caps=b.caps||[];
   const el=document.getElementById(`bpt-${id}`);if(!el)return;
-  const hD=dim&&!dim.startsWith('—'),hC=capinst.trim().length>0,hCa=causa.trim().length>0;
-  if(!hD&&!hC&&!hCa){el.innerHTML='<span class="blank">Complete los campos...</span>';return;}
-  el.innerHTML=`Se identifica una brecha en la dimensión de ${hD?`<span class="fill">${dim}</span>`:'<span class="blank">[dimensión]</span>'} que impacta la capacidad de ${hC?`<span class="fill">${capinst}</span>`:'<span class="blank">[capacidad]</span>'}, como consecuencia de ${hCa?`<span class="fill">${causa}</span>`:'<span class="blank">[causa]</span>'}.`;
+  const hD=dim&&dim!=='',hCa=causa.trim().length>0,hC=caps.length>0;
+  if(!hD&&!hCa&&!hC){el.innerHTML='<span class="blank">Complete los pasos anteriores...</span>';return;}
+  const capStr=caps.length>1?caps.map((c,i)=>`<span class="fill">${c}</span>`).join(' y '):caps.length===1?`<span class="fill">${caps[0]}</span>`:'<span class="blank">[capacidad institucional]</span>';
+  el.innerHTML=`Se identifica una brecha en la dimensión de ${hD?`<span class="fill">${dim}</span>`:'<span class="blank">[dimensión]</span>'} que impacta la capacidad de ${capStr}, como consecuencia de ${hCa?`<span class="fill">${causa}</span>`:'<span class="blank">[causa estructural]</span>'}.`;
+  // Auto-fill redacción si está vacía
+  const redEl=document.getElementById(`b${id}-redaccion`);
+  if(redEl&&!b.redaccion){
+    const capTxt=caps.length>1?caps.join(' y '):caps[0]||'[capacidad]';
+    redEl.value=hD&&hCa&&hC?`Se identifica una brecha en la dimensión de ${dim} que impacta la capacidad de ${capTxt}, como consecuencia de ${causa}.`:'';
+  }
 }
 
 // ── B4 ──
@@ -670,18 +845,22 @@ function chipM(n){
 function refrescarBrechaSel(){
   const sel=document.getElementById('brecha-sel');const cur=sel.value;
   sel.innerHTML='<option value="">— seleccionar —</option>';
-  state.brechas.forEach((b,i)=>{const dim=document.getElementById(`b${b.id}-dim`)?.value||b.dim||'';if(dim&&!dim.startsWith('—'))sel.innerHTML+=`<option value="${b.id}">${i+1}. ${dim}</option>`;});
+  state.brechas.forEach((b,i)=>{
+    const dim=document.getElementById(`b${b.id}-dim`)?.value||b.dim||'';
+    if(dim)sel.innerHTML+=`<option value="${b.id}">${i+1}. ${dim}</option>`;
+  });
   sel.value=cur;actualizarBrecha();
 }
 function actualizarBrecha(){
   const id=parseInt(document.getElementById('brecha-sel').value);
   const el=document.getElementById('brecha-txt');
   if(!id){el.textContent='Seleccione una brecha del Bloque 3';el.style.fontStyle='italic';return;}
-  const dim=document.getElementById(`b${id}-dim`)?.value||'';
-  const capinst=document.getElementById(`b${id}-capinst`)?.value||'';
-  const causa=document.getElementById(`b${id}-causa`)?.value||'';
+  const b=state.brechas.find(x=>x.id===id);
+  const dim=document.getElementById(`b${id}-dim`)?.value||b?.dim||'';
+  const causa=document.getElementById(`b${id}-causa`)?.value||b?.causa||'';
+  const caps=(b?.caps||[]).join(' y ')||'';
   el.style.color='var(--navy)';el.style.fontStyle='normal';
-  el.textContent=`Se identifica una brecha en la dimensión de ${dim} que impacta la capacidad de ${capinst}, como consecuencia de ${causa}.`;
+  el.textContent=`Se identifica una brecha en la dimensión de ${dim} que impacta la capacidad de ${caps}, como consecuencia de ${causa}.`;
 }
 
 // ── PLENARIA ──
@@ -710,7 +889,6 @@ function abrirPlenaria(){
         ?caps.map(c=>{
             const obs=state.obstaculos[c.id]||'';
             return `<div class="pl-cap-row">
-              <span class="pl-cap-code">${c.code}</span>
               <div style="flex:1">
                 <div class="pl-cap-name">${c.name}</div>
                 ${obs?`<div class="pl-cap-obs pl-nivel-group ${n.cls}">⚠ ${obs}</div>`:`<span class="pl-no-obs">Sin obstáculo registrado</span>`}
@@ -727,12 +905,13 @@ function abrirPlenaria(){
   // Brechas
   const brechasHtml=state.brechas.map((b,i)=>{
     const dim=document.getElementById(`b${b.id}-dim`)?.value||b.dim||'';
-    const capinst=document.getElementById(`b${b.id}-capinst`)?.value||b.capinst||'';
+    const caps=(b.caps||[]);
     const causa=document.getElementById(`b${b.id}-causa`)?.value||b.causa||'';
-    if(!dim&&!capinst&&!causa)return'';
+    if(!dim&&!caps.length&&!causa)return'';
+    const capStr=caps.length?caps.join(' y '):'___';
     return `<div class="pl-brecha">
       <div class="pl-brecha-num">Brecha ${i+1} · ${dim||'Dimensión sin definir'}</div>
-      <div class="pl-brecha-txt">Se identifica una brecha en la dimensión de <span class="fill">${dim||'___'}</span> que impacta la capacidad de <span class="fill">${capinst||'___'}</span>, como consecuencia de <span class="fill">${causa||'___'}</span>.</div>
+      <div class="pl-brecha-txt">Se identifica una brecha en la dimensión de <span class="fill">${dim||'___'}</span> que impacta la capacidad de <span class="fill">${capStr}</span>, como consecuencia de <span class="fill">${causa||'___'}</span>.</div>
     </div>`;
   }).join('');
 
@@ -768,7 +947,7 @@ function exportar(num){
     ['green','yellow','amber','red'].forEach(lv=>{
       const caps=CAPS.filter(c=>state.capacidades[c.id]===lv);if(!caps.length)return;
       lines.push(`\n${NLVL[lv].icon} ${NLVL[lv].label.toUpperCase()}:`);
-      caps.forEach(c=>{lines.push(`  ${c.code} ${c.name}`);const obs=state.obstaculos[c.id];if(obs?.trim())lines.push(`    Obstáculo: ${obs}`);});
+      caps.forEach(c=>{lines.push(`  ${c.name}`);const obs=state.obstaculos[c.id];if(obs?.trim())lines.push(`    Obstáculo: ${obs}`);});
     });
     lines.push('');
   }
@@ -776,10 +955,15 @@ function exportar(num){
     lines.push('BLOQUE 3 · BRECHAS FORMULADAS',dash);
     state.brechas.forEach((b,i)=>{
       const dim=document.getElementById(`b${b.id}-dim`)?.value||b.dim||'';
-      const capinst=document.getElementById(`b${b.id}-capinst`)?.value||b.capinst||'';
+      const caps=(b.caps||[]);
       const causa=document.getElementById(`b${b.id}-causa`)?.value||b.causa||'';
-      if(!dim&&!capinst&&!causa)return;
-      lines.push(`Brecha ${i+1}: ${dim}`,`  Capacidad: ${capinst}`,`  Causa: ${causa}`,`  → Se identifica una brecha en la dimensión de ${dim} que impacta la capacidad de ${capinst}, como consecuencia de ${causa}.`,'');
+      if(!dim&&!caps.length&&!causa)return;
+      const capStr=caps.join(' / ')||'(sin capacidad)';
+      lines.push(`Brecha ${i+1}: ${dim}`);
+      if(b.pills?.length)lines.push(`  Obstáculos agrupados: ${b.pills.join(' | ')}`);
+      lines.push(`  Causa estructural: ${causa}`);
+      lines.push(`  Capacidades institucionales impactadas: ${capStr}`);
+      lines.push(`  → Se identifica una brecha en la dimensión de ${dim} que impacta la capacidad de ${capStr}, como consecuencia de ${causa}.`,'');
     });
   }
   if(num>=4){
