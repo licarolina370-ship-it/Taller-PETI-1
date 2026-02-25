@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Taller PETI 2027 — Grupo Virtual</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#1A2E4A;--teal:#0D7C8E;--orange:#E07B39;--purple:#6D28D9;
+  --green:#16A34A;--yellow:#CA8A04;--red:#DC2626;--amber:#D97706;
+  --bg:#F0F4F8;--card:#FFFFFF;--border:#E2E8F0;--text:#1E293B;--muted:#64748B;
+  --green-bg:#F0FDF4;--green-bd:#86EFAC;
+  --yellow-bg:#FEFCE8;--yellow-bd:#FDE047;
+  --red-bg:#FFF1F2;--red-bd:#FCA5A5;
+  --amber-bg:#FFF7ED;--amber-bd:#FCD34D;
+  --purple-bg:#F5F3FF;--purple-bd:#C4B5FD;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+nav{position:sticky;top:0;z-index:100;background:var(--navy);display:flex;align-items:center;padding:0 22px;box-shadow:0 2px 12px rgba(0,0,0,.28);}
+.nav-brand{font-size:13px;font-weight:700;color:#fff;padding:12px 18px 12px 0;border-right:1px solid rgba(255,255,255,.15);margin-right:8px;white-space:nowrap;line-height:1.4;}
+.nav-brand span{color:var(--orange);}
+.nav-sub{font-size:10px;color:rgba(255,255,255,.45);font-weight:400;display:block;}
+.nav-tabs{display:flex;}
+.tab-btn{background:none;border:none;cursor:pointer;color:rgba(255,255,255,.5);font-family:inherit;font-size:13px;font-weight:500;padding:16px 15px;position:relative;transition:color .2s;white-space:nowrap;}
+.tab-btn:hover{color:rgba(255,255,255,.85);}
+.tab-btn.active{color:#fff;}
+.tab-btn.active::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--orange);border-radius:3px 3px 0 0;}
+.tab-num{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,.15);font-size:11px;font-weight:700;margin-right:6px;}
+.tab-btn.active .tab-num{background:var(--orange);}
+.nav-right{margin-left:auto;}
+.plenaria-btn{background:var(--orange);color:#fff;border:none;border-radius:8px;padding:7px 15px;font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;transition:background .2s;white-space:nowrap;}
+.plenaria-btn:hover{background:#c96a28;}
+.save-pill{position:fixed;bottom:18px;left:18px;z-index:500;background:var(--navy);color:#fff;padding:6px 13px;border-radius:20px;font-size:11px;font-weight:600;display:flex;align-items:center;gap:6px;opacity:0;transition:opacity .4s;pointer-events:none;}
+.save-pill.show{opacity:1;}
+.save-dot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 1s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+main{max-width:1200px;margin:0 auto;padding:26px 22px;}
+.page{display:none;}
+.page.active{display:block;animation:fadeIn .22s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(5px);}to{opacity:1;transform:none;}}
+.page-header{background:var(--card);border-radius:14px;padding:20px 26px;border-left:5px solid var(--teal);margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;box-shadow:0 1px 4px rgba(0,0,0,.07);}
+.page-header h1{font-size:19px;font-weight:700;color:var(--navy);}
+.page-header p{font-size:13px;color:var(--muted);margin-top:3px;}
+.badge{font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;background:var(--teal);color:#fff;white-space:nowrap;}
+.btn-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+.progress-bar{height:4px;background:var(--border);border-radius:2px;margin-top:8px;}
+.progress-fill{height:100%;border-radius:2px;transition:width .4s ease;}
+.card{background:var(--card);border-radius:12px;padding:20px;box-shadow:0 1px 4px rgba(0,0,0,.07);border:1px solid var(--border);}
+.card-title{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:14px;}
+.reset-btn{background:none;border:1px solid var(--border);border-radius:8px;padding:7px 13px;cursor:pointer;font-family:inherit;font-size:12px;color:var(--muted);transition:all .2s;}
+.reset-btn:hover{border-color:var(--red);color:var(--red);}
+.export-btn{background:var(--navy);color:#fff;border:none;border-radius:8px;padding:9px 17px;cursor:pointer;font-family:inherit;font-size:13px;font-weight:600;transition:background .2s;display:flex;align-items:center;gap:6px;white-space:nowrap;}
+.export-btn:hover{background:var(--teal);}
+.export-block{background:var(--card);border:2px dashed var(--border);border-radius:12px;padding:15px 20px;margin-top:18px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;}
+.export-block strong{font-size:14px;color:var(--navy);}
+.export-block p{font-size:12px;color:var(--muted);margin-top:2px;}
+
+/* B1 */
+.dim-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px;}
+.dim-item{background:#fff;border:1.5px solid var(--border);border-radius:10px;padding:14px 15px;transition:all .25s;}
+.dim-name{font-size:13px;font-weight:600;color:var(--navy);margin-bottom:10px;}
+.sem-btns{display:flex;gap:6px;}
+.sem-btn{flex:1;border:none;border-radius:7px;padding:8px 4px;cursor:pointer;font-family:inherit;font-size:12px;font-weight:600;transition:all .18s;opacity:.5;}
+.sem-btn:hover{opacity:.85;transform:translateY(-1px);}
+.sem-btn.selected{opacity:1;transform:translateY(-1px);box-shadow:0 3px 10px rgba(0,0,0,.13);}
+.sem-btn.g{background:var(--green-bg);color:var(--green);border:1.5px solid var(--green-bd);}
+.sem-btn.y{background:var(--yellow-bg);color:var(--yellow);border:1.5px solid var(--yellow-bd);}
+.sem-btn.r{background:var(--red-bg);color:var(--red);border:1.5px solid var(--red-bd);}
+.sem-btn.g.selected{background:var(--green);color:#fff;border-color:var(--green);}
+.sem-btn.y.selected{background:var(--yellow);color:#fff;border-color:var(--yellow);}
+.sem-btn.r.selected{background:var(--red);color:#fff;border-color:var(--red);}
+.tapete{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;}
+.zone{border-radius:12px;padding:15px;min-height:140px;border:2px dashed;transition:all .3s;}
+.zone.zg{background:var(--green-bg);border-color:var(--green-bd);}
+.zone.zy{background:var(--yellow-bg);border-color:var(--yellow-bd);}
+.zone.zr{background:var(--red-bg);border-color:var(--red-bd);}
+.zone-hdr{font-size:13px;font-weight:700;margin-bottom:10px;text-align:center;}
+.zone.zg .zone-hdr{color:var(--green);}
+.zone.zy .zone-hdr{color:var(--yellow);}
+.zone.zr .zone-hdr{color:var(--red);}
+.chip{display:inline-block;font-size:12px;font-weight:600;padding:5px 10px;border-radius:6px;margin:3px;animation:chipIn .22s ease;}
+@keyframes chipIn{from{transform:scale(.8);opacity:0;}to{transform:scale(1);opacity:1;}}
+.zone.zg .chip{background:#dcfce7;color:var(--green);}
+.zone.zy .chip{background:#fef9c3;color:var(--yellow);}
+.zone.zr .chip{background:#fee2e2;color:var(--red);}
+.hint{font-size:11px;color:#ccc;text-align:center;margin-top:14px;font-style:italic;}
+.ev-row{display:none;align-items:flex-start;gap:8px;background:#fff;border:1px solid var(--border);border-radius:8px;padding:9px 12px;margin-bottom:7px;}
+.ev-row.show{display:flex;}
+.ev-label{font-size:12px;font-weight:600;min-width:130px;color:var(--muted);}
+.ev-input{flex:1;border:none;outline:none;font-family:inherit;font-size:13px;color:var(--text);background:transparent;resize:none;}
+
+/* B2 */
+.cap-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+.cap-item{background:#fff;border:1.5px solid var(--border);border-radius:10px;padding:14px;transition:all .25s;}
+.cap-code{font-size:11px;font-family:'DM Mono',monospace;color:var(--teal);margin-bottom:2px;}
+.cap-name{font-size:12px;font-weight:700;color:var(--navy);margin-bottom:10px;}
+.lvl-btns{display:flex;gap:5px;margin-bottom:10px;}
+.lvl-btn{flex:1;border:none;border-radius:6px;padding:6px 3px;cursor:pointer;font-family:inherit;font-size:11px;font-weight:600;transition:all .18s;opacity:.48;line-height:1.3;}
+.lvl-btn:hover{opacity:.82;}
+.lvl-btn.selected{opacity:1;box-shadow:0 2px 8px rgba(0,0,0,.13);transform:translateY(-1px);}
+.lvl-btn.lg{background:var(--green-bg);color:var(--green);border:1.5px solid var(--green-bd);}
+.lvl-btn.ly{background:var(--yellow-bg);color:var(--yellow);border:1.5px solid var(--yellow-bd);}
+.lvl-btn.la{background:var(--amber-bg);color:var(--amber);border:1.5px solid var(--amber-bd);}
+.lvl-btn.lr{background:var(--red-bg);color:var(--red);border:1.5px solid var(--red-bd);}
+.lvl-btn.lg.selected{background:var(--green);color:#fff;border-color:var(--green);}
+.lvl-btn.ly.selected{background:var(--yellow);color:#fff;border-color:var(--yellow);}
+.lvl-btn.la.selected{background:var(--amber);color:#fff;border-color:var(--amber);}
+.lvl-btn.lr.selected{background:var(--red);color:#fff;border-color:var(--red);}
+.obs-lbl{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px;}
+.obs-input{width:100%;border:1.5px solid var(--border);border-radius:7px;padding:7px 10px;font-family:inherit;font-size:12px;color:var(--text);background:#fafafa;resize:none;outline:none;transition:border-color .2s;}
+.obs-input:focus{border-color:var(--orange);background:#fff;}
+
+/* Resumen B2 agrupado */
+.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.bar-label{font-size:12px;font-weight:600;min-width:160px;color:var(--navy);}
+.bar-track{flex:1;height:10px;background:var(--border);border-radius:5px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:5px;transition:width .4s ease;}
+.bar-num{font-size:11px;font-weight:700;min-width:36px;text-align:right;}
+.nivel-group{border-radius:12px;overflow:hidden;margin-bottom:12px;border:1.5px solid;}
+.nivel-group.ng{border-color:var(--green-bd);}
+.nivel-group.ny{border-color:var(--yellow-bd);}
+.nivel-group.na{border-color:var(--amber-bd);}
+.nivel-group.nr{border-color:var(--red-bd);}
+.nivel-hdr{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;font-size:13px;font-weight:700;}
+.nivel-group.ng .nivel-hdr{background:var(--green);color:#fff;}
+.nivel-group.ny .nivel-hdr{background:var(--yellow);color:#fff;}
+.nivel-group.na .nivel-hdr{background:var(--amber);color:#fff;}
+.nivel-group.nr .nivel-hdr{background:var(--red);color:#fff;}
+.nivel-count{font-size:12px;background:rgba(255,255,255,.25);padding:2px 8px;border-radius:10px;}
+.nivel-cap-row{display:flex;align-items:flex-start;gap:12px;padding:10px 16px;border-bottom:1px solid rgba(0,0,0,.05);}
+.nivel-cap-row:last-child{border-bottom:none;}
+.nivel-cap-code{font-size:10px;font-family:'DM Mono',monospace;font-weight:700;min-width:44px;color:var(--muted);padding-top:2px;}
+.nivel-cap-name{font-size:12px;font-weight:700;color:var(--navy);margin-bottom:3px;}
+.nivel-cap-obs{font-size:12px;color:var(--text);font-style:italic;background:rgba(0,0,0,.03);border-radius:5px;padding:4px 8px;border-left:3px solid;}
+.nivel-group.ng .nivel-cap-obs{border-color:var(--green-bd);}
+.nivel-group.ny .nivel-cap-obs{border-color:var(--yellow-bd);}
+.nivel-group.na .nivel-cap-obs{border-color:var(--amber-bd);}
+.nivel-group.nr .nivel-cap-obs{border-color:var(--red-bd);}
+.no-obs{font-size:11px;color:#bbb;font-style:italic;}
+.empty-nivel{padding:11px 16px;font-size:12px;color:var(--muted);font-style:italic;background:var(--bg);}
+
+/* B3 */
+.brecha-card{background:#fff;border-radius:12px;overflow:hidden;border:1.5px solid var(--purple-bd);margin-bottom:13px;box-shadow:0 2px 8px rgba(109,40,217,.07);}
+.brecha-hdr{background:var(--purple-bg);padding:11px 16px;display:flex;align-items:center;gap:10px;border-bottom:1.5px solid var(--purple-bd);}
+.brecha-num{width:26px;height:26px;border-radius:50%;background:var(--purple);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.brecha-hdr-title{font-size:13px;font-weight:700;color:var(--purple);}
+.brecha-body{padding:16px;}
+.bf-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px;}
+.fg label{display:block;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px;}
+.fsel,.finp{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:8px 11px;font-family:inherit;font-size:13px;color:var(--text);background:#fafafa;outline:none;transition:border-color .2s,box-shadow .2s;appearance:none;}
+.fsel:focus,.finp:focus{border-color:var(--purple);background:#fff;box-shadow:0 0 0 3px rgba(109,40,217,.09);}
+.b-preview{background:var(--purple-bg);border:1.5px solid var(--purple-bd);border-radius:9px;padding:12px 14px;margin-top:10px;}
+.b-preview-lbl{font-size:10px;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:.06em;margin-bottom:7px;}
+.b-preview-txt{font-size:13.5px;color:var(--navy);line-height:1.6;font-style:italic;}
+.b-preview-txt .fill{color:var(--purple);font-weight:700;font-style:normal;background:rgba(109,40,217,.1);padding:1px 5px;border-radius:4px;}
+.b-preview-txt .blank{color:#bbb;}
+.add-brecha-btn{width:100%;padding:12px;border:2px dashed var(--purple-bd);border-radius:12px;background:none;cursor:pointer;font-family:inherit;font-size:13px;font-weight:600;color:var(--purple);transition:all .2s;display:flex;align-items:center;justify-content:center;gap:7px;}
+.add-brecha-btn:hover{background:var(--purple-bg);border-style:solid;}
+
+/* B4 */
+.relato-brecha-box{background:var(--card);border-radius:10px;padding:13px 17px;border:1px solid var(--border);margin-bottom:16px;display:flex;gap:18px;align-items:center;flex-wrap:wrap;}
+.relato-brecha-box label{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:5px;}
+.momento-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.momento-card{background:#fff;border-radius:11px;overflow:hidden;border:1.5px solid var(--green-bd);}
+.m-hdr{background:var(--green);padding:9px 13px;display:flex;align-items:center;gap:8px;}
+.m-icon{font-size:17px;}
+.m-title{font-size:12px;font-weight:700;color:#fff;}
+.m-body{padding:13px;}
+.m-q{font-size:11.5px;color:var(--muted);margin-bottom:9px;font-style:italic;line-height:1.5;}
+.m-input{width:100%;border:1.5px solid var(--border);border-radius:7px;padding:7px 10px;font-family:inherit;font-size:13px;font-weight:600;color:var(--navy);background:var(--green-bg);outline:none;transition:all .2s;}
+.m-input:focus{border-color:var(--green);background:#fff;}
+.m-chip{font-size:11px;font-weight:700;margin-top:8px;padding:5px 9px;border-radius:6px;text-align:center;}
+.m-chip.asig{background:var(--green);color:#fff;}
+.m-chip.vacio{background:var(--green-bg);color:var(--muted);border:1px dashed var(--green-bd);}
+.relato-area{background:#fff;border:1.5px solid var(--green-bd);border-radius:11px;padding:15px;margin-top:16px;}
+.relato-area h3{font-size:13px;font-weight:700;color:var(--green);margin-bottom:10px;}
+.relato-textarea{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:10px 13px;font-family:inherit;font-size:13px;line-height:1.7;color:var(--text);background:var(--green-bg);outline:none;resize:vertical;min-height:90px;transition:border-color .2s;}
+.relato-textarea:focus{border-color:var(--green);background:#fff;}
+
+/* MODAL PLENARIA */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:800;display:none;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto;}
+.modal-overlay.open{display:flex;}
+.modal-box{background:#fff;border-radius:18px;width:100%;max-width:980px;box-shadow:0 24px 60px rgba(0,0,0,.3);animation:slideUp .3s ease;margin:auto;}
+@keyframes slideUp{from{transform:translateY(28px);opacity:0;}to{transform:none;opacity:1;}}
+.modal-nav{background:var(--navy);border-radius:18px 18px 0 0;padding:14px 22px;display:flex;align-items:center;justify-content:space-between;}
+.modal-nav h2{font-size:15px;font-weight:700;color:#fff;}
+.modal-close{background:none;border:1px solid rgba(255,255,255,.3);border-radius:8px;padding:6px 14px;color:#fff;cursor:pointer;font-family:inherit;font-size:12px;font-weight:600;transition:background .2s;}
+.modal-close:hover{background:rgba(255,255,255,.15);}
+.modal-body{padding:24px;}
+.modal-sec{margin-bottom:26px;}
+.modal-sec-title{font-size:12px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.07em;margin-bottom:13px;padding-bottom:6px;border-bottom:2px solid var(--border);}
+.pl-tapete{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;}
+.pl-zone{border-radius:12px;padding:14px;border:2px solid;}
+.pl-zone.plg{background:var(--green-bg);border-color:var(--green-bd);}
+.pl-zone.ply{background:var(--yellow-bg);border-color:var(--yellow-bd);}
+.pl-zone.plr{background:var(--red-bg);border-color:var(--red-bd);}
+.pl-zone-hdr{font-size:13px;font-weight:700;margin-bottom:10px;text-align:center;padding-bottom:7px;border-bottom:1.5px solid;}
+.pl-zone.plg .pl-zone-hdr{color:var(--green);border-color:var(--green-bd);}
+.pl-zone.ply .pl-zone-hdr{color:var(--yellow);border-color:var(--yellow-bd);}
+.pl-zone.plr .pl-zone-hdr{color:var(--red);border-color:var(--red-bd);}
+.pl-dim-item{background:#fff;border-radius:8px;padding:8px 10px;margin-bottom:5px;border:1px solid rgba(0,0,0,.06);}
+.pl-dim-name{font-size:12px;font-weight:700;color:var(--navy);margin-bottom:2px;}
+.pl-dim-ev{font-size:11px;color:var(--muted);font-style:italic;}
+/* Galería plenaria — agrupada por nivel */
+.pl-nivel-group{border-radius:11px;overflow:hidden;margin-bottom:11px;border:1.5px solid;}
+.pl-nivel-group.ng{border-color:var(--green-bd);}
+.pl-nivel-group.ny{border-color:var(--yellow-bd);}
+.pl-nivel-group.na{border-color:var(--amber-bd);}
+.pl-nivel-group.nr{border-color:var(--red-bd);}
+.pl-nivel-hdr{display:flex;align-items:center;justify-content:space-between;padding:9px 15px;font-size:13px;font-weight:700;}
+.pl-nivel-group.ng .pl-nivel-hdr{background:var(--green);color:#fff;}
+.pl-nivel-group.ny .pl-nivel-hdr{background:var(--yellow);color:#fff;}
+.pl-nivel-group.na .pl-nivel-hdr{background:var(--amber);color:#fff;}
+.pl-nivel-group.nr .pl-nivel-hdr{background:var(--red);color:#fff;}
+.pl-nivel-cnt{font-size:11px;background:rgba(255,255,255,.25);padding:2px 8px;border-radius:10px;}
+.pl-cap-row{display:flex;align-items:flex-start;gap:10px;padding:9px 15px;border-bottom:1px solid rgba(0,0,0,.05);}
+.pl-cap-row:last-child{border-bottom:none;}
+.pl-cap-code{font-size:10px;font-family:'DM Mono',monospace;font-weight:700;min-width:40px;color:var(--muted);padding-top:2px;}
+.pl-cap-name{font-size:12px;font-weight:700;color:var(--navy);margin-bottom:3px;}
+.pl-cap-obs{font-size:11.5px;color:var(--text);font-style:italic;padding:3px 8px;border-radius:4px;border-left:3px solid;background:rgba(0,0,0,.03);}
+.pl-nivel-group.ng .pl-cap-obs{border-color:var(--green-bd);}
+.pl-nivel-group.ny .pl-cap-obs{border-color:var(--yellow-bd);}
+.pl-nivel-group.na .pl-cap-obs{border-color:var(--amber-bd);}
+.pl-nivel-group.nr .pl-cap-obs{border-color:var(--red-bd);}
+.pl-no-obs{font-size:11px;color:#bbb;font-style:italic;}
+.pl-brecha{background:var(--purple-bg);border:1.5px solid var(--purple-bd);border-radius:10px;padding:12px 14px;margin-bottom:9px;}
+.pl-brecha-num{font-size:10px;font-weight:700;color:var(--purple);text-transform:uppercase;margin-bottom:5px;}
+.pl-brecha-txt{font-size:13px;color:var(--navy);font-style:italic;line-height:1.6;}
+.pl-brecha-txt .fill{font-weight:700;font-style:normal;color:var(--purple);}
+.toast{position:fixed;bottom:22px;right:22px;z-index:999;background:var(--navy);color:#fff;padding:11px 18px;border-radius:10px;font-size:13px;font-weight:600;box-shadow:0 4px 20px rgba(0,0,0,.22);transform:translateY(80px);opacity:0;transition:all .3s;pointer-events:none;}
+.toast.show{transform:translateY(0);opacity:1;}
+@media(max-width:760px){
+  .tapete,.pl-tapete,.momento-grid,.bf-grid{grid-template-columns:1fr;}
+  .dim-grid,.cap-grid{grid-template-columns:1fr;}
+  .export-block{flex-direction:column;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">PETI <span>2027</span><span class="nav-sub">Grupo Virtual · Facilitadora</span></div>
+  <div class="nav-tabs">
+    <button class="tab-btn active" onclick="showTab(0)"><span class="tab-num">1</span>Diagnóstico</button>
+    <button class="tab-btn" onclick="showTab(1)"><span class="tab-num">2</span>Capacidades</button>
+    <button class="tab-btn" onclick="showTab(2)"><span class="tab-num">3</span>Brechas</button>
+    <button class="tab-btn" onclick="showTab(3)"><span class="tab-num">4</span>Relato</button>
+  </div>
+  <div class="nav-right">
+    <button class="plenaria-btn" onclick="abrirPlenaria()">📊 Vista Plenaria</button>
+  </div>
+</nav>
+
+<main>
+
+<!-- B1 -->
+<div class="page active" id="page-0">
+  <div class="page-header" style="border-left-color:var(--teal)">
+    <div>
+      <h1>Bloque 1 · Diagnóstico del PETI</h1>
+      <p>El grupo discute y consensúa un color por dimensión. Registre el resultado aquí.</p>
+      <div class="progress-bar"><div class="progress-fill" id="prog1" style="width:0%;background:var(--teal)"></div></div>
+    </div>
+    <div class="btn-row">
+      <button class="reset-btn" onclick="resetB1()">↺ Reiniciar</button>
+      <span class="badge" style="background:var(--teal)">6 dimensiones</span>
+    </div>
+  </div>
+  <div class="dim-grid" id="dim-grid"></div>
+  <div class="card">
+    <div class="card-title">Tapete del grupo virtual</div>
+    <div class="tapete">
+      <div class="zone zg"><div class="zone-hdr">🟢 Desempeño Adecuado</div><div id="zone-g"><div class="hint">Ninguna aún</div></div></div>
+      <div class="zone zy"><div class="zone-hdr">🟡 Parcial / En Riesgo</div><div id="zone-y"><div class="hint">Ninguna aún</div></div></div>
+      <div class="zone zr"><div class="zone-hdr">🔴 Crítico</div><div id="zone-r"><div class="hint">Ninguna aún</div></div></div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:15px">
+    <div class="card-title">Evidencias (dimensiones en amarillo o rojo)</div>
+    <div id="ev-area"></div>
+    <div id="ev-hint" style="font-size:13px;color:var(--muted);font-style:italic">Aparecerán aquí al marcar una dimensión en amarillo o rojo.</div>
+  </div>
+  <div class="export-block">
+    <div><strong>Exportar Bloque 1</strong><p>Tapete y evidencias del grupo virtual en .txt</p></div>
+    <button class="export-btn" onclick="exportar(1)">⬇ Exportar Bloque 1</button>
+  </div>
+</div>
+
+<!-- B2 -->
+<div class="page" id="page-1">
+  <div class="page-header" style="border-left-color:var(--orange)">
+    <div>
+      <h1>Bloque 2 · Galería de Capacidades</h1>
+      <p>Registre el nivel consensuado y el obstáculo principal de cada capacidad.</p>
+      <div class="progress-bar"><div class="progress-fill" id="prog2" style="width:0%;background:var(--orange)"></div></div>
+    </div>
+    <div class="btn-row">
+      <button class="reset-btn" onclick="resetB2()">↺ Reiniciar</button>
+      <span class="badge" style="background:var(--orange)">12 capacidades</span>
+    </div>
+  </div>
+  <div class="cap-grid" id="cap-grid"></div>
+  <div class="card" style="margin-top:15px">
+    <div class="card-title">Resumen agrupado por nivel · con obstáculos</div>
+    <div id="resumen-bars" style="margin-bottom:16px"></div>
+    <div id="resumen-grupos"></div>
+  </div>
+  <div class="export-block">
+    <div><strong>Exportar Bloque 2</strong><p>Capacidades agrupadas por nivel con obstáculos</p></div>
+    <button class="export-btn" onclick="exportar(2)">⬇ Exportar Bloque 2</button>
+  </div>
+</div>
+
+<!-- B3 -->
+<div class="page" id="page-2">
+  <div class="page-header" style="border-left-color:var(--purple)">
+    <div>
+      <h1>Bloque 3 · Formulación de Brechas</h1>
+      <p>Complete los campos — la brecha se redacta automáticamente.</p>
+    </div>
+    <span class="badge" style="background:var(--purple)">Plantilla automática</span>
+  </div>
+  <div id="brechas-cont"></div>
+  <button class="add-brecha-btn" onclick="addBrecha()">＋ Agregar brecha</button>
+  <div class="export-block" style="margin-top:16px">
+    <div><strong>Exportar Bloque 3</strong><p>Brechas formuladas listas para consolidar</p></div>
+    <button class="export-btn" onclick="exportar(3)">⬇ Exportar Bloque 3</button>
+  </div>
+</div>
+
+<!-- B4 -->
+<div class="page" id="page-3">
+  <div class="page-header" style="border-left-color:var(--green)">
+    <div>
+      <h1>Bloque 4 · Relato Estratégico</h1>
+      <p>Asigne los 6 momentos y construya el relato en vivo.</p>
+    </div>
+    <span class="badge" style="background:var(--green)">6 momentos</span>
+  </div>
+  <div class="relato-brecha-box">
+    <div>
+      <label>Brecha que trabaja este relato</label>
+      <select class="fsel" id="brecha-sel" onchange="actualizarBrecha()" style="min-width:200px">
+        <option value="">— seleccionar —</option>
+      </select>
+    </div>
+    <div style="flex:1">
+      <label>Brecha seleccionada</label>
+      <div id="brecha-txt" style="font-size:13px;color:var(--muted);font-style:italic">Seleccione una brecha del Bloque 3</div>
+    </div>
+  </div>
+  <div class="momento-grid" id="momento-grid"></div>
+  <div class="relato-area">
+    <h3>📖 Relato construido en vivo</h3>
+    <textarea class="relato-textarea" id="relato-txt"
+      placeholder="A medida que cada participante narra su momento, escriba aquí el relato del grupo..."
+      oninput="debouncedSave()"></textarea>
+  </div>
+  <div class="export-block">
+    <div><strong>Exportar resumen completo</strong><p>Todos los bloques del grupo virtual en un archivo</p></div>
+    <button class="export-btn" onclick="exportar(4)">⬇ Exportar resumen completo</button>
+  </div>
+</div>
+
+</main>
+
+<!-- MODAL PLENARIA -->
+<div class="modal-overlay" id="modal-plenaria">
+  <div class="modal-box">
+    <div class="modal-nav">
+      <h2>📊 Vista Plenaria — Resultado Grupo Virtual</h2>
+      <button class="modal-close" onclick="cerrarPlenaria()">✕ Cerrar</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<div class="save-pill" id="save-pill"><div class="save-dot"></div>Guardado</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const DIMS=[
+  {id:"alin",name:"Alineación Estratégica",short:"Alineación"},
+  {id:"ejec",name:"Cumplimiento y Ejecución",short:"Cumplimiento"},
+  {id:"gob", name:"Gobierno y Gestión",       short:"Gobierno"},
+  {id:"arq", name:"Arquitectura y Cap. TI",   short:"Arquitectura"},
+  {id:"info",name:"Gestión de Información",   short:"Información"},
+  {id:"tal", name:"Talento y Cap. Operativa", short:"Talento"},
+];
+const CAPS=[
+  {id:"in01",code:"IN-01",name:"Gobierno de Datos"},
+  {id:"in02",code:"IN-02",name:"Análisis de Información"},
+  {id:"in03",code:"IN-03",name:"Interoperabilidad de Información"},
+  {id:"in04",code:"IN-04",name:"Fábrica de Software / DevOps"},
+  {id:"in05",code:"IN-05",name:"Tecnologías Emergentes (pilotos)"},
+  {id:"in06",code:"IN-06",name:"Arquitectura Empresarial TI"},
+  {id:"in07",code:"IN-07",name:"Modelo de Gobierno y Gestión TI"},
+  {id:"in08",code:"IN-08",name:"Seguridad Digital"},
+  {id:"in09",code:"IN-09",name:"SI Planeación Estratégica y Operativa"},
+  {id:"in10",code:"IN-10",name:"Infraestructura Tecnológica"},
+  {id:"in11",code:"IN-11",name:"Desarrollo e Impl. de Sistemas"},
+  {id:"in12",code:"IN-12",name:"Sistema Gestión Administrativa y RRHH"},
+];
+const MOMENTOS=[
+  {n:"1",icon:"⚡",title:"Punto de Quiebre",    q:"¿Qué situación crítica evidenció que la brecha ya no podía continuar?"},
+  {n:"2",icon:"🎯",title:"Decisión Estratégica", q:"¿Qué decisión estructural tomó la OTI para cerrar la brecha?"},
+  {n:"3",icon:"🧱",title:"Resistencia",          q:"¿Qué resistencia institucional apareció y cómo fue gestionada?"},
+  {n:"4",icon:"💡",title:"Apuesta Estructural",  q:"¿En qué se invirtió para que el cambio fuera sostenible?"},
+  {n:"5",icon:"🔄",title:"Cambio Implementado",  q:"¿Qué cambió permanentemente en la forma de trabajar?"},
+  {n:"6",icon:"🏆",title:"Resultado Logrado",    q:"¿Qué mejora concreta se evidenció en la capacidad impactada?"},
+];
+const DIM_OPTS=["— seleccionar —",...DIMS.map(d=>d.name)];
+const CAP_OPTS=["— seleccionar —",...CAPS.map(c=>`${c.code}: ${c.name}`)];
+const NLVL={
+  green:{icon:"🟢",label:"Consolidada",bg:"var(--green-bg)",bd:"var(--green-bd)",tc:"var(--green)",cls:"ng"},
+  yellow:{icon:"🟡",label:"Funcional",bg:"var(--yellow-bg)",bd:"var(--yellow-bd)",tc:"var(--yellow)",cls:"ny"},
+  amber:{icon:"🟠",label:"Frágil",bg:"var(--amber-bg)",bd:"var(--amber-bd)",tc:"var(--amber)",cls:"na"},
+  red:{icon:"🔴",label:"Declarativa",bg:"var(--red-bg)",bd:"var(--red-bd)",tc:"var(--red)",cls:"nr"},
+};
+const SLV={green:"🟢 Adecuado",yellow:"🟡 Parcial",red:"🔴 Crítico"};
+const SK='peti2027_vf2';
+let state={semaforo:{},evidencias:{},capacidades:{},obstaculos:{},brechas:[],brechaCount:0,momentos:{},relatoTxt:''};
+
+function persist(){
+  try{
+    state.brechas.forEach(b=>{
+      ['dim','cap','causa','capinst'].forEach(f=>{const e=document.getElementById(`b${b.id}-${f}`);if(e)b[f]=e.value;});
+    });
+    DIMS.forEach(d=>{const e=document.getElementById(`ev-${d.id}`);if(e)state.evidencias[d.id]=e.value;});
+    CAPS.forEach(c=>{const e=document.getElementById(`obs-${c.id}`);if(e)state.obstaculos[c.id]=e.value;});
+    state.relatoTxt=document.getElementById('relato-txt')?.value||'';
+    localStorage.setItem(SK,JSON.stringify(state));
+    flash();
+  }catch(e){}
+}
+function load(){try{const r=localStorage.getItem(SK);if(r)state={...state,...JSON.parse(r)};}catch(e){}}
+let st;function debouncedSave(){clearTimeout(st);st=setTimeout(persist,700);}
+function flash(){const el=document.getElementById('save-pill');el.classList.add('show');setTimeout(()=>el.classList.remove('show'),1800);}
+
+function showTab(i){
+  document.querySelectorAll('.page').forEach((p,j)=>p.classList.toggle('active',j===i));
+  document.querySelectorAll('.tab-btn').forEach((b,j)=>b.classList.toggle('active',j===i));
+  if(i===3)refrescarBrechaSel();
+}
+
+// ── B1 ──
+function initB1(){
+  document.getElementById('dim-grid').innerHTML=DIMS.map(d=>`
+    <div class="dim-item" id="dim-${d.id}">
+      <div class="dim-name">${d.name}</div>
+      <div class="sem-btns">
+        <button class="sem-btn g" onclick="setSem('${d.id}','green')">🟢 Adecuado</button>
+        <button class="sem-btn y" onclick="setSem('${d.id}','yellow')">🟡 Parcial</button>
+        <button class="sem-btn r" onclick="setSem('${d.id}','red')">🔴 Crítico</button>
+      </div>
+    </div>`).join('');
+  document.getElementById('ev-area').innerHTML=DIMS.map(d=>`
+    <div class="ev-row" id="ev-row-${d.id}">
+      <span class="ev-label">${d.short}</span>
+      <textarea class="ev-input" id="ev-${d.id}" rows="1" placeholder="Evidencia del grupo..."
+        oninput="state.evidencias['${d.id}']=this.value;debouncedSave()"></textarea>
+    </div>`).join('');
+}
+function restoreB1(){
+  Object.entries(state.semaforo).forEach(([id,lv])=>applyDim(id,lv));
+  DIMS.forEach(d=>{
+    const el=document.getElementById(`ev-${d.id}`);if(el&&state.evidencias[d.id])el.value=state.evidencias[d.id];
+    const lv=state.semaforo[d.id];
+    if(lv==='yellow'||lv==='red')document.getElementById(`ev-row-${d.id}`)?.classList.add('show');
+  });
+  hintEv();updateTapete();
+  document.getElementById('prog1').style.width=`${Object.keys(state.semaforo).length/6*100}%`;
+}
+function setSem(id,lv){
+  state.semaforo[id]=lv;applyDim(id,lv);
+  DIMS.forEach(d=>{
+    const dlv=state.semaforo[d.id];
+    const row=document.getElementById(`ev-row-${d.id}`);
+    if(row)(dlv==='yellow'||dlv==='red')?row.classList.add('show'):row.classList.remove('show');
+  });
+  hintEv();updateTapete();
+  document.getElementById('prog1').style.width=`${Object.keys(state.semaforo).length/6*100}%`;
+  debouncedSave();
+}
+function hintEv(){
+  const hay=DIMS.some(d=>state.semaforo[d.id]==='yellow'||state.semaforo[d.id]==='red');
+  document.getElementById('ev-hint').style.display=hay?'none':'block';
+}
+function applyDim(id,lv){
+  const el=document.getElementById(`dim-${id}`);if(!el)return;
+  el.querySelectorAll('.sem-btn').forEach(b=>b.classList.remove('selected'));
+  el.querySelector(`.sem-btn.${lv[0]}`)?.classList.add('selected');
+  const bgs={green:'var(--green-bg)',yellow:'var(--yellow-bg)',red:'var(--red-bg)'};
+  const bds={green:'var(--green-bd)',yellow:'var(--yellow-bd)',red:'var(--red-bd)'};
+  el.style.background=bgs[lv];el.style.borderColor=bds[lv];
+}
+function updateTapete(){
+  ['green','yellow','red'].forEach(lv=>{
+    const zone=document.getElementById(`zone-${lv[0]}`);
+    const dims=DIMS.filter(d=>state.semaforo[d.id]===lv);
+    zone.innerHTML=dims.length?dims.map(d=>`<span class="chip">${d.short}</span>`).join(''):'<div class="hint">Ninguna aún</div>';
+  });
+}
+function resetB1(){state.semaforo={};state.evidencias={};initB1();updateTapete();document.getElementById('prog1').style.width='0%';hintEv();persist();showToast('Bloque 1 reiniciado');}
+
+// ── B2 ──
+function initB2(){
+  document.getElementById('cap-grid').innerHTML=CAPS.map(c=>`
+    <div class="cap-item" id="cap-${c.id}">
+      <div class="cap-code">${c.code}</div>
+      <div class="cap-name">${c.name}</div>
+      <div class="lvl-btns">
+        <button class="lvl-btn lg" onclick="setCap('${c.id}','green')">🟢 Consolidada</button>
+        <button class="lvl-btn ly" onclick="setCap('${c.id}','yellow')">🟡 Funcional</button>
+        <button class="lvl-btn la" onclick="setCap('${c.id}','amber')">🟠 Frágil</button>
+        <button class="lvl-btn lr" onclick="setCap('${c.id}','red')">🔴 Declarativa</button>
+      </div>
+      <div class="obs-lbl">Obstáculo principal</div>
+      <textarea class="obs-input" id="obs-${c.id}" rows="2"
+        placeholder="¿Qué impide que esta capacidad sea más sólida?"
+        oninput="state.obstaculos['${c.id}']=this.value;debouncedSave();updateResumen()"></textarea>
+    </div>`).join('');
+}
+function restoreB2(){
+  Object.entries(state.capacidades).forEach(([id,lv])=>applyCapStyle(id,lv));
+  CAPS.forEach(c=>{const el=document.getElementById(`obs-${c.id}`);if(el&&state.obstaculos[c.id])el.value=state.obstaculos[c.id];});
+  document.getElementById('prog2').style.width=`${Object.keys(state.capacidades).length/12*100}%`;
+  updateResumen();
+}
+function setCap(id,lv){
+  state.capacidades[id]=lv;applyCapStyle(id,lv);
+  document.getElementById('prog2').style.width=`${Object.keys(state.capacidades).length/12*100}%`;
+  updateResumen();debouncedSave();
+}
+function applyCapStyle(id,lv){
+  const el=document.getElementById(`cap-${id}`);if(!el)return;
+  el.querySelectorAll('.lvl-btn').forEach(b=>b.classList.remove('selected'));
+  const map={green:'lg',yellow:'ly',amber:'la',red:'lr'};
+  el.querySelector(`.lvl-btn.${map[lv]}`)?.classList.add('selected');
+  const n=NLVL[lv];el.style.background=n.bg;el.style.borderColor=n.bd;
+}
+function updateResumen(){
+  const total=Object.keys(state.capacidades).length;
+  const cnt={green:0,yellow:0,amber:0,red:0};
+  Object.values(state.capacidades).forEach(v=>cnt[v]++);
+  // barras
+  document.getElementById('resumen-bars').innerHTML=
+    [{k:'green',l:'🟢 Consolidadas',c:'var(--green)'},
+     {k:'yellow',l:'🟡 Funcionales',c:'var(--yellow)'},
+     {k:'amber',l:'🟠 Frágiles',c:'var(--amber)'},
+     {k:'red',l:'🔴 Declarativas',c:'var(--red)'}]
+    .map(x=>`<div class="bar-row">
+      <span class="bar-label">${x.l}</span>
+      <div class="bar-track"><div class="bar-fill" style="width:${total?cnt[x.k]/12*100:0}%;background:${x.c}"></div></div>
+      <span class="bar-num" style="color:${x.c}">${cnt[x.k]}/12</span>
+    </div>`).join('');
+  if(!total){document.getElementById('resumen-grupos').innerHTML='<p style="color:var(--muted);font-size:13px;font-style:italic">El resumen aparecerá aquí a medida que califique las capacidades.</p>';return;}
+  // grupos
+  document.getElementById('resumen-grupos').innerHTML=
+    [{lv:'green',label:'🟢 Consolidadas'},{lv:'yellow',label:'🟡 Funcionales'},
+     {lv:'amber',label:'🟠 Frágiles'},{lv:'red',label:'🔴 Declarativas'}]
+    .map(g=>{
+      const n=NLVL[g.lv];
+      const caps=CAPS.filter(c=>state.capacidades[c.id]===g.lv);
+      const rows=caps.length
+        ?caps.map(c=>{
+            const obs=state.obstaculos[c.id]||'';
+            return `<div class="nivel-cap-row">
+              <span class="nivel-cap-code">${c.code}</span>
+              <div style="flex:1">
+                <div class="nivel-cap-name">${c.name}</div>
+                ${obs?`<div class="nivel-cap-obs nivel-group ${n.cls}">⚠ ${obs}</div>`:`<span class="no-obs">Sin obstáculo registrado</span>`}
+              </div>
+            </div>`;
+          }).join('')
+        :`<div class="empty-nivel">Ninguna capacidad en este nivel</div>`;
+      return `<div class="nivel-group ${n.cls}">
+        <div class="nivel-hdr"><span>${g.label}</span><span class="nivel-count">${caps.length} capacidad${caps.length!==1?'es':''}</span></div>
+        ${rows}
+      </div>`;
+    }).join('');
+}
+function resetB2(){state.capacidades={};state.obstaculos={};initB2();document.getElementById('prog2').style.width='0%';updateResumen();persist();showToast('Bloque 2 reiniciado');}
+
+// ── B3 ──
+function addBrecha(restored){
+  state.brechaCount++;
+  const id=state.brechaCount;
+  const div=document.createElement('div');
+  div.className='brecha-card';div.id=`brecha-${id}`;
+  div.innerHTML=`
+    <div class="brecha-hdr">
+      <div class="brecha-num">${id}</div>
+      <div class="brecha-hdr-title">Brecha ${id}</div>
+      <button onclick="removeBrecha(${id})" style="margin-left:auto;background:none;border:none;cursor:pointer;color:var(--muted);font-size:16px">✕</button>
+    </div>
+    <div class="brecha-body">
+      <div class="bf-grid">
+        <div class="fg"><label>Dimensión</label>
+          <select class="fsel" id="b${id}-dim" onchange="previewB(${id});debouncedSave()">
+            ${DIM_OPTS.map(o=>`<option>${o}</option>`).join('')}</select></div>
+        <div class="fg"><label>Capacidad (PETI)</label>
+          <select class="fsel" id="b${id}-cap" onchange="previewB(${id});debouncedSave()">
+            ${CAP_OPTS.map(o=>`<option>${o}</option>`).join('')}</select></div>
+        <div class="fg"><label>Causa estructural</label>
+          <input class="finp" id="b${id}-causa" placeholder="Ausencia de..."
+            oninput="previewB(${id});debouncedSave()"></div>
+      </div>
+      <div class="fg" style="margin-bottom:0">
+        <label>Capacidad institucional impactada</label>
+        <input class="finp" id="b${id}-capinst" placeholder="Ej: gestionar proyectos de inversión..."
+          oninput="previewB(${id});debouncedSave()" style="margin-bottom:10px"></div>
+      <div class="b-preview">
+        <div class="b-preview-lbl">📝 Brecha formulada</div>
+        <div class="b-preview-txt" id="bpt-${id}"><span class="blank">Complete los campos...</span></div>
+      </div>
+    </div>`;
+  document.getElementById('brechas-cont').appendChild(div);
+  if(!restored)state.brechas.push({id,dim:'',cap:'',causa:'',capinst:''});
+}
+function restoreBrechas(){
+  state.brechaCount=0;document.getElementById('brechas-cont').innerHTML='';
+  const saved=[...state.brechas];state.brechas=[];
+  if(!saved.length){addBrecha();addBrecha();return;}
+  saved.forEach(b=>{
+    state.brechaCount=b.id-1;addBrecha(true);state.brechas.push(b);
+    setTimeout(()=>{
+      ['dim','cap','causa','capinst'].forEach(f=>{const el=document.getElementById(`b${b.id}-${f}`);if(el)el.value=b[f]||'';});
+      previewB(b.id);
+    },0);
+  });
+}
+function removeBrecha(id){document.getElementById(`brecha-${id}`).remove();state.brechas=state.brechas.filter(b=>b.id!==id);debouncedSave();}
+function previewB(id){
+  const dim=document.getElementById(`b${id}-dim`)?.value||'';
+  const causa=document.getElementById(`b${id}-causa`)?.value||'';
+  const capinst=document.getElementById(`b${id}-capinst`)?.value||'';
+  const b=state.brechas.find(x=>x.id===id);
+  if(b){b.dim=dim;b.cap=document.getElementById(`b${id}-cap`)?.value||'';b.causa=causa;b.capinst=capinst;}
+  const el=document.getElementById(`bpt-${id}`);if(!el)return;
+  const hD=dim&&!dim.startsWith('—'),hC=capinst.trim().length>0,hCa=causa.trim().length>0;
+  if(!hD&&!hC&&!hCa){el.innerHTML='<span class="blank">Complete los campos...</span>';return;}
+  el.innerHTML=`Se identifica una brecha en la dimensión de ${hD?`<span class="fill">${dim}</span>`:'<span class="blank">[dimensión]</span>'} que impacta la capacidad de ${hC?`<span class="fill">${capinst}</span>`:'<span class="blank">[capacidad]</span>'}, como consecuencia de ${hCa?`<span class="fill">${causa}</span>`:'<span class="blank">[causa]</span>'}.`;
+}
+
+// ── B4 ──
+function initB4(){
+  document.getElementById('momento-grid').innerHTML=MOMENTOS.map(m=>`
+    <div class="momento-card">
+      <div class="m-hdr"><span class="m-icon">${m.icon}</span><span class="m-title">${m.n}. ${m.title}</span></div>
+      <div class="m-body">
+        <div class="m-q">${m.q}</div>
+        <input class="m-input" id="m-${m.n}" placeholder="Nombre del participante..."
+          oninput="state.momentos['${m.n}']=this.value;chipM('${m.n}');debouncedSave()">
+        <div class="m-chip vacio" id="chip-${m.n}">Sin asignar</div>
+      </div>
+    </div>`).join('');
+}
+function restoreB4(){
+  Object.entries(state.momentos).forEach(([n,name])=>{const el=document.getElementById(`m-${n}`);if(el){el.value=name;chipM(n);}});
+  const rt=document.getElementById('relato-txt');if(rt&&state.relatoTxt)rt.value=state.relatoTxt;
+}
+function chipM(n){
+  const val=document.getElementById(`m-${n}`)?.value.trim();
+  const chip=document.getElementById(`chip-${n}`);if(!chip)return;
+  chip.textContent=val?'📹 '+val:'Sin asignar';chip.className='m-chip '+(val?'asig':'vacio');
+}
+function refrescarBrechaSel(){
+  const sel=document.getElementById('brecha-sel');const cur=sel.value;
+  sel.innerHTML='<option value="">— seleccionar —</option>';
+  state.brechas.forEach((b,i)=>{const dim=document.getElementById(`b${b.id}-dim`)?.value||b.dim||'';if(dim&&!dim.startsWith('—'))sel.innerHTML+=`<option value="${b.id}">${i+1}. ${dim}</option>`;});
+  sel.value=cur;actualizarBrecha();
+}
+function actualizarBrecha(){
+  const id=parseInt(document.getElementById('brecha-sel').value);
+  const el=document.getElementById('brecha-txt');
+  if(!id){el.textContent='Seleccione una brecha del Bloque 3';el.style.fontStyle='italic';return;}
+  const dim=document.getElementById(`b${id}-dim`)?.value||'';
+  const capinst=document.getElementById(`b${id}-capinst`)?.value||'';
+  const causa=document.getElementById(`b${id}-causa`)?.value||'';
+  el.style.color='var(--navy)';el.style.fontStyle='normal';
+  el.textContent=`Se identifica una brecha en la dimensión de ${dim} que impacta la capacidad de ${capinst}, como consecuencia de ${causa}.`;
+}
+
+// ── PLENARIA ──
+function abrirPlenaria(){
+  persist();
+  // Tapete
+  const zonaInfo={green:{lbl:'🟢 Desempeño Adecuado',cls:'plg'},yellow:{lbl:'🟡 Parcial / En Riesgo',cls:'ply'},red:{lbl:'🔴 Crítico',cls:'plr'}};
+  const tapeteHtml=['green','yellow','red'].map(lv=>{
+    const zi=zonaInfo[lv];
+    const dims=DIMS.filter(d=>state.semaforo[d.id]===lv);
+    return `<div class="pl-zone ${zi.cls}">
+      <div class="pl-zone-hdr">${zi.lbl}</div>
+      ${dims.length?dims.map(d=>`<div class="pl-dim-item">
+        <div class="pl-dim-name">${d.name}</div>
+        ${state.evidencias[d.id]?`<div class="pl-dim-ev">"${state.evidencias[d.id]}"</div>`:''}
+      </div>`).join(''):'<p style="font-size:12px;color:#bbb;text-align:center;font-style:italic">Ninguna</p>'}
+    </div>`;
+  }).join('');
+
+  // Galería agrupada por nivel
+  const galeriaHtml=[{lv:'green',label:'🟢 Consolidadas'},{lv:'yellow',label:'🟡 Funcionales'},{lv:'amber',label:'🟠 Frágiles'},{lv:'red',label:'🔴 Declarativas'}]
+    .map(g=>{
+      const n=NLVL[g.lv];
+      const caps=CAPS.filter(c=>state.capacidades[c.id]===g.lv);
+      const rows=caps.length
+        ?caps.map(c=>{
+            const obs=state.obstaculos[c.id]||'';
+            return `<div class="pl-cap-row">
+              <span class="pl-cap-code">${c.code}</span>
+              <div style="flex:1">
+                <div class="pl-cap-name">${c.name}</div>
+                ${obs?`<div class="pl-cap-obs pl-nivel-group ${n.cls}">⚠ ${obs}</div>`:`<span class="pl-no-obs">Sin obstáculo registrado</span>`}
+              </div>
+            </div>`;
+          }).join('')
+        :`<div style="padding:10px 15px;font-size:12px;color:var(--muted);font-style:italic;background:var(--bg)">Ninguna capacidad en este nivel</div>`;
+      return `<div class="pl-nivel-group ${n.cls}">
+        <div class="pl-nivel-hdr"><span>${g.label}</span><span class="pl-nivel-cnt">${caps.length} capacidad${caps.length!==1?'es':''}</span></div>
+        ${rows}
+      </div>`;
+    }).join('');
+
+  // Brechas
+  const brechasHtml=state.brechas.map((b,i)=>{
+    const dim=document.getElementById(`b${b.id}-dim`)?.value||b.dim||'';
+    const capinst=document.getElementById(`b${b.id}-capinst`)?.value||b.capinst||'';
+    const causa=document.getElementById(`b${b.id}-causa`)?.value||b.causa||'';
+    if(!dim&&!capinst&&!causa)return'';
+    return `<div class="pl-brecha">
+      <div class="pl-brecha-num">Brecha ${i+1} · ${dim||'Dimensión sin definir'}</div>
+      <div class="pl-brecha-txt">Se identifica una brecha en la dimensión de <span class="fill">${dim||'___'}</span> que impacta la capacidad de <span class="fill">${capinst||'___'}</span>, como consecuencia de <span class="fill">${causa||'___'}</span>.</div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('modal-body').innerHTML=`
+    <div class="modal-sec">
+      <div class="modal-sec-title">Bloque 1 · Semáforo de dimensiones</div>
+      <div class="pl-tapete">${tapeteHtml}</div>
+    </div>
+    <div class="modal-sec">
+      <div class="modal-sec-title">Bloque 2 · Capacidades agrupadas por nivel</div>
+      ${galeriaHtml}
+    </div>
+    <div class="modal-sec">
+      <div class="modal-sec-title">Bloque 3 · Brechas formuladas</div>
+      ${brechasHtml||'<p style="color:var(--muted);font-size:13px;font-style:italic">Aún no hay brechas formuladas.</p>'}
+    </div>`;
+  document.getElementById('modal-plenaria').classList.add('open');
+}
+function cerrarPlenaria(){document.getElementById('modal-plenaria').classList.remove('open');}
+
+// ── EXPORTAR ──
+function exportar(num){
+  persist();
+  const sep='='.repeat(52),dash='-'.repeat(40);
+  const lines=['TALLER PETI 2027 — RESULTADO GRUPO VIRTUAL',sep,`Exportado: ${new Date().toLocaleString('es-CO')}`,''];
+  if(num>=1){
+    lines.push('BLOQUE 1 · DIAGNÓSTICO — SEMÁFORO',dash);
+    DIMS.forEach(d=>{const lv=state.semaforo[d.id];lines.push(`${d.name}: ${lv?SLV[lv]:'Sin respuesta'}`);const ev=state.evidencias[d.id];if(ev?.trim())lines.push(`  Evidencia: ${ev}`);});
+    lines.push('');
+  }
+  if(num>=2){
+    lines.push('BLOQUE 2 · CAPACIDADES — AGRUPADAS POR NIVEL',dash);
+    ['green','yellow','amber','red'].forEach(lv=>{
+      const caps=CAPS.filter(c=>state.capacidades[c.id]===lv);if(!caps.length)return;
+      lines.push(`\n${NLVL[lv].icon} ${NLVL[lv].label.toUpperCase()}:`);
+      caps.forEach(c=>{lines.push(`  ${c.code} ${c.name}`);const obs=state.obstaculos[c.id];if(obs?.trim())lines.push(`    Obstáculo: ${obs}`);});
+    });
+    lines.push('');
+  }
+  if(num>=3){
+    lines.push('BLOQUE 3 · BRECHAS FORMULADAS',dash);
+    state.brechas.forEach((b,i)=>{
+      const dim=document.getElementById(`b${b.id}-dim`)?.value||b.dim||'';
+      const capinst=document.getElementById(`b${b.id}-capinst`)?.value||b.capinst||'';
+      const causa=document.getElementById(`b${b.id}-causa`)?.value||b.causa||'';
+      if(!dim&&!capinst&&!causa)return;
+      lines.push(`Brecha ${i+1}: ${dim}`,`  Capacidad: ${capinst}`,`  Causa: ${causa}`,`  → Se identifica una brecha en la dimensión de ${dim} que impacta la capacidad de ${capinst}, como consecuencia de ${causa}.`,'');
+    });
+  }
+  if(num>=4){
+    lines.push('BLOQUE 4 · RELATO ESTRATÉGICO',dash);
+    MOMENTOS.forEach(m=>lines.push(`Momento ${m.n} — ${m.title}: ${state.momentos[m.n]||'Sin asignar'}`));
+    const rt=document.getElementById('relato-txt')?.value||'';
+    if(rt)lines.push('','Relato:',rt);
+    lines.push('');
+  }
+  lines.push(sep,'Taller PETI 2027 · ANH OTI · Grupo Virtual');
+  const blob=new Blob([lines.join('\n')],{type:'text/plain;charset=utf-8'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download=`PETI2027_grupo_virtual_${num===4?'completo':'bloque'+num}.txt`;a.click();
+  showToast('✓ Archivo descargado');
+}
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800);}
+
+// ── INIT ──
+load();
+initB1();restoreB1();
+initB2();restoreB2();
+restoreBrechas();
+initB4();restoreB4();
+</script>
+</body>
+</html>
