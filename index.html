@@ -754,29 +754,36 @@ function addCapInst(id, val=''){
 }
 
 function syncCaps(id){
+  id=parseInt(id);
   const list=document.getElementById(`caplist-${id}`);if(!list)return;
   const vals=[...list.querySelectorAll('select')].map(s=>s.value.trim()).filter(Boolean);
-  const b=state.brechas.find(x=>x.id===id);if(b)b.caps=vals;
+  const b=state.brechas.find(x=>parseInt(x.id)===id);if(b)b.caps=vals;
 }
 
 function addPill(id){
+  id=parseInt(id);
   const inp=document.getElementById(`obs-inp-${id}`);if(!inp)return;
   const val=inp.value.trim();if(!val)return;
-  const b=state.brechas.find(x=>x.id===id);if(b&&!b.pills.includes(val))b.pills.push(val);
+  let b=state.brechas.find(x=>parseInt(x.id)===id);
+  if(!b){b={id,pills:[],causa:'',dim:'',caps:[],redaccion:''};state.brechas.push(b);}
+  if(!b.pills)b.pills=[];
+  if(!b.pills.includes(val))b.pills.push(val);
   renderPills(id);
   inp.value='';previewB(id);debouncedSave();
 }
 
 function removePill(id,val){
-  const b=state.brechas.find(x=>x.id===id);
+  id=parseInt(id);
+  const b=state.brechas.find(x=>parseInt(x.id)===id);
   if(b)b.pills=b.pills.filter(p=>p!==val);
   renderPills(id);previewB(id);debouncedSave();
 }
 
 function renderPills(id){
+  id=parseInt(id);
   const cont=document.getElementById(`pills-${id}`);if(!cont)return;
-  const b=state.brechas.find(x=>x.id===id);if(!b)return;
-  cont.innerHTML=b.pills.map(p=>`<span class="obs-pill">${p}<button onclick="removePill(${id},'${p.replace(/'/g,"\\'")}')">✕</button></span>`).join('');
+  const b=state.brechas.find(x=>parseInt(x.id)===id);if(!b)return;
+  cont.innerHTML=(b.pills||[]).map(p=>`<span class="obs-pill">${p.replace(/</g,'&lt;')}<button onclick="removePill(${id},decodeURIComponent('${encodeURIComponent(p)}'))">✕</button></span>`).join('');
 }
 
 function restoreBrechas(){
@@ -797,10 +804,11 @@ function restoreBrechas(){
   });
 }
 
-function removeBrecha(id){document.getElementById(`brecha-${id}`).remove();state.brechas=state.brechas.filter(b=>b.id!==id);debouncedSave();}
+function removeBrecha(id){id=parseInt(id);document.getElementById(`brecha-${id}`).remove();state.brechas=state.brechas.filter(b=>parseInt(b.id)!==id);debouncedSave();}
 
 function previewB(id){
-  const b=state.brechas.find(x=>x.id===id);if(!b)return;
+  id=parseInt(id);
+  const b=state.brechas.find(x=>parseInt(x.id)===id);if(!b)return;
   // sync state
   const causa=document.getElementById(`b${id}-causa`)?.value||'';
   const dim=document.getElementById(`b${id}-dim`)?.value||'';
