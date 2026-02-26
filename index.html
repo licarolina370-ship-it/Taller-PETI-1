@@ -273,8 +273,6 @@ main{max-width:1200px;margin:0 auto;padding:26px 22px;}
   <div class="nav-tabs">
     <button class="tab-btn active" onclick="showTab(0)"><span class="tab-num">1</span>Diagnóstico</button>
     <button class="tab-btn" onclick="showTab(1)"><span class="tab-num">2</span>Capacidades</button>
-    <button class="tab-btn" onclick="showTab(2)"><span class="tab-num">3</span>Brechas</button>
-    <button class="tab-btn" onclick="showTab(3)"><span class="tab-num">4</span>Relato</button>
   </div>
   <div class="nav-right">
     <button class="plenaria-btn" onclick="abrirPlenaria()">📊 Vista Plenaria</button>
@@ -419,33 +417,72 @@ main{max-width:1200px;margin:0 auto;padding:26px 22px;}
 
 <script>
 const DIMS=[
-  {id:"alin",name:"Alineación Estratégica",short:"Alineación"},
-  {id:"ejec",name:"Cumplimiento y Ejecución",short:"Cumplimiento"},
-  {id:"gob", name:"Gobierno y Gestión",       short:"Gobierno"},
-  {id:"arq", name:"Arquitectura y Cap. TI",   short:"Arquitectura"},
-  {id:"info",name:"Gestión de Información",   short:"Información"},
-  {id:"tal", name:"Talento y Cap. Operativa", short:"Talento"},
+  {id:"alin",name:"Alineación Estratégica del PETI",   short:"Alineación"},
+  {id:"ejec",name:"Cumplimiento y Ejecución del PETI", short:"Cumplimiento"},
+  {id:"gob", name:"Gobierno y Gestión del PETI",       short:"Gobierno"},
+  {id:"arq", name:"Arquitectura Empresarial",          short:"Arquitectura"},
+  {id:"cap", name:"Capacidad Tecnológica",             short:"Cap. Tecnológica"},
+  {id:"info",name:"Gestión de Información y Datos",    short:"Información"},
+  {id:"tal", name:"Talento y Capacidad Operativa TI",  short:"Talento TI"},
 ];
 const CAPS=[
-  {id:"cap01",name:"Gestionar la Estrategia Institucional"},
-  {id:"cap02",name:"Gestionar Proyectos de Inversión"},
-  {id:"cap03",name:"Gestionar el Conocimiento del Recurso Natural"},
-  {id:"cap04",name:"Promocionar y Fomentar Exploración y Explotación del Recurso Natural"},
-  {id:"cap05",name:"Gestionar UpStream (E&P - Generación)"},
-  {id:"cap06",name:"Gestionar el control de operaciones y fiscalización"},
-  {id:"cap07",name:"Análisis de Información de producción y reservas de hidrocarburos"},
-  {id:"cap08",name:"Gestionar Regalías y Derechos Económicos"},
-  {id:"cap09",name:"Implementar el Desarrollo Sostenible"},
-  {id:"cap10",name:"Gestionar el Talento Humano"},
-  {id:"cap11",name:"Participación Ciudadana en la Gestión Pública"},
-  {id:"cap12",name:"Gestión Presupuestal y Eficiencia del Gasto Público"},
-  {id:"cap13",name:"Gobierno y Gestión de TI"},
-  {id:"cap14",name:"Gestionar la defensa legal"},
-  {id:"cap15",name:"Gestionar Contratos y Convenios"},
-  {id:"cap16",name:"Gestionar Recursos Institucionales"},
-  {id:"cap17",name:"Gestión Documental"},
-  {id:"cap18",name:"Administrar Sistemas Integrados de Gestión"},
-  {id:"cap19",name:"Gestionar la mejora continua"},
+  {id:"cap01",name:"Gestionar la Estrategia Institucional",
+   implica:"Capacidad institucional para definir, orientar y priorizar las decisiones estratégicas de la ANH, asegurando coherencia entre objetivos, planes, recursos y resultados.",
+   ti:["Información confiable para la toma de decisiones","Herramientas de seguimiento estratégico","Sistemas de planificación","Integración de datos institucionales"]},
+  {id:"cap02",name:"Gestionar Proyectos de Inversión",
+   implica:"Capacidad institucional para identificar, evaluar y ejecutar proyectos de inversión de alto impacto, asegurando que estén alineados con las prioridades estratégicas de la ANH y estén bien gestionados.",
+   ti:["Herramientas de gestión de portafolio","Análisis económico y financiero","Sistemas de evaluación y control","Monitoreo de indicadores de desempeño"]},
+  {id:"cap03",name:"Gestionar el Conocimiento del Recurso Natural",
+   implica:"Implica asegurar que la información técnica (geológica, producción, reservas) esté disponible, estructurada, confiable y analizable para la toma de decisiones.",
+   ti:["Gestión de datos","Interoperabilidad","Sistemas de información técnica","Analítica","Trazabilidad"]},
+  {id:"cap04",name:"Promocionar y Fomentar Exploración y Explotación del Recurso Natural",
+   implica:"Capacidad institucional para impulsar el desarrollo de actividades exploratorias y de producción, garantizando el aprovechamiento sostenible de los recursos naturales.",
+   ti:["Análisis de datos de exploración","Plataformas para inteligencia sectorial","Sistemas de seguimiento de contratos","Divulgación de oportunidades"]},
+  {id:"cap05",name:"Gestionar UpStream (E&P - Generación)",
+   implica:"Capacidad institucional para gestionar eficientemente la exploración y producción (E&P) de hidrocarburos, asegurando el control, optimización y sostenibilidad de las operaciones desde el levantamiento sísmico hasta la generación en superficie.",
+   ti:["Monitoreo y gestión de operaciones","Integración de datos geológicos y de producción","Analítica avanzada para optimización","Seguridad en la infraestructura crítica"]},
+  {id:"cap06",name:"Gestionar el control de operaciones y fiscalización",
+   implica:"Capacidad institucional para supervisar eficientemente las operaciones hidrocarburíferas, asegurando que cumplan con las normativas, reporten de manera confiable, y contribuyan a la transparencia y accountability del sector.",
+   ti:["Sistemas de inspección y monitoreo","Informes y alertas automáticas","Analítica y trazabilidad de reportes","Gestión de auditorías y evidencias"]},
+  {id:"cap07",name:"Análisis de Información de producción y reservas de hidrocarburos",
+   implica:"Implica recopilar, analizar y presentar información precisa sobre producción actual, reservas, y tendencias de explotación de hidrocarburos, apoyando la toma de decisiones.",
+   ti:["Sistemas de análisis y gestión de datos","Modelos de pronóstico y análisis geológico","Visualización de reportes dinámicos","Integración y procesamiento de datos en tiempo real"]},
+  {id:"cap08",name:"Gestionar Regalías y Derechos Económicos",
+   implica:"Capacidad institucional para administrar y controlar eficientemente el recaudo, distribución y liquidación de regalías, derechos económicos, y otros ingresos derivados del sector de hidrocarburos.",
+   ti:["Sistemas de gestión de regalías y derechos","Monitoreo de pagos y cumplimiento","Análisis financiero y reporte de ingresos","Transparencia en la distribución de recursos"]},
+  {id:"cap09",name:"Implementar el Desarrollo Sostenible",
+   implica:"Capacidad institucional para garantizar que las actividades del sector hidrocarburífero se desarrollen cuidando el medio ambiente y generando beneficios sociales y económicos para las comunidades.",
+   ti:["Sistemas de monitoreo ambiental","Plataformas de gestión ambiental","Herramientas para gestión social y comunitaria","Reportes de huella de carbono"]},
+  {id:"cap10",name:"Gestionar el Talento Humano",
+   implica:"Capacidad institucional para gestionar, desarrollar y fortalecer las competencias del talento humano, asegurando idoneidad, cumplimiento normativo y continuidad institucional.",
+   ti:["Sistemas de información de talento humano (SIGEP, nómina, desempeño)","Plataformas de capacitación y gestión del conocimiento","Herramientas para evaluación y seguimiento del desempeño","Sistemas de gestión documental laboral"]},
+  {id:"cap11",name:"Participación Ciudadana en la Gestión Pública",
+   implica:"Capacidad institucional para fomentar la participación activa de la ciudadanía en la gestión del sector hidrocarburífero, promoviendo la transparencia, el acceso a la información y la rendición de cuentas.",
+   ti:["Plataformas de consulta y participación ciudadana","Sistemas de atención y comunicación con la comunidad","Herramientas de acceso y divulgación de información","Sistemas para la rendición de cuentas y veeduría ciudadana"]},
+  {id:"cap12",name:"Gestión Presupuestal y Eficiencia del Gasto Público",
+   implica:"Capacidad institucional para administrar y controlar los recursos públicos destinados al sector hidrocarburífero, asegurando una ejecución eficiente del presupuesto y promoviendo la transparencia.",
+   ti:["Sistemas de gestión presupuestal","Herramientas de control y seguimiento del gasto","Plataformas de transparencia y acceso público","Reportes e indicadores de eficiencia y gastos"]},
+  {id:"cap13",name:"Gobierno y Gestión de TI",
+   implica:"Implica establecer políticas, estándares y controles para gestionar y mantener una infraestructura tecnológica eficiente, segura y alineada con los objetivos institucionales.",
+   ti:["Gestión de la seguridad de la información","Optimización y mantenimiento de infraestructuras y sistemas","Cumplimiento de normativas y auditorías de TI","Gestión de riesgos y continuidad del negocio"]},
+  {id:"cap14",name:"Gestionar la defensa legal",
+   implica:"Capacidad institucional para gestionar, atender y resolver los asuntos jurídicos y litigios relacionados con el sector, garantizando la defensa legal del Estado y el cumplimiento normativo.",
+   ti:["Sistemas de gestión de casos","Plataformas de seguimiento documental","Herramientas de análisis y consulta de normatividad","Archivística y trazabilidad"]},
+  {id:"cap15",name:"Gestionar Contratos y Convenios",
+   implica:"Capacidad institucional para formalizar, gestionar y controlar contratos y convenios relacionados con el sector, garantizando las condiciones y obligaciones establecidas.",
+   ti:["Sistemas de gestión contractual","Seguimiento y cumplimiento de compromisos","Plataformas de gestión documental","Control y trazabilidad de contratos"]},
+  {id:"cap16",name:"Gestionar la Mejora Continua",
+   implica:"Promueve la evaluación permanente de procesos y resultados para optimizar el desempeño institucional.",
+   ti:["Automatización de procesos","Analítica de desempeño","Gestión de indicadores","Soporte a transformación digital"]},
+  {id:"cap17",name:"Gestionar Recursos Institucionales",
+   implica:"Implica coordinar eficientemente los recursos financieros, físicos y humanos de una entidad, asegurando su uso adecuado y sostenible para el cumplimiento de la misión institucional.",
+   ti:["Gestión financiera","Gestión de recursos humanos","Gestión de activos e inventario","Control de compras y proveedores","Optimización de procesos y recursos"]},
+  {id:"cap18",name:"Gestión Documental",
+   implica:"Implica asegurar el adecuado manejo, organización, almacenamiento, custodia y acceso de los documentos y archivos de la entidad, garantizando su integridad, disponibilidad y conservación.",
+   ti:["Sistemas de gestión documental","Digitalización y almacenamiento electrónico","Controles de acceso y seguridad","Trazabilidad y ciclo de vida de los documentos","Cumplimiento de normativas y estándares"]},
+  {id:"cap19",name:"Administrar Sistemas Integrados de Gestión",
+   implica:"Capacidad institucional para coordinar y mantener sistemas integrados de gestión (calidad, ambiental, salud y seguridad, etc.), asegurando la conformidad con las normativas y el rendimiento organizacional.",
+   ti:["Soluciones de gestión integrada de sistemas","Automatización de procesos y control","Herramientas de monitoreo y auditoría","Análisis de desempeño y reportes"]},
 ];
 const MOMENTOS=[
   {n:"1",icon:"⚡",title:"Punto de Quiebre",    q:"¿Qué situación crítica evidenció que la brecha ya no podía continuar?"},
@@ -559,6 +596,16 @@ function initB2(){
     <div class="cap-item" id="cap-${c.id}">
       <div class="cap-code">${String(i+1).padStart(2,'0')}</div>
       <div class="cap-name">${c.name}</div>
+      <details class="cap-ctx" style="margin-bottom:8px;">
+        <summary style="font-size:11px;font-weight:600;color:var(--teal);cursor:pointer;list-style:none;display:flex;align-items:center;gap:4px;">
+          <span>ℹ️ Ver contextualización</span>
+        </summary>
+        <div style="margin-top:6px;padding:8px 10px;background:rgba(10,124,140,.06);border-radius:8px;border-left:3px solid var(--teal);">
+          <p style="font-size:11px;color:var(--text);margin:0 0 6px 0;line-height:1.5;">${c.implica}</p>
+          <div style="font-size:10.5px;font-weight:700;color:var(--orange);margin-bottom:4px;">Desde TI impacta:</div>
+          <ul style="margin:0;padding-left:14px;">${c.ti.map(t=>`<li style="font-size:11px;color:var(--text);line-height:1.6;">${t}</li>`).join('')}</ul>
+        </div>
+      </details>
       <div class="lvl-btns">
         <button class="lvl-btn lg" onclick="setCap('${c.id}','green')">🟢 Consolidada</button>
         <button class="lvl-btn ly" onclick="setCap('${c.id}','yellow')">🟡 Funcional</button>
