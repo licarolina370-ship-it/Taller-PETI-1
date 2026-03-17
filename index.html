@@ -3,1045 +3,1204 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Taller PETI 2027 — Grupo Virtual</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>Taller PETI 2027 · Bloque 2</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{
-  --navy:#1A2E4A;--teal:#0D7C8E;--orange:#E07B39;--purple:#6D28D9;
-  --green:#16A34A;--yellow:#CA8A04;--red:#DC2626;--amber:#D97706;
-  --bg:#F0F4F8;--card:#FFFFFF;--border:#E2E8F0;--text:#1E293B;--muted:#64748B;
-  --green-bg:#F0FDF4;--green-bd:#86EFAC;
-  --yellow-bg:#FEFCE8;--yellow-bd:#FDE047;
-  --red-bg:#FFF1F2;--red-bd:#FCA5A5;
-  --amber-bg:#FFF7ED;--amber-bd:#FCD34D;
-  --purple-bg:#F5F3FF;--purple-bd:#C4B5FD;
+:root {
+  --navy:    #0F2A47;
+  --teal:    #0A7C8C;
+  --teal2:   #0D9BAD;
+  --orange:  #E07B39;
+  --green:   #16A34A;
+  --red:     #DC2626;
+  --green-bg:#DCFCE7;
+  --red-bg:  #FEE2E2;
+  --cream:   #F7F4EF;
+  --muted:   #64748B;
+  --border:  #E2E8F0;
+  --white:   #FFFFFF;
 }
-*{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
-nav{position:sticky;top:0;z-index:100;background:var(--navy);display:flex;align-items:center;padding:0 22px;box-shadow:0 2px 12px rgba(0,0,0,.28);}
-.nav-brand{font-size:13px;font-weight:700;color:#fff;padding:12px 18px 12px 0;border-right:1px solid rgba(255,255,255,.15);margin-right:8px;white-space:nowrap;line-height:1.4;}
-.nav-brand span{color:var(--orange);}
-.nav-sub{font-size:10px;color:rgba(255,255,255,.45);font-weight:400;display:block;}
-.nav-tabs{display:flex;}
-.tab-btn{background:none;border:none;cursor:pointer;color:rgba(255,255,255,.5);font-family:inherit;font-size:13px;font-weight:500;padding:16px 15px;position:relative;transition:color .2s;white-space:nowrap;}
-.tab-btn:hover{color:rgba(255,255,255,.85);}
-.tab-btn.active{color:#fff;}
-.tab-btn.active::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--orange);border-radius:3px 3px 0 0;}
-.tab-num{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,.15);font-size:11px;font-weight:700;margin-right:6px;}
-.tab-btn.active .tab-num{background:var(--orange);}
-.nav-right{margin-left:auto;}
-.plenaria-btn{background:var(--orange);color:#fff;border:none;border-radius:8px;padding:7px 15px;font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;transition:background .2s;white-space:nowrap;}
-.plenaria-btn:hover{background:#c96a28;}
-.save-pill{position:fixed;bottom:18px;left:18px;z-index:500;background:var(--navy);color:#fff;padding:6px 13px;border-radius:20px;font-size:11px;font-weight:600;display:flex;align-items:center;gap:6px;opacity:0;transition:opacity .4s;pointer-events:none;}
-.save-pill.show{opacity:1;}
-.save-dot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulse 1s infinite;}
-@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
-main{max-width:1200px;margin:0 auto;padding:26px 22px;}
-.page{display:none;}
-.page.active{display:block;animation:fadeIn .22s ease;}
-@keyframes fadeIn{from{opacity:0;transform:translateY(5px);}to{opacity:1;transform:none;}}
-.page-header{background:var(--card);border-radius:14px;padding:20px 26px;border-left:5px solid var(--teal);margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;box-shadow:0 1px 4px rgba(0,0,0,.07);}
-.page-header h1{font-size:19px;font-weight:700;color:var(--navy);}
-.page-header p{font-size:13px;color:var(--muted);margin-top:3px;}
-.badge{font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;background:var(--teal);color:#fff;white-space:nowrap;}
-.btn-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
-.progress-bar{height:4px;background:var(--border);border-radius:2px;margin-top:8px;}
-.progress-fill{height:100%;border-radius:2px;transition:width .4s ease;}
-.card{background:var(--card);border-radius:12px;padding:20px;box-shadow:0 1px 4px rgba(0,0,0,.07);border:1px solid var(--border);}
-.card-title{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:14px;}
-.reset-btn{background:none;border:1px solid var(--border);border-radius:8px;padding:7px 13px;cursor:pointer;font-family:inherit;font-size:12px;color:var(--muted);transition:all .2s;}
-.reset-btn:hover{border-color:var(--red);color:var(--red);}
-.export-btn{background:var(--navy);color:#fff;border:none;border-radius:8px;padding:9px 17px;cursor:pointer;font-family:inherit;font-size:13px;font-weight:600;transition:background .2s;display:flex;align-items:center;gap:6px;white-space:nowrap;}
-.export-btn:hover{background:var(--teal);}
-.export-block{background:var(--card);border:2px dashed var(--border);border-radius:12px;padding:15px 20px;margin-top:18px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;}
-.export-block strong{font-size:14px;color:var(--navy);}
-.export-block p{font-size:12px;color:var(--muted);margin-top:2px;}
 
-/* B1 */
-.dim-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px;}
-.dim-item{background:#fff;border:1.5px solid var(--border);border-radius:10px;padding:14px 15px;transition:all .25s;}
-.dim-name{font-size:13px;font-weight:600;color:var(--navy);margin-bottom:10px;}
-.sem-btns{display:flex;gap:6px;}
-.sem-btn{flex:1;border:none;border-radius:7px;padding:8px 4px;cursor:pointer;font-family:inherit;font-size:12px;font-weight:600;transition:all .18s;opacity:.5;}
-.sem-btn:hover{opacity:.85;transform:translateY(-1px);}
-.sem-btn.selected{opacity:1;transform:translateY(-1px);box-shadow:0 3px 10px rgba(0,0,0,.13);}
-.sem-btn.g{background:var(--green-bg);color:var(--green);border:1.5px solid var(--green-bd);}
-.sem-btn.y{background:var(--yellow-bg);color:var(--yellow);border:1.5px solid var(--yellow-bd);}
-.sem-btn.r{background:var(--red-bg);color:var(--red);border:1.5px solid var(--red-bd);}
-.sem-btn.g.selected{background:var(--green);color:#fff;border-color:var(--green);}
-.sem-btn.y.selected{background:var(--yellow);color:#fff;border-color:var(--yellow);}
-.sem-btn.r.selected{background:var(--red);color:#fff;border-color:var(--red);}
-.tapete{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;}
-.zone{border-radius:12px;padding:15px;min-height:140px;border:2px dashed;transition:all .3s;}
-.zone.zg{background:var(--green-bg);border-color:var(--green-bd);}
-.zone.zy{background:var(--yellow-bg);border-color:var(--yellow-bd);}
-.zone.zr{background:var(--red-bg);border-color:var(--red-bd);}
-.zone-hdr{font-size:13px;font-weight:700;margin-bottom:10px;text-align:center;}
-.zone.zg .zone-hdr{color:var(--green);}
-.zone.zy .zone-hdr{color:var(--yellow);}
-.zone.zr .zone-hdr{color:var(--red);}
-.chip{display:inline-block;font-size:12px;font-weight:600;padding:5px 10px;border-radius:6px;margin:3px;animation:chipIn .22s ease;}
-@keyframes chipIn{from{transform:scale(.8);opacity:0;}to{transform:scale(1);opacity:1;}}
-.zone.zg .chip{background:#dcfce7;color:var(--green);}
-.zone.zy .chip{background:#fef9c3;color:var(--yellow);}
-.zone.zr .chip{background:#fee2e2;color:var(--red);}
-.hint{font-size:11px;color:#ccc;text-align:center;margin-top:14px;font-style:italic;}
-.ev-row{display:none;align-items:flex-start;gap:8px;background:#fff;border:1px solid var(--border);border-radius:8px;padding:9px 12px;margin-bottom:7px;}
-.ev-row.show{display:flex;}
-.ev-label{font-size:12px;font-weight:600;min-width:130px;color:var(--muted);}
-.ev-input{flex:1;border:none;outline:none;font-family:inherit;font-size:13px;color:var(--text);background:transparent;resize:none;}
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* B2 */
-.cap-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
-.cap-item{background:#fff;border:1.5px solid var(--border);border-radius:10px;padding:14px;transition:all .25s;}
-.cap-code{font-size:11px;font-family:'DM Mono',monospace;color:var(--teal);margin-bottom:2px;}
-.cap-name{font-size:12px;font-weight:700;color:var(--navy);margin-bottom:10px;}
-.lvl-btns{display:flex;gap:5px;margin-bottom:10px;}
-.lvl-btn{flex:1;border:none;border-radius:6px;padding:6px 3px;cursor:pointer;font-family:inherit;font-size:11px;font-weight:600;transition:all .18s;opacity:.48;line-height:1.3;}
-.lvl-btn:hover{opacity:.82;}
-.lvl-btn.selected{opacity:1;box-shadow:0 2px 8px rgba(0,0,0,.13);transform:translateY(-1px);}
-.lvl-btn.lg{background:var(--green-bg);color:var(--green);border:1.5px solid var(--green-bd);}
-.lvl-btn.ly{background:var(--yellow-bg);color:var(--yellow);border:1.5px solid var(--yellow-bd);}
-.lvl-btn.la{background:var(--amber-bg);color:var(--amber);border:1.5px solid var(--amber-bd);}
-.lvl-btn.lr{background:var(--red-bg);color:var(--red);border:1.5px solid var(--red-bd);}
-.lvl-btn.lg.selected{background:var(--green);color:#fff;border-color:var(--green);}
-.lvl-btn.ly.selected{background:var(--yellow);color:#fff;border-color:var(--yellow);}
-.lvl-btn.la.selected{background:var(--amber);color:#fff;border-color:var(--amber);}
-.lvl-btn.lr.selected{background:var(--red);color:#fff;border-color:var(--red);}
-.obs-lbl{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px;}
-.obs-input{width:100%;border:1.5px solid var(--border);border-radius:7px;padding:7px 10px;font-family:inherit;font-size:12px;color:var(--text);background:#fafafa;resize:none;outline:none;transition:border-color .2s;}
-.obs-input:focus{border-color:var(--orange);background:#fff;}
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--cream);
+  min-height: 100vh;
+  color: var(--navy);
+}
 
-/* Resumen B2 agrupado */
-.bar-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
-.bar-label{font-size:12px;font-weight:600;min-width:160px;color:var(--navy);}
-.bar-track{flex:1;height:10px;background:var(--border);border-radius:5px;overflow:hidden;}
-.bar-fill{height:100%;border-radius:5px;transition:width .4s ease;}
-.bar-num{font-size:11px;font-weight:700;min-width:36px;text-align:right;}
-.nivel-group{border-radius:12px;overflow:hidden;margin-bottom:12px;border:1.5px solid;}
-.nivel-group.ng{border-color:var(--green-bd);}
-.nivel-group.ny{border-color:var(--yellow-bd);}
-.nivel-group.na{border-color:var(--amber-bd);}
-.nivel-group.nr{border-color:var(--red-bd);}
-.nivel-hdr{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;font-size:13px;font-weight:700;}
-.nivel-group.ng .nivel-hdr{background:var(--green);color:#fff;}
-.nivel-group.ny .nivel-hdr{background:var(--yellow);color:#fff;}
-.nivel-group.na .nivel-hdr{background:var(--amber);color:#fff;}
-.nivel-group.nr .nivel-hdr{background:var(--red);color:#fff;}
-.nivel-count{font-size:12px;background:rgba(255,255,255,.25);padding:2px 8px;border-radius:10px;}
-.nivel-cap-row{display:flex;align-items:flex-start;gap:12px;padding:10px 16px;border-bottom:1px solid rgba(0,0,0,.05);}
-.nivel-cap-row:last-child{border-bottom:none;}
-.nivel-cap-code{font-size:10px;font-family:'DM Mono',monospace;font-weight:700;min-width:44px;color:var(--muted);padding-top:2px;}
-.nivel-cap-name{font-size:12px;font-weight:700;color:var(--navy);margin-bottom:3px;}
-.nivel-cap-obs{font-size:12px;color:var(--text);font-style:italic;background:rgba(0,0,0,.03);border-radius:5px;padding:4px 8px;border-left:3px solid;}
-.nivel-group.ng .nivel-cap-obs{border-color:var(--green-bd);}
-.nivel-group.ny .nivel-cap-obs{border-color:var(--yellow-bd);}
-.nivel-group.na .nivel-cap-obs{border-color:var(--amber-bd);}
-.nivel-group.nr .nivel-cap-obs{border-color:var(--red-bd);}
-.no-obs{font-size:11px;color:#bbb;font-style:italic;}
-.empty-nivel{padding:11px 16px;font-size:12px;color:var(--muted);font-style:italic;background:var(--bg);}
+/* ── VIEWS ── */
+.view { display: none; }
+.view.active { display: block; }
 
-/* B3 */
-.fsel,.finp{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:8px 11px;font-family:inherit;font-size:13px;color:var(--text);background:#fafafa;outline:none;transition:border-color .2s,box-shadow .2s;appearance:none;}
-.fsel:focus,.finp:focus{border-color:var(--purple);background:#fff;box-shadow:0 0 0 3px rgba(109,40,217,.09);}
-.fg label{display:block;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px;}
-/* Brecha card — flujo 4 pasos */
-.brecha-card{background:#fff;border-radius:14px;overflow:hidden;border:1.5px solid var(--purple-bd);margin-bottom:16px;box-shadow:0 2px 10px rgba(109,40,217,.08);}
-.brecha-hdr{background:var(--purple);padding:11px 18px;display:flex;align-items:center;gap:10px;}
-.brecha-num{width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.25);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.brecha-hdr-title{font-size:13px;font-weight:700;color:#fff;flex:1;}
-.brecha-del{background:none;border:1px solid rgba(255,255,255,.3);border-radius:6px;padding:3px 10px;color:#fff;cursor:pointer;font-size:12px;font-family:inherit;}
-.b3-steps{display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:1.5px solid var(--purple-bd);}
-.b3-step{padding:16px 18px;border-right:1px solid var(--purple-bd);border-bottom:1px solid var(--purple-bd);}
-.b3-step:nth-child(even){border-right:none;}
-.b3-step:nth-child(3),.b3-step:nth-child(4){border-bottom:none;}
-.step-tag{display:inline-flex;align-items:center;gap:6px;background:var(--purple);color:#fff;font-size:10px;font-weight:700;padding:3px 9px;border-radius:12px;margin-bottom:8px;letter-spacing:.04em;}
-.step-q{font-size:11px;color:var(--muted);margin-bottom:8px;font-style:italic;line-height:1.5;}
-.obs-pills{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px;min-height:28px;padding:6px 8px;background:#fafafa;border:1.5px solid var(--border);border-radius:8px;}
-.obs-pill{background:var(--purple-bg);border:1px solid var(--purple-bd);color:var(--purple);font-size:11px;font-weight:600;padding:3px 8px;border-radius:10px;display:flex;align-items:center;gap:4px;animation:chipIn .18s ease;}
-.obs-pill button{background:none;border:none;cursor:pointer;color:var(--purple);font-size:12px;padding:0;line-height:1;}
-.obs-add-row{display:flex;gap:6px;margin-top:4px;}
-.obs-add-inp{flex:1;border:1.5px solid var(--border);border-radius:7px;padding:6px 10px;font-family:inherit;font-size:12px;outline:none;transition:border-color .2s;}
-.obs-add-inp:focus{border-color:var(--purple);}
-.obs-add-btn{background:var(--purple);color:#fff;border:none;border-radius:7px;padding:6px 12px;font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;}
-.cap-inst-list{display:flex;flex-direction:column;gap:5px;margin-bottom:8px;}
-.cap-inst-row{display:flex;gap:6px;align-items:center;}
-.cap-inst-inp{flex:1;border:1.5px solid var(--border);border-radius:7px;padding:6px 10px;font-family:inherit;font-size:12px;outline:none;transition:border-color .2s;}
-.cap-inst-inp:focus{border-color:var(--purple);}
-.cap-inst-del{background:none;border:none;cursor:pointer;color:var(--muted);font-size:16px;padding:0 2px;}
-.cap-add-btn{background:none;border:1.5px dashed var(--purple-bd);border-radius:7px;padding:5px 12px;font-family:inherit;font-size:11px;font-weight:600;color:var(--purple);cursor:pointer;transition:all .18s;}
-.cap-add-btn:hover{background:var(--purple-bg);}
-/* Preview brecha */
-.b-preview-full{grid-column:1/-1;padding:16px 18px;background:var(--purple-bg);border-top:1.5px solid var(--purple-bd);}
-.b-preview-lbl{font-size:10px;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;}
-.b-preview-txt{font-size:13.5px;color:var(--navy);line-height:1.7;font-style:italic;}
-.b-preview-txt .fill{color:var(--purple);font-weight:700;font-style:normal;background:rgba(109,40,217,.1);padding:1px 5px;border-radius:4px;}
-.b-preview-txt .blank{color:#bbb;}
-.add-brecha-btn{width:100%;padding:12px;border:2px dashed var(--purple-bd);border-radius:12px;background:none;cursor:pointer;font-family:inherit;font-size:13px;font-weight:600;color:var(--purple);transition:all .2s;display:flex;align-items:center;justify-content:center;gap:7px;}
-.add-brecha-btn:hover{background:var(--purple-bg);border-style:solid;}
-/* Resumen obstáculos del B2 */
-.obs-resumen{background:#fff;border:1.5px solid var(--purple-bd);border-radius:12px;padding:16px 18px;margin-bottom:18px;}
-.obs-resumen-title{font-size:11px;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;}
-.obs-resumen-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:8px;}
-.obs-dim-chip{background:var(--purple-bg);border:1px solid var(--purple-bd);border-radius:8px;padding:7px 11px;}
-.obs-dim-name{font-size:10px;font-weight:700;color:var(--purple);margin-bottom:4px;}
-.obs-dim-val{font-size:12px;color:var(--navy);font-style:italic;}
+/* ── LANDING (participant entry) ── */
+#view-landing {
+  min-height: 100vh;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: var(--navy);
+  position: relative;
+  overflow: hidden;
+}
+#view-landing.active { display: flex; }
 
-/* B4 */
-.relato-brecha-box{background:var(--card);border-radius:10px;padding:13px 17px;border:1px solid var(--border);margin-bottom:16px;display:flex;gap:18px;align-items:center;flex-wrap:wrap;}
-.relato-brecha-box label{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:5px;}
-.momento-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
-.momento-card{background:#fff;border-radius:11px;overflow:hidden;border:1.5px solid var(--green-bd);}
-.m-hdr{background:var(--green);padding:9px 13px;display:flex;align-items:center;gap:8px;}
-.m-icon{font-size:17px;}
-.m-title{font-size:12px;font-weight:700;color:#fff;}
-.m-body{padding:13px;}
-.m-q{font-size:11.5px;color:var(--muted);margin-bottom:9px;font-style:italic;line-height:1.5;}
-.m-input{width:100%;border:1.5px solid var(--border);border-radius:7px;padding:7px 10px;font-family:inherit;font-size:13px;font-weight:600;color:var(--navy);background:var(--green-bg);outline:none;transition:all .2s;}
-.m-input:focus{border-color:var(--green);background:#fff;}
-.m-chip{font-size:11px;font-weight:700;margin-top:8px;padding:5px 9px;border-radius:6px;text-align:center;}
-.m-chip.asig{background:var(--green);color:#fff;}
-.m-chip.vacio{background:var(--green-bg);color:var(--muted);border:1px dashed var(--green-bd);}
-.relato-area{background:#fff;border:1.5px solid var(--green-bd);border-radius:11px;padding:15px;margin-top:16px;}
-.relato-area h3{font-size:13px;font-weight:700;color:var(--green);margin-bottom:10px;}
-.relato-textarea{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:10px 13px;font-family:inherit;font-size:13px;line-height:1.7;color:var(--text);background:var(--green-bg);outline:none;resize:vertical;min-height:90px;transition:border-color .2s;}
-.relato-textarea:focus{border-color:var(--green);background:#fff;}
+#view-landing::before {
+  content: '';
+  position: absolute;
+  width: 600px; height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(10,124,140,0.25) 0%, transparent 70%);
+  top: -200px; right: -200px;
+  pointer-events: none;
+}
+#view-landing::after {
+  content: '';
+  position: absolute;
+  width: 400px; height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(224,123,57,0.15) 0%, transparent 70%);
+  bottom: -100px; left: -100px;
+  pointer-events: none;
+}
 
-/* MODAL PLENARIA */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:800;display:none;align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto;}
-.modal-overlay.open{display:flex;}
-.modal-box{background:#fff;border-radius:18px;width:100%;max-width:980px;box-shadow:0 24px 60px rgba(0,0,0,.3);animation:slideUp .3s ease;margin:auto;}
-@keyframes slideUp{from{transform:translateY(28px);opacity:0;}to{transform:none;opacity:1;}}
-.modal-nav{background:var(--navy);border-radius:18px 18px 0 0;padding:14px 22px;display:flex;align-items:center;justify-content:space-between;}
-.modal-nav h2{font-size:15px;font-weight:700;color:#fff;}
-.modal-close{background:none;border:1px solid rgba(255,255,255,.3);border-radius:8px;padding:6px 14px;color:#fff;cursor:pointer;font-family:inherit;font-size:12px;font-weight:600;transition:background .2s;}
-.modal-close:hover{background:rgba(255,255,255,.15);}
-.modal-body{padding:24px;}
-.modal-sec{margin-bottom:26px;}
-.modal-sec-title{font-size:12px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.07em;margin-bottom:13px;padding-bottom:6px;border-bottom:2px solid var(--border);}
-.pl-tapete{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;}
-.pl-zone{border-radius:12px;padding:14px;border:2px solid;}
-.pl-zone.plg{background:var(--green-bg);border-color:var(--green-bd);}
-.pl-zone.ply{background:var(--yellow-bg);border-color:var(--yellow-bd);}
-.pl-zone.plr{background:var(--red-bg);border-color:var(--red-bd);}
-.pl-zone-hdr{font-size:13px;font-weight:700;margin-bottom:10px;text-align:center;padding-bottom:7px;border-bottom:1.5px solid;}
-.pl-zone.plg .pl-zone-hdr{color:var(--green);border-color:var(--green-bd);}
-.pl-zone.ply .pl-zone-hdr{color:var(--yellow);border-color:var(--yellow-bd);}
-.pl-zone.plr .pl-zone-hdr{color:var(--red);border-color:var(--red-bd);}
-.pl-dim-item{background:#fff;border-radius:8px;padding:8px 10px;margin-bottom:5px;border:1px solid rgba(0,0,0,.06);}
-.pl-dim-name{font-size:12px;font-weight:700;color:var(--navy);margin-bottom:2px;}
-.pl-dim-ev{font-size:11px;color:var(--muted);font-style:italic;}
-/* Galería plenaria — agrupada por nivel */
-.pl-nivel-group{border-radius:11px;overflow:hidden;margin-bottom:11px;border:1.5px solid;}
-.pl-nivel-group.ng{border-color:var(--green-bd);}
-.pl-nivel-group.ny{border-color:var(--yellow-bd);}
-.pl-nivel-group.na{border-color:var(--amber-bd);}
-.pl-nivel-group.nr{border-color:var(--red-bd);}
-.pl-nivel-hdr{display:flex;align-items:center;justify-content:space-between;padding:9px 15px;font-size:13px;font-weight:700;}
-.pl-nivel-group.ng .pl-nivel-hdr{background:var(--green);color:#fff;}
-.pl-nivel-group.ny .pl-nivel-hdr{background:var(--yellow);color:#fff;}
-.pl-nivel-group.na .pl-nivel-hdr{background:var(--amber);color:#fff;}
-.pl-nivel-group.nr .pl-nivel-hdr{background:var(--red);color:#fff;}
-.pl-nivel-cnt{font-size:11px;background:rgba(255,255,255,.25);padding:2px 8px;border-radius:10px;}
-.pl-cap-row{display:flex;align-items:flex-start;gap:10px;padding:9px 15px;border-bottom:1px solid rgba(0,0,0,.05);}
-.pl-cap-row:last-child{border-bottom:none;}
-.pl-cap-code{font-size:10px;font-family:'DM Mono',monospace;font-weight:700;min-width:40px;color:var(--muted);padding-top:2px;}
-.pl-cap-name{font-size:12px;font-weight:700;color:var(--navy);margin-bottom:3px;}
-.pl-cap-obs{font-size:11.5px;color:var(--text);font-style:italic;padding:3px 8px;border-radius:4px;border-left:3px solid;background:rgba(0,0,0,.03);}
-.pl-nivel-group.ng .pl-cap-obs{border-color:var(--green-bd);}
-.pl-nivel-group.ny .pl-cap-obs{border-color:var(--yellow-bd);}
-.pl-nivel-group.na .pl-cap-obs{border-color:var(--amber-bd);}
-.pl-nivel-group.nr .pl-cap-obs{border-color:var(--red-bd);}
-.pl-no-obs{font-size:11px;color:#bbb;font-style:italic;}
-.pl-brecha{background:var(--purple-bg);border:1.5px solid var(--purple-bd);border-radius:10px;padding:12px 14px;margin-bottom:9px;}
-.pl-brecha-num{font-size:10px;font-weight:700;color:var(--purple);text-transform:uppercase;margin-bottom:5px;}
-.pl-brecha-txt{font-size:13px;color:var(--navy);font-style:italic;line-height:1.6;}
-.pl-brecha-txt .fill{font-weight:700;font-style:normal;color:var(--purple);}
-.toast{position:fixed;bottom:22px;right:22px;z-index:999;background:var(--navy);color:#fff;padding:11px 18px;border-radius:10px;font-size:13px;font-weight:600;box-shadow:0 4px 20px rgba(0,0,0,.22);transform:translateY(80px);opacity:0;transition:all .3s;pointer-events:none;}
-.toast.show{transform:translateY(0);opacity:1;}
-@media(max-width:760px){
-  .tapete,.pl-tapete,.momento-grid,.bf-grid{grid-template-columns:1fr;}
-  .dim-grid,.cap-grid{grid-template-columns:1fr;}
-  .export-block{flex-direction:column;}
+.landing-card {
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 24px;
+  padding: 48px 40px;
+  max-width: 440px;
+  width: 100%;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.landing-badge {
+  display: inline-block;
+  background: var(--orange);
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border-radius: 20px;
+  margin-bottom: 24px;
+}
+
+.landing-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 32px;
+  color: white;
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+
+.landing-sub {
+  font-size: 14px;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 36px;
+  line-height: 1.6;
+}
+
+.landing-input {
+  width: 100%;
+  padding: 14px 18px;
+  border-radius: 12px;
+  border: 1.5px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.08);
+  color: white;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  margin-bottom: 14px;
+  transition: border-color .2s;
+  outline: none;
+}
+.landing-input::placeholder { color: rgba(255,255,255,0.35); }
+.landing-input:focus { border-color: var(--teal2); }
+
+.btn-primary {
+  width: 100%;
+  padding: 15px;
+  border-radius: 12px;
+  border: none;
+  background: var(--teal);
+  color: white;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .2s;
+  letter-spacing: 0.3px;
+}
+.btn-primary:hover { background: var(--teal2); transform: translateY(-1px); }
+.btn-primary:active { transform: translateY(0); }
+
+.landing-note {
+  margin-top: 20px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.3);
+}
+
+/* ── VOTING VIEW ── */
+#view-voting {
+  min-height: 100vh;
+  padding-bottom: 40px;
+}
+
+.vote-header {
+  background: var(--navy);
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.vote-header-left { display: flex; flex-direction: column; gap: 2px; }
+.vote-header-title { font-family: 'DM Serif Display', serif; font-size: 18px; color: white; }
+.vote-header-sub { font-size: 12px; color: rgba(255,255,255,0.5); }
+
+.progress-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.progress-bar-bg {
+  width: 120px;
+  height: 6px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.progress-bar-fill {
+  height: 100%;
+  background: var(--teal2);
+  border-radius: 3px;
+  transition: width .3s ease;
+}
+.progress-label { font-size: 12px; color: rgba(255,255,255,0.6); }
+
+.vote-body { padding: 24px 20px; max-width: 560px; margin: 0 auto; }
+
+.cap-counter {
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.cap-card {
+  background: white;
+  border-radius: 20px;
+  padding: 28px 24px;
+  margin-bottom: 20px;
+  border: 1.5px solid var(--border);
+  box-shadow: 0 2px 12px rgba(15,42,71,0.06);
+  animation: slideUp .3s ease;
+}
+@keyframes slideUp {
+  from { opacity:0; transform: translateY(12px); }
+  to   { opacity:1; transform: translateY(0); }
+}
+
+.cap-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px; height: 28px;
+  border-radius: 8px;
+  background: var(--navy);
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.cap-name {
+  font-family: 'DM Serif Display', serif;
+  font-size: 20px;
+  line-height: 1.3;
+  margin-bottom: 10px;
+  color: var(--navy);
+}
+
+.cap-desc {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.6;
+  margin-bottom: 20px;
+  padding: 12px 14px;
+  background: var(--cream);
+  border-radius: 10px;
+  border-left: 3px solid var(--teal);
+}
+
+.cap-question {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--navy);
+  margin-bottom: 14px;
+}
+
+.vote-btns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.vote-btn {
+  padding: 18px 16px;
+  border-radius: 14px;
+  border: 2px solid var(--border);
+  background: white;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  transition: all .18s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: var(--navy);
+}
+.vote-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
+
+.vote-btn.green { border-color: #BBF7D0; background: #F0FDF4; color: var(--green); }
+.vote-btn.green:hover { background: #DCFCE7; border-color: var(--green); }
+.vote-btn.green.selected { background: var(--green); color: white; border-color: var(--green); box-shadow: 0 4px 16px rgba(22,163,74,0.35); }
+
+.vote-btn.red { border-color: #FECACA; background: #FFF5F5; color: var(--red); }
+.vote-btn.red:hover { background: #FEE2E2; border-color: var(--red); }
+.vote-btn.red.selected { background: var(--red); color: white; border-color: var(--red); box-shadow: 0 4px 16px rgba(220,38,38,0.35); }
+
+.vote-btn-icon { font-size: 28px; }
+.vote-btn-label { font-size: 13px; font-weight: 700; letter-spacing: 0.3px; }
+.vote-btn-desc { font-size: 11px; font-weight: 400; opacity: 0.8; text-align: center; }
+
+.nav-btns {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.btn-nav {
+  flex: 1;
+  padding: 13px;
+  border-radius: 12px;
+  border: 1.5px solid var(--border);
+  background: white;
+  color: var(--navy);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .18s;
+}
+.btn-nav:hover { background: var(--cream); }
+.btn-nav.next {
+  background: var(--navy);
+  color: white;
+  border-color: var(--navy);
+}
+.btn-nav.next:hover { background: #1a3d63; }
+.btn-nav:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+.skip-note {
+  text-align: center;
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 12px;
+}
+
+/* ── DONE VIEW ── */
+#view-done {
+  min-height: 100vh;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: var(--navy);
+}
+#view-done.active { display: flex; }
+
+.done-card {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 24px;
+  padding: 48px 40px;
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+}
+.done-icon { font-size: 56px; margin-bottom: 20px; }
+.done-title { font-family: 'DM Serif Display', serif; font-size: 28px; color: white; margin-bottom: 12px; }
+.done-sub { font-size: 14px; color: rgba(255,255,255,0.55); line-height: 1.7; }
+
+/* ── ADMIN / DASHBOARD ── */
+#view-admin {
+  min-height: 100vh;
+  background: var(--cream);
+}
+
+.admin-header {
+  background: var(--navy);
+  padding: 20px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.admin-title { font-family: 'DM Serif Display', serif; font-size: 22px; color: white; }
+.admin-sub { font-size: 13px; color: rgba(255,255,255,0.5); margin-top: 2px; }
+
+.admin-controls { display: flex; gap: 10px; flex-wrap: wrap; }
+
+.btn-admin {
+  padding: 9px 18px;
+  border-radius: 10px;
+  border: 1.5px solid rgba(255,255,255,0.2);
+  background: transparent;
+  color: white;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .18s;
+}
+.btn-admin:hover { background: rgba(255,255,255,0.1); }
+.btn-admin.danger { border-color: #F87171; color: #F87171; }
+.btn-admin.danger:hover { background: rgba(248,113,113,0.1); }
+.btn-admin.accent { background: var(--teal); border-color: var(--teal); }
+.btn-admin.accent:hover { background: var(--teal2); }
+
+.admin-body { padding: 28px 32px; max-width: 1100px; margin: 0 auto; }
+
+.admin-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.stat-card {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  border: 1.5px solid var(--border);
+  text-align: center;
+}
+.stat-number { font-family: 'DM Serif Display', serif; font-size: 36px; color: var(--navy); }
+.stat-label { font-size: 12px; color: var(--muted); font-weight: 500; margin-top: 4px; }
+
+.admin-section-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 20px;
+  color: var(--navy);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.caps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.cap-result-card {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  border: 1.5px solid var(--border);
+  transition: box-shadow .2s;
+}
+.cap-result-card:hover { box-shadow: 0 4px 20px rgba(15,42,71,0.08); }
+
+.cap-result-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.cap-result-num {
+  width: 24px; height: 24px;
+  border-radius: 6px;
+  background: var(--navy);
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.cap-result-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--navy);
+  line-height: 1.4;
+}
+
+.vote-bar {
+  display: flex;
+  border-radius: 8px;
+  overflow: hidden;
+  height: 32px;
+  margin-bottom: 8px;
+}
+.vote-bar-green {
+  background: var(--green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+  transition: width .5s ease;
+  min-width: 0;
+  overflow: hidden;
+}
+.vote-bar-red {
+  background: var(--red);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+  transition: width .5s ease;
+  min-width: 0;
+  overflow: hidden;
+}
+.vote-bar-empty {
+  background: var(--border);
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.vote-counts {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--muted);
+}
+.vote-counts .green-count { color: var(--green); font-weight: 600; }
+.vote-counts .red-count { color: var(--red); font-weight: 600; }
+
+.majority-badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 6px;
+  margin-top: 8px;
+}
+.majority-badge.green { background: var(--green-bg); color: var(--green); }
+.majority-badge.red { background: var(--red-bg); color: var(--red); }
+.majority-badge.tie { background: #FEF3C7; color: #D97706; }
+.majority-badge.pending { background: var(--border); color: var(--muted); }
+
+/* Priority list — capacidades rojas */
+.priority-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
+
+.priority-item {
+  background: white;
+  border-radius: 14px;
+  padding: 16px 20px;
+  border: 1.5px solid #FECACA;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.priority-rank {
+  font-family: 'DM Serif Display', serif;
+  font-size: 28px;
+  color: var(--red);
+  min-width: 36px;
+  text-align: center;
+}
+.priority-info { flex: 1; }
+.priority-name { font-size: 14px; font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+.priority-stat { font-size: 12px; color: var(--muted); }
+.priority-pct {
+  font-family: 'DM Serif Display', serif;
+  font-size: 24px;
+  color: var(--red);
+  text-align: right;
+}
+
+/* Live indicator */
+.live-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #4ADE80;
+  animation: pulse 1.5s infinite;
+  display: inline-block;
+  margin-right: 6px;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+/* Admin password */
+#view-admin-login {
+  min-height: 100vh;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: var(--navy);
+  padding: 24px;
+}
+#view-admin-login.active { display: flex; }
+
+.admin-login-card {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 20px;
+  padding: 40px;
+  max-width: 360px;
+  width: 100%;
+  text-align: center;
+}
+.admin-login-title { font-family: 'DM Serif Display', serif; font-size: 24px; color: white; margin-bottom: 8px; }
+.admin-login-sub { font-size: 13px; color: rgba(255,255,255,0.4); margin-bottom: 28px; }
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background: var(--navy);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  z-index: 9999;
+  transition: transform .3s ease;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  white-space: nowrap;
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+
+/* Tabs admin */
+.admin-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 24px;
+  background: white;
+  padding: 4px;
+  border-radius: 12px;
+  border: 1.5px solid var(--border);
+  width: fit-content;
+}
+.admin-tab {
+  padding: 8px 20px;
+  border-radius: 9px;
+  border: none;
+  background: transparent;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--muted);
+  transition: all .18s;
+}
+.admin-tab.active { background: var(--navy); color: white; }
+
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* Responsive */
+@media (max-width: 480px) {
+  .vote-body { padding: 16px 14px; }
+  .admin-body { padding: 20px 16px; }
+  .caps-grid { grid-template-columns: 1fr; }
+  .admin-header { padding: 16px; }
 }
 </style>
 </head>
 <body>
 
-<nav>
-  <div class="nav-brand">PETI <span>2027</span><span class="nav-sub">Grupo Virtual · Facilitadora</span></div>
-  <div class="nav-tabs">
-    <button class="tab-btn active" onclick="showTab(0)"><span class="tab-num">1</span>Diagnóstico</button>
-    <button class="tab-btn" onclick="showTab(1)"><span class="tab-num">2</span>Capacidades</button>
-  </div>
-  <div class="nav-right">
-    <button class="plenaria-btn" onclick="abrirPlenaria()">📊 Vista Plenaria</button>
-  </div>
-</nav>
-
-<main>
-
-<!-- B1 -->
-<div class="page active" id="page-0">
-  <div class="page-header" style="border-left-color:var(--teal)">
-    <div>
-      <h1>Bloque 1 · Diagnóstico del PETI</h1>
-      <p>El grupo discute y consensúa un color por dimensión. Registre el resultado aquí.</p>
-      <div class="progress-bar"><div class="progress-fill" id="prog1" style="width:0%;background:var(--teal)"></div></div>
+<!-- ══════════════════════════════════════════════
+     VIEW 1: LANDING — Participant enters name
+══════════════════════════════════════════════ -->
+<div id="view-landing" class="view active">
+  <div class="landing-card">
+    <div class="landing-badge">PETI 2023–2027 · Bloque 2</div>
+    <h1 class="landing-title">Galería de Capacidades</h1>
+    <p class="landing-sub">Evaluación individual del soporte tecnológico a las capacidades institucionales de la ANH</p>
+    <input class="landing-input" id="input-name" type="text" placeholder="Su nombre completo" maxlength="60" autocomplete="off">
+    <button class="btn-primary" onclick="startVoting()">Comenzar evaluación →</button>
+    <p class="landing-note">Sus respuestas son anónimas en el consolidado</p>
+    <div style="margin-top:28px; padding-top:20px; border-top:1px solid rgba(255,255,255,0.1);">
+      <button onclick="goAdminLogin()" style="background:none;border:none;color:rgba(255,255,255,0.25);font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif;">
+        Acceso facilitador →
+      </button>
     </div>
-    <div class="btn-row">
-      <button class="reset-btn" onclick="resetB1()">↺ Reiniciar</button>
-      <span class="badge" style="background:var(--teal)">6 dimensiones</span>
-    </div>
-  </div>
-  <div class="dim-grid" id="dim-grid"></div>
-  <div class="card">
-    <div class="card-title">Tapete del grupo virtual</div>
-    <div class="tapete">
-      <div class="zone zg"><div class="zone-hdr">🟢 Desempeño Adecuado</div><div id="zone-g"><div class="hint">Ninguna aún</div></div></div>
-      <div class="zone zy"><div class="zone-hdr">🟡 Parcial / En Riesgo</div><div id="zone-y"><div class="hint">Ninguna aún</div></div></div>
-      <div class="zone zr"><div class="zone-hdr">🔴 Crítico</div><div id="zone-r"><div class="hint">Ninguna aún</div></div></div>
-    </div>
-  </div>
-  <div class="card" style="margin-top:15px">
-    <div class="card-title">Evidencias (dimensiones en amarillo o rojo)</div>
-    <div id="ev-area"></div>
-    <div id="ev-hint" style="font-size:13px;color:var(--muted);font-style:italic">Aparecerán aquí al marcar una dimensión en amarillo o rojo.</div>
-  </div>
-  <div class="export-block">
-    <div><strong>Exportar Bloque 1</strong><p>Tapete y evidencias del grupo virtual en .txt</p></div>
-    <button class="export-btn" onclick="exportar(1)">⬇ Exportar Bloque 1</button>
   </div>
 </div>
 
-<!-- B2 -->
-<div class="page" id="page-1">
-  <div class="page-header" style="border-left-color:var(--orange)">
-    <div>
-      <h1>Bloque 2 · Galería de Capacidades</h1>
-      <p>Registre el nivel consensuado y el obstáculo principal de cada capacidad.</p>
-      <div class="progress-bar"><div class="progress-fill" id="prog2" style="width:0%;background:var(--orange)"></div></div>
+<!-- ══════════════════════════════════════════════
+     VIEW 2: ADMIN LOGIN
+══════════════════════════════════════════════ -->
+<div id="view-admin-login" class="view">
+  <div class="admin-login-card">
+    <div style="font-size:36px;margin-bottom:16px;">🔐</div>
+    <h2 class="admin-login-title">Panel de Facilitador</h2>
+    <p class="admin-login-sub">Ingrese la clave para ver los resultados en tiempo real</p>
+    <input class="landing-input" id="input-pwd" type="password" placeholder="Clave de acceso" onkeydown="if(event.key==='Enter')checkAdmin()">
+    <button class="btn-primary" onclick="checkAdmin()">Ingresar</button>
+    <div style="margin-top:16px;">
+      <button onclick="showView('view-landing')" style="background:none;border:none;color:rgba(255,255,255,0.3);font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;">← Volver</button>
     </div>
-    <div class="btn-row">
-      <button class="reset-btn" onclick="resetB2()">↺ Reiniciar</button>
-      <span class="badge" style="background:var(--orange)">19 capacidades</span>
-    </div>
-  </div>
-  <div class="cap-grid" id="cap-grid"></div>
-  <div class="card" style="margin-top:15px">
-    <div class="card-title">Resumen agrupado por nivel · con obstáculos</div>
-    <div id="resumen-bars" style="margin-bottom:16px"></div>
-    <div id="resumen-grupos"></div>
-  </div>
-  <div class="export-block">
-    <div><strong>Exportar Bloque 2</strong><p>Capacidades agrupadas por nivel con obstáculos</p></div>
-    <button class="export-btn" onclick="exportar(2)">⬇ Exportar Bloque 2</button>
   </div>
 </div>
 
-<!-- B3 -->
-<div class="page" id="page-2">
-  <div class="page-header" style="border-left-color:var(--purple)">
-    <div>
-      <h1>Bloque 3 · Formulación de Brechas</h1>
-      <p>A partir de las capacidades débiles y obstáculos del Bloque 2, formule brechas estratégicas en 4 pasos.</p>
+<!-- ══════════════════════════════════════════════
+     VIEW 3: VOTING — One card at a time
+══════════════════════════════════════════════ -->
+<div id="view-voting" class="view">
+  <div class="vote-header">
+    <div class="vote-header-left">
+      <div class="vote-header-title">Bloque 2 · Capacidades</div>
+      <div class="vote-header-sub" id="voter-name-display"></div>
     </div>
-    <span class="badge" style="background:var(--purple)">4 pasos</span>
-  </div>
-
-  <!-- Resumen obstáculos del B2 -->
-  <div class="obs-resumen">
-    <div class="obs-resumen-title">Obstáculos registrados en Bloque 2 — use estos como insumo</div>
-    <div class="obs-resumen-grid" id="obs-resumen-grid">
-      <div style="font-size:12px;color:var(--muted);font-style:italic">Cuando registre obstáculos en el Bloque 2 aparecerán aquí automáticamente.</div>
+    <div class="progress-wrap">
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" id="vote-progress-bar" style="width:0%"></div>
+      </div>
+      <span class="progress-label" id="vote-progress-label">0 / 19</span>
     </div>
   </div>
-
-  <div id="brechas-cont"></div>
-  <button class="add-brecha-btn" onclick="addBrecha()">＋ Agregar brecha</button>
-  <div class="export-block" style="margin-top:16px">
-    <div><strong>Exportar Bloque 3</strong><p>Brechas formuladas listas para consolidar en plenaria</p></div>
-    <button class="export-btn" onclick="exportar(3)">⬇ Exportar Bloque 3</button>
+  <div class="vote-body">
+    <div id="vote-card-container"></div>
   </div>
 </div>
 
-<!-- B4 -->
-<div class="page" id="page-3">
-  <div class="page-header" style="border-left-color:var(--green)">
-    <div>
-      <h1>Bloque 4 · Relato Estratégico</h1>
-      <p>Asigne los 6 momentos y construya el relato en vivo.</p>
-    </div>
-    <span class="badge" style="background:var(--green)">6 momentos</span>
-  </div>
-  <div class="relato-brecha-box">
-    <div>
-      <label>Brecha que trabaja este relato</label>
-      <select class="fsel" id="brecha-sel" onchange="actualizarBrecha()" style="min-width:200px">
-        <option value="">— seleccionar —</option>
-      </select>
-    </div>
-    <div style="flex:1">
-      <label>Brecha seleccionada</label>
-      <div id="brecha-txt" style="font-size:13px;color:var(--muted);font-style:italic">Seleccione una brecha del Bloque 3</div>
-    </div>
-  </div>
-  <div class="momento-grid" id="momento-grid"></div>
-  <div class="relato-area">
-    <h3>📖 Relato construido en vivo</h3>
-    <textarea class="relato-textarea" id="relato-txt"
-      placeholder="A medida que cada participante narra su momento, escriba aquí el relato del grupo..."
-      oninput="debouncedSave()"></textarea>
-  </div>
-  <div class="export-block">
-    <div><strong>Exportar resumen completo</strong><p>Todos los bloques del grupo virtual en un archivo</p></div>
-    <button class="export-btn" onclick="exportar(4)">⬇ Exportar resumen completo</button>
+<!-- ══════════════════════════════════════════════
+     VIEW 4: DONE
+══════════════════════════════════════════════ -->
+<div id="view-done" class="view">
+  <div class="done-card">
+    <div class="done-icon">✅</div>
+    <h2 class="done-title">¡Evaluación completada!</h2>
+    <p class="done-sub">Sus respuestas han sido registradas.<br>Gracias por participar.<br><br>La facilitadora compartirá los resultados consolidados con el grupo.</p>
   </div>
 </div>
 
-</main>
-
-<!-- MODAL PLENARIA -->
-<div class="modal-overlay" id="modal-plenaria">
-  <div class="modal-box">
-    <div class="modal-nav">
-      <h2>📊 Vista Plenaria — Resultado Grupo Virtual</h2>
-      <button class="modal-close" onclick="cerrarPlenaria()">✕ Cerrar</button>
+<!-- ══════════════════════════════════════════════
+     VIEW 5: ADMIN DASHBOARD
+══════════════════════════════════════════════ -->
+<div id="view-admin" class="view">
+  <div class="admin-header">
+    <div>
+      <div class="admin-title">Panel de Resultados · Bloque 2</div>
+      <div class="admin-sub"><span class="live-dot"></span>Actualización automática cada 10 segundos</div>
     </div>
-    <div class="modal-body" id="modal-body"></div>
+    <div class="admin-controls">
+      <button class="btn-admin accent" onclick="refreshAdmin()">↺ Actualizar ahora</button>
+      <button class="btn-admin" onclick="exportResults()">↓ Exportar CSV</button>
+      <button class="btn-admin danger" onclick="confirmReset()">✕ Reiniciar todo</button>
+      <button class="btn-admin" onclick="exitAdmin()">← Salir</button>
+    </div>
+  </div>
+
+  <div class="admin-body">
+
+    <!-- Stats -->
+    <div class="admin-stats">
+      <div class="stat-card">
+        <div class="stat-number" id="stat-voters">0</div>
+        <div class="stat-label">Participantes</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="stat-votes">0</div>
+        <div class="stat-label">Votos totales</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" style="color:var(--red)" id="stat-reds">0</div>
+        <div class="stat-label">Capacidades con mayoría roja</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" style="color:var(--green)" id="stat-greens">0</div>
+        <div class="stat-label">Capacidades con mayoría verde</div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="admin-tabs">
+      <button class="admin-tab active" onclick="switchTab('tab-priority')">🔴 Prioritarias</button>
+      <button class="admin-tab" onclick="switchTab('tab-all')">📊 Todas</button>
+      <button class="admin-tab" onclick="switchTab('tab-voters')">👥 Participantes</button>
+    </div>
+
+    <!-- Tab: Priority (red majority) -->
+    <div id="tab-priority" class="tab-content active">
+      <div class="admin-section-title">
+        Capacidades con mayoría roja
+        <span style="font-size:13px;font-weight:400;color:var(--muted);font-family:'DM Sans',sans-serif;">Las que requieren análisis de obstáculos</span>
+      </div>
+      <div class="priority-list" id="priority-list">
+        <div style="color:var(--muted);font-size:14px;font-style:italic;padding:20px 0;">Aún no hay suficientes votos para mostrar resultados.</div>
+      </div>
+    </div>
+
+    <!-- Tab: All capacidades -->
+    <div id="tab-all" class="tab-content">
+      <div class="admin-section-title">Todas las capacidades</div>
+      <div class="caps-grid" id="caps-grid"></div>
+    </div>
+
+    <!-- Tab: Voters -->
+    <div id="tab-voters" class="tab-content">
+      <div class="admin-section-title">Participantes registrados</div>
+      <div id="voters-list" style="display:flex;flex-wrap:wrap;gap:8px;"></div>
+    </div>
+
   </div>
 </div>
 
-<div class="save-pill" id="save-pill"><div class="save-dot"></div>Guardado</div>
+<!-- Toast -->
 <div class="toast" id="toast"></div>
 
 <script>
-const DIMS=[
-  {id:"alin",name:"Alineación Estratégica del PETI",   short:"Alineación"},
-  {id:"ejec",name:"Cumplimiento y Ejecución del PETI", short:"Cumplimiento"},
-  {id:"gob", name:"Gobierno y Gestión del PETI",       short:"Gobierno"},
-  {id:"arq", name:"Arquitectura Empresarial",          short:"Arquitectura"},
-  {id:"cap", name:"Capacidad Tecnológica",             short:"Cap. Tecnológica"},
-  {id:"info",name:"Gestión de Información y Datos",    short:"Información"},
-  {id:"tal", name:"Talento y Capacidad Operativa TI",  short:"Talento TI"},
+// ══════════════════════════════════════
+// DATA
+// ══════════════════════════════════════
+const CAPS = [
+  { id:'c01', n:1,  name:'Gestionar la Estrategia Institucional',
+    desc:'Capacidad de formular, actualizar y hacer seguimiento al direccionamiento estratégico de la entidad.',
+    ti:'¿Los sistemas y herramientas permiten planear y hacer seguimiento a metas estratégicas?' },
+  { id:'c02', n:2,  name:'Gestionar Proyectos de Inversión',
+    desc:'Capacidad de planificar, ejecutar y controlar proyectos institucionales.',
+    ti:'¿Tenemos metodologías, herramientas y seguimiento formal para ejecutar proyectos TI con control?' },
+  { id:'c03', n:3,  name:'Gestionar el Conocimiento del Recurso Natural',
+    desc:'Capacidad de administrar información técnica sobre hidrocarburos.',
+    ti:'¿Los sistemas permiten almacenar, analizar y consultar información técnica de forma confiable?' },
+  { id:'c04', n:4,  name:'Promocionar y Fomentar Exploración y Explotación del Recurso Natural',
+    desc:'Capacidad de impulsar actividades de exploración y producción.',
+    ti:'¿Las plataformas tecnológicas apoyan el análisis y promoción de oportunidades?' },
+  { id:'c05', n:5,  name:'Gestionar UpStream (E&P - Generación)',
+    desc:'Capacidad de gestionar actividades de exploración y producción.',
+    ti:'¿Los sistemas soportan los procesos operativos y técnicos del upstream?' },
+  { id:'c06', n:6,  name:'Gestionar el Control de Operaciones y Fiscalización',
+    desc:'Capacidad de supervisar y controlar operaciones del sector.',
+    ti:'¿Existen herramientas tecnológicas que permitan monitoreo y control eficiente?' },
+  { id:'c07', n:7,  name:'Análisis de Información de Producción y Reservas de Hidrocarburos',
+    desc:'Capacidad de analizar datos técnicos para toma de decisiones.',
+    ti:'¿Los datos están integrados, actualizados y disponibles para análisis confiable?' },
+  { id:'c08', n:8,  name:'Gestionar Regalías y Derechos Económicos',
+    desc:'Capacidad de administrar y controlar recursos económicos derivados del sector.',
+    ti:'¿Los sistemas garantizan trazabilidad, cálculos confiables y seguridad de la información?' },
+  { id:'c09', n:9,  name:'Implementar el Desarrollo Sostenible',
+    desc:'Capacidad de integrar criterios ambientales y sociales en la gestión institucional.',
+    ti:'¿Existen herramientas que soporten seguimiento a indicadores ambientales y sociales?' },
+  { id:'c10', n:10, name:'Gestionar el Talento Humano',
+    desc:'Capacidad de administrar y desarrollar el recurso humano institucional.',
+    ti:'¿Los sistemas de talento permiten control, seguimiento y gestión eficiente?' },
+  { id:'c11', n:11, name:'Participación Ciudadana en la Gestión Pública',
+    desc:'Capacidad de facilitar interacción con la ciudadanía.',
+    ti:'¿Las plataformas permiten atención, trazabilidad y transparencia en la participación?' },
+  { id:'c12', n:12, name:'Gestión Presupuestal y Eficiencia del Gasto Público',
+    desc:'Capacidad de administrar recursos financieros con eficiencia.',
+    ti:'¿Los sistemas financieros son confiables y soportan el control presupuestal?' },
+  { id:'c13', n:13, name:'Gobierno y Gestión de TI',
+    desc:'Capacidad de dirigir estratégicamente la función tecnológica.',
+    ti:'¿Existen roles, seguimiento y toma de decisiones formal en TI?' },
+  { id:'c14', n:14, name:'Gestionar la Defensa Legal',
+    desc:'Capacidad de atender procesos jurídicos y defensa institucional.',
+    ti:'¿Existen sistemas que soporten gestión documental y seguimiento de procesos legales?' },
+  { id:'c15', n:15, name:'Gestionar Contratos y Convenios',
+    desc:'Capacidad de administrar acuerdos institucionales.',
+    ti:'¿Los sistemas permiten trazabilidad y control contractual?' },
+  { id:'c16', n:16, name:'Gestionar la Mejora Continua',
+    desc:'Capacidad de evaluar y optimizar procesos institucionales.',
+    ti:'¿La tecnología facilita medición de desempeño y ajustes oportunos?' },
+  { id:'c17', n:17, name:'Gestionar Recursos Institucionales',
+    desc:'Capacidad de administrar bienes y recursos físicos.',
+    ti:'¿Las herramientas tecnológicas permiten control y registro eficiente?' },
+  { id:'c18', n:18, name:'Gestión Documental',
+    desc:'Capacidad de administrar documentos institucionales.',
+    ti:'¿El sistema documental garantiza organización, seguridad y acceso oportuno?' },
+  { id:'c19', n:19, name:'Administrar Sistemas Integrados de Gestión',
+    desc:'Capacidad de mantener estándares y sistemas de calidad institucional.',
+    ti:'¿Existen plataformas que soporten seguimiento a procesos y mejora continua?' },
 ];
-const CAPS=[
-  {id:"cap01",name:"Gestionar la Estrategia Institucional",
-   implica:"Capacidad institucional para definir, orientar y priorizar las decisiones estratégicas de la ANH, asegurando coherencia entre objetivos, planes, recursos y resultados.",
-   ti:["Información confiable para la toma de decisiones","Herramientas de seguimiento estratégico","Sistemas de planificación","Integración de datos institucionales"]},
-  {id:"cap02",name:"Gestionar Proyectos de Inversión",
-   implica:"Capacidad institucional para identificar, evaluar y ejecutar proyectos de inversión de alto impacto, asegurando que estén alineados con las prioridades estratégicas de la ANH y estén bien gestionados.",
-   ti:["Herramientas de gestión de portafolio","Análisis económico y financiero","Sistemas de evaluación y control","Monitoreo de indicadores de desempeño"]},
-  {id:"cap03",name:"Gestionar el Conocimiento del Recurso Natural",
-   implica:"Implica asegurar que la información técnica (geológica, producción, reservas) esté disponible, estructurada, confiable y analizable para la toma de decisiones.",
-   ti:["Gestión de datos","Interoperabilidad","Sistemas de información técnica","Analítica","Trazabilidad"]},
-  {id:"cap04",name:"Promocionar y Fomentar Exploración y Explotación del Recurso Natural",
-   implica:"Capacidad institucional para impulsar el desarrollo de actividades exploratorias y de producción, garantizando el aprovechamiento sostenible de los recursos naturales.",
-   ti:["Análisis de datos de exploración","Plataformas para inteligencia sectorial","Sistemas de seguimiento de contratos","Divulgación de oportunidades"]},
-  {id:"cap05",name:"Gestionar UpStream (E&P - Generación)",
-   implica:"Capacidad institucional para gestionar eficientemente la exploración y producción (E&P) de hidrocarburos, asegurando el control, optimización y sostenibilidad de las operaciones desde el levantamiento sísmico hasta la generación en superficie.",
-   ti:["Monitoreo y gestión de operaciones","Integración de datos geológicos y de producción","Analítica avanzada para optimización","Seguridad en la infraestructura crítica"]},
-  {id:"cap06",name:"Gestionar el control de operaciones y fiscalización",
-   implica:"Capacidad institucional para supervisar eficientemente las operaciones hidrocarburíferas, asegurando que cumplan con las normativas, reporten de manera confiable, y contribuyan a la transparencia y accountability del sector.",
-   ti:["Sistemas de inspección y monitoreo","Informes y alertas automáticas","Analítica y trazabilidad de reportes","Gestión de auditorías y evidencias"]},
-  {id:"cap07",name:"Análisis de Información de producción y reservas de hidrocarburos",
-   implica:"Implica recopilar, analizar y presentar información precisa sobre producción actual, reservas, y tendencias de explotación de hidrocarburos, apoyando la toma de decisiones.",
-   ti:["Sistemas de análisis y gestión de datos","Modelos de pronóstico y análisis geológico","Visualización de reportes dinámicos","Integración y procesamiento de datos en tiempo real"]},
-  {id:"cap08",name:"Gestionar Regalías y Derechos Económicos",
-   implica:"Capacidad institucional para administrar y controlar eficientemente el recaudo, distribución y liquidación de regalías, derechos económicos, y otros ingresos derivados del sector de hidrocarburos.",
-   ti:["Sistemas de gestión de regalías y derechos","Monitoreo de pagos y cumplimiento","Análisis financiero y reporte de ingresos","Transparencia en la distribución de recursos"]},
-  {id:"cap09",name:"Implementar el Desarrollo Sostenible",
-   implica:"Capacidad institucional para garantizar que las actividades del sector hidrocarburífero se desarrollen cuidando el medio ambiente y generando beneficios sociales y económicos para las comunidades.",
-   ti:["Sistemas de monitoreo ambiental","Plataformas de gestión ambiental","Herramientas para gestión social y comunitaria","Reportes de huella de carbono"]},
-  {id:"cap10",name:"Gestionar el Talento Humano",
-   implica:"Capacidad institucional para gestionar, desarrollar y fortalecer las competencias del talento humano, asegurando idoneidad, cumplimiento normativo y continuidad institucional.",
-   ti:["Sistemas de información de talento humano (SIGEP, nómina, desempeño)","Plataformas de capacitación y gestión del conocimiento","Herramientas para evaluación y seguimiento del desempeño","Sistemas de gestión documental laboral"]},
-  {id:"cap11",name:"Participación Ciudadana en la Gestión Pública",
-   implica:"Capacidad institucional para fomentar la participación activa de la ciudadanía en la gestión del sector hidrocarburífero, promoviendo la transparencia, el acceso a la información y la rendición de cuentas.",
-   ti:["Plataformas de consulta y participación ciudadana","Sistemas de atención y comunicación con la comunidad","Herramientas de acceso y divulgación de información","Sistemas para la rendición de cuentas y veeduría ciudadana"]},
-  {id:"cap12",name:"Gestión Presupuestal y Eficiencia del Gasto Público",
-   implica:"Capacidad institucional para administrar y controlar los recursos públicos destinados al sector hidrocarburífero, asegurando una ejecución eficiente del presupuesto y promoviendo la transparencia.",
-   ti:["Sistemas de gestión presupuestal","Herramientas de control y seguimiento del gasto","Plataformas de transparencia y acceso público","Reportes e indicadores de eficiencia y gastos"]},
-  {id:"cap13",name:"Gobierno y Gestión de TI",
-   implica:"Implica establecer políticas, estándares y controles para gestionar y mantener una infraestructura tecnológica eficiente, segura y alineada con los objetivos institucionales.",
-   ti:["Gestión de la seguridad de la información","Optimización y mantenimiento de infraestructuras y sistemas","Cumplimiento de normativas y auditorías de TI","Gestión de riesgos y continuidad del negocio"]},
-  {id:"cap14",name:"Gestionar la defensa legal",
-   implica:"Capacidad institucional para gestionar, atender y resolver los asuntos jurídicos y litigios relacionados con el sector, garantizando la defensa legal del Estado y el cumplimiento normativo.",
-   ti:["Sistemas de gestión de casos","Plataformas de seguimiento documental","Herramientas de análisis y consulta de normatividad","Archivística y trazabilidad"]},
-  {id:"cap15",name:"Gestionar Contratos y Convenios",
-   implica:"Capacidad institucional para formalizar, gestionar y controlar contratos y convenios relacionados con el sector, garantizando las condiciones y obligaciones establecidas.",
-   ti:["Sistemas de gestión contractual","Seguimiento y cumplimiento de compromisos","Plataformas de gestión documental","Control y trazabilidad de contratos"]},
-  {id:"cap16",name:"Gestionar la Mejora Continua",
-   implica:"Promueve la evaluación permanente de procesos y resultados para optimizar el desempeño institucional.",
-   ti:["Automatización de procesos","Analítica de desempeño","Gestión de indicadores","Soporte a transformación digital"]},
-  {id:"cap17",name:"Gestionar Recursos Institucionales",
-   implica:"Implica coordinar eficientemente los recursos financieros, físicos y humanos de una entidad, asegurando su uso adecuado y sostenible para el cumplimiento de la misión institucional.",
-   ti:["Gestión financiera","Gestión de recursos humanos","Gestión de activos e inventario","Control de compras y proveedores","Optimización de procesos y recursos"]},
-  {id:"cap18",name:"Gestión Documental",
-   implica:"Implica asegurar el adecuado manejo, organización, almacenamiento, custodia y acceso de los documentos y archivos de la entidad, garantizando su integridad, disponibilidad y conservación.",
-   ti:["Sistemas de gestión documental","Digitalización y almacenamiento electrónico","Controles de acceso y seguridad","Trazabilidad y ciclo de vida de los documentos","Cumplimiento de normativas y estándares"]},
-  {id:"cap19",name:"Administrar Sistemas Integrados de Gestión",
-   implica:"Capacidad institucional para coordinar y mantener sistemas integrados de gestión (calidad, ambiental, salud y seguridad, etc.), asegurando la conformidad con las normativas y el rendimiento organizacional.",
-   ti:["Soluciones de gestión integrada de sistemas","Automatización de procesos y control","Herramientas de monitoreo y auditoría","Análisis de desempeño y reportes"]},
-];
-const MOMENTOS=[
-  {n:"1",icon:"⚡",title:"Punto de Quiebre",    q:"¿Qué situación crítica evidenció que la brecha ya no podía continuar?"},
-  {n:"2",icon:"🎯",title:"Decisión Estratégica", q:"¿Qué decisión estructural tomó la OTI para cerrar la brecha?"},
-  {n:"3",icon:"🧱",title:"Resistencia",          q:"¿Qué resistencia institucional apareció y cómo fue gestionada?"},
-  {n:"4",icon:"💡",title:"Apuesta Estructural",  q:"¿En qué se invirtió para que el cambio fuera sostenible?"},
-  {n:"5",icon:"🔄",title:"Cambio Implementado",  q:"¿Qué cambió permanentemente en la forma de trabajar?"},
-  {n:"6",icon:"🏆",title:"Resultado Logrado",    q:"¿Qué mejora concreta se evidenció en la capacidad impactada?"},
-];
-const DIM_OPTS=["— seleccionar —",...DIMS.map(d=>d.name)];
-const CAP_OPTS=["— seleccionar —",...CAPS.map(c=>c.name)];
-const NLVL={
-  green:{icon:"🟢",label:"Consolidada",bg:"var(--green-bg)",bd:"var(--green-bd)",tc:"var(--green)",cls:"ng"},
-  yellow:{icon:"🟡",label:"Funcional",bg:"var(--yellow-bg)",bd:"var(--yellow-bd)",tc:"var(--yellow)",cls:"ny"},
-  amber:{icon:"🟠",label:"Frágil",bg:"var(--amber-bg)",bd:"var(--amber-bd)",tc:"var(--amber)",cls:"na"},
-  red:{icon:"🔴",label:"Declarativa",bg:"var(--red-bg)",bd:"var(--red-bd)",tc:"var(--red)",cls:"nr"},
-};
-const SLV={green:"🟢 Adecuado",yellow:"🟡 Parcial",red:"🔴 Crítico"};
-const SK='peti2027_vf2';
-let state={semaforo:{},evidencias:{},capacidades:{},obstaculos:{},brechas:[],brechaCount:0,momentos:{},relatoTxt:''};
 
-function persist(){
-  try{
-    state.brechas.forEach(b=>{
-      const causa=document.getElementById(`b${b.id}-causa`);if(causa)b.causa=causa.value;
-      const dim=document.getElementById(`b${b.id}-dim`);if(dim)b.dim=dim.value;
-      const red=document.getElementById(`b${b.id}-redaccion`);if(red)b.redaccion=red.value;
-      syncCaps(b.id);
-    });
-    DIMS.forEach(d=>{const e=document.getElementById(`ev-${d.id}`);if(e)state.evidencias[d.id]=e.value;});
-    CAPS.forEach(c=>{const e=document.getElementById(`obs-${c.id}`);if(e)state.obstaculos[c.id]=e.value;});
-    state.relatoTxt=document.getElementById('relato-txt')?.value||'';
-    localStorage.setItem(SK,JSON.stringify(state));
-    flash();
-  }catch(e){}
-}
-function load(){try{const r=localStorage.getItem(SK);if(r)state={...state,...JSON.parse(r)};}catch(e){}}
-let st;function debouncedSave(){clearTimeout(st);st=setTimeout(persist,700);}
-function flash(){const el=document.getElementById('save-pill');el.classList.add('show');setTimeout(()=>el.classList.remove('show'),1800);}
+const ADMIN_PWD = 'OTI2027';
+const STORAGE_KEY = 'peti_b2_votes';
 
-function showTab(i){
-  document.querySelectorAll('.page').forEach((p,j)=>p.classList.toggle('active',j===i));
-  document.querySelectorAll('.tab-btn').forEach((b,j)=>b.classList.toggle('active',j===i));
-  if(i===2)obsResumen();
-  if(i===3)refrescarBrechaSel();
+// ══════════════════════════════════════
+// STATE
+// ══════════════════════════════════════
+let currentVoter = '';
+let currentIndex = 0;
+let currentVotes = {}; // { c01: 'green'|'red', ... }
+let adminRefreshInterval = null;
+
+// ══════════════════════════════════════
+// STORAGE HELPERS
+// ══════════════════════════════════════
+function loadData() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : { voters: [], votes: {} };
+    // votes: { voterName: { c01:'green', c02:'red', ... } }
+  } catch(e) { return { voters: [], votes: {} }; }
 }
 
-// ── B1 ──
-function initB1(){
-  document.getElementById('dim-grid').innerHTML=DIMS.map(d=>`
-    <div class="dim-item" id="dim-${d.id}">
-      <div class="dim-name">${d.name}</div>
-      <div class="sem-btns">
-        <button class="sem-btn g" onclick="setSem('${d.id}','green')">🟢 Adecuado</button>
-        <button class="sem-btn y" onclick="setSem('${d.id}','yellow')">🟡 Parcial</button>
-        <button class="sem-btn r" onclick="setSem('${d.id}','red')">🔴 Crítico</button>
+function saveData(data) {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch(e) {}
+}
+
+// ══════════════════════════════════════
+// NAVIGATION
+// ══════════════════════════════════════
+function showView(id) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  const el = document.getElementById(id);
+  if (el) el.classList.add('active');
+}
+
+// ══════════════════════════════════════
+// LANDING
+// ══════════════════════════════════════
+function startVoting() {
+  const name = document.getElementById('input-name').value.trim();
+  if (!name) { showToast('Por favor ingrese su nombre'); return; }
+  currentVoter = name;
+  currentIndex = 0;
+  currentVotes = {};
+  document.getElementById('voter-name-display').textContent = name;
+  showView('view-voting');
+  renderVoteCard();
+}
+
+document.getElementById('input-name').addEventListener('keydown', e => {
+  if (e.key === 'Enter') startVoting();
+});
+
+// ══════════════════════════════════════
+// VOTING
+// ══════════════════════════════════════
+function renderVoteCard() {
+  const cap = CAPS[currentIndex];
+  const answered = Object.keys(currentVotes).length;
+  const pct = Math.round(answered / CAPS.length * 100);
+
+  document.getElementById('vote-progress-bar').style.width = pct + '%';
+  document.getElementById('vote-progress-label').textContent = `${answered} / ${CAPS.length}`;
+
+  const selected = currentVotes[cap.id];
+
+  document.getElementById('vote-card-container').innerHTML = `
+    <div class="cap-counter">Capacidad ${cap.n} de ${CAPS.length}</div>
+    <div class="cap-card">
+      <div class="cap-num">${cap.n}</div>
+      <div class="cap-name">${cap.name}</div>
+      <div class="cap-desc">💻 <strong>Desde TI:</strong> ${cap.ti}</div>
+      <div class="cap-question">¿TI habilita sólidamente esta capacidad?</div>
+      <div class="vote-btns">
+        <button class="vote-btn green ${selected==='green'?'selected':''}" onclick="selectVote('green')">
+          <span class="vote-btn-icon">🟢</span>
+          <span class="vote-btn-label">SÍ la habilita</span>
+          <span class="vote-btn-desc">El soporte tecnológico es suficiente</span>
+        </button>
+        <button class="vote-btn red ${selected==='red'?'selected':''}" onclick="selectVote('red')">
+          <span class="vote-btn-icon">🔴</span>
+          <span class="vote-btn-label">NO la habilita</span>
+          <span class="vote-btn-desc">El soporte tiene vacíos importantes</span>
+        </button>
       </div>
-    </div>`).join('');
-  document.getElementById('ev-area').innerHTML=DIMS.map(d=>`
-    <div class="ev-row" id="ev-row-${d.id}">
-      <span class="ev-label">${d.short}</span>
-      <textarea class="ev-input" id="ev-${d.id}" rows="1" placeholder="Evidencia del grupo..."
-        oninput="state.evidencias['${d.id}']=this.value;debouncedSave()"></textarea>
-    </div>`).join('');
-}
-function restoreB1(){
-  Object.entries(state.semaforo).forEach(([id,lv])=>applyDim(id,lv));
-  DIMS.forEach(d=>{
-    const el=document.getElementById(`ev-${d.id}`);if(el&&state.evidencias[d.id])el.value=state.evidencias[d.id];
-    const lv=state.semaforo[d.id];
-    if(lv==='yellow'||lv==='red')document.getElementById(`ev-row-${d.id}`)?.classList.add('show');
-  });
-  hintEv();updateTapete();
-  document.getElementById('prog1').style.width=`${Object.keys(state.semaforo).length/6*100}%`;
-}
-function setSem(id,lv){
-  state.semaforo[id]=lv;applyDim(id,lv);
-  DIMS.forEach(d=>{
-    const dlv=state.semaforo[d.id];
-    const row=document.getElementById(`ev-row-${d.id}`);
-    if(row)(dlv==='yellow'||dlv==='red')?row.classList.add('show'):row.classList.remove('show');
-  });
-  hintEv();updateTapete();
-  document.getElementById('prog1').style.width=`${Object.keys(state.semaforo).length/6*100}%`;
-  debouncedSave();
-}
-function hintEv(){
-  const hay=DIMS.some(d=>state.semaforo[d.id]==='yellow'||state.semaforo[d.id]==='red');
-  document.getElementById('ev-hint').style.display=hay?'none':'block';
-}
-function applyDim(id,lv){
-  const el=document.getElementById(`dim-${id}`);if(!el)return;
-  el.querySelectorAll('.sem-btn').forEach(b=>b.classList.remove('selected'));
-  el.querySelector(`.sem-btn.${lv[0]}`)?.classList.add('selected');
-  const bgs={green:'var(--green-bg)',yellow:'var(--yellow-bg)',red:'var(--red-bg)'};
-  const bds={green:'var(--green-bd)',yellow:'var(--yellow-bd)',red:'var(--red-bd)'};
-  el.style.background=bgs[lv];el.style.borderColor=bds[lv];
-}
-function updateTapete(){
-  ['green','yellow','red'].forEach(lv=>{
-    const zone=document.getElementById(`zone-${lv[0]}`);
-    const dims=DIMS.filter(d=>state.semaforo[d.id]===lv);
-    zone.innerHTML=dims.length?dims.map(d=>`<span class="chip">${d.short}</span>`).join(''):'<div class="hint">Ninguna aún</div>';
-  });
-}
-function resetB1(){state.semaforo={};state.evidencias={};initB1();updateTapete();document.getElementById('prog1').style.width='0%';hintEv();persist();showToast('Bloque 1 reiniciado');}
-
-// ── B2 ──
-function initB2(){
-  document.getElementById('cap-grid').innerHTML=CAPS.map((c,i)=>`
-    <div class="cap-item" id="cap-${c.id}">
-      <div class="cap-code">${String(i+1).padStart(2,'0')}</div>
-      <div class="cap-name">${c.name}</div>
-      <details class="cap-ctx" style="margin-bottom:8px;">
-        <summary style="font-size:11px;font-weight:600;color:var(--teal);cursor:pointer;list-style:none;display:flex;align-items:center;gap:4px;">
-          <span>ℹ️ Ver contextualización</span>
-        </summary>
-        <div style="margin-top:6px;padding:8px 10px;background:rgba(10,124,140,.06);border-radius:8px;border-left:3px solid var(--teal);">
-          <p style="font-size:11px;color:var(--text);margin:0 0 6px 0;line-height:1.5;">${c.implica}</p>
-          <div style="font-size:10.5px;font-weight:700;color:var(--orange);margin-bottom:4px;">Desde TI impacta:</div>
-          <ul style="margin:0;padding-left:14px;">${c.ti.map(t=>`<li style="font-size:11px;color:var(--text);line-height:1.6;">${t}</li>`).join('')}</ul>
-        </div>
-      </details>
-      <div class="lvl-btns">
-        <button class="lvl-btn lg" onclick="setCap('${c.id}','green')">🟢 Consolidada</button>
-        <button class="lvl-btn ly" onclick="setCap('${c.id}','yellow')">🟡 Funcional</button>
-        <button class="lvl-btn la" onclick="setCap('${c.id}','amber')">🟠 Frágil</button>
-        <button class="lvl-btn lr" onclick="setCap('${c.id}','red')">🔴 Declarativa</button>
+      <div class="nav-btns">
+        <button class="btn-nav" onclick="prevCard()" ${currentIndex===0?'disabled':''}>← Anterior</button>
+        <button class="btn-nav next" onclick="nextCard()" id="btn-next">
+          ${currentIndex === CAPS.length-1 ? 'Finalizar ✓' : 'Siguiente →'}
+        </button>
       </div>
-      <div class="obs-lbl">Obstáculo principal</div>
-      <textarea class="obs-input" id="obs-${c.id}" rows="2"
-        placeholder="¿Qué impide que esta capacidad sea más sólida?"
-        oninput="state.obstaculos['${c.id}']=this.value;debouncedSave();updateResumen()"></textarea>
-    </div>`).join('');
-}
-function restoreB2(){
-  Object.entries(state.capacidades).forEach(([id,lv])=>applyCapStyle(id,lv));
-  CAPS.forEach(c=>{const el=document.getElementById(`obs-${c.id}`);if(el&&state.obstaculos[c.id])el.value=state.obstaculos[c.id];});
-  document.getElementById('prog2').style.width=`${Object.keys(state.capacidades).length/12*100}%`;
-  updateResumen();
-}
-function setCap(id,lv){
-  state.capacidades[id]=lv;applyCapStyle(id,lv);
-  document.getElementById('prog2').style.width=`${Object.keys(state.capacidades).length/12*100}%`;
-  updateResumen();debouncedSave();
-}
-function applyCapStyle(id,lv){
-  const el=document.getElementById(`cap-${id}`);if(!el)return;
-  el.querySelectorAll('.lvl-btn').forEach(b=>b.classList.remove('selected'));
-  const map={green:'lg',yellow:'ly',amber:'la',red:'lr'};
-  el.querySelector(`.lvl-btn.${map[lv]}`)?.classList.add('selected');
-  const n=NLVL[lv];el.style.background=n.bg;el.style.borderColor=n.bd;
-}
-function updateResumen(){
-  const total=Object.keys(state.capacidades).length;
-  const cnt={green:0,yellow:0,amber:0,red:0};
-  Object.values(state.capacidades).forEach(v=>cnt[v]++);
-  // barras
-  document.getElementById('resumen-bars').innerHTML=
-    [{k:'green',l:'🟢 Consolidadas',c:'var(--green)'},
-     {k:'yellow',l:'🟡 Funcionales',c:'var(--yellow)'},
-     {k:'amber',l:'🟠 Frágiles',c:'var(--amber)'},
-     {k:'red',l:'🔴 Declarativas',c:'var(--red)'}]
-    .map(x=>`<div class="bar-row">
-      <span class="bar-label">${x.l}</span>
-      <div class="bar-track"><div class="bar-fill" style="width:${total?cnt[x.k]/12*100:0}%;background:${x.c}"></div></div>
-      <span class="bar-num" style="color:${x.c}">${cnt[x.k]}/12</span>
-    </div>`).join('');
-  if(!total){document.getElementById('resumen-grupos').innerHTML='<p style="color:var(--muted);font-size:13px;font-style:italic">El resumen aparecerá aquí a medida que califique las capacidades.</p>';return;}
-  // grupos
-  document.getElementById('resumen-grupos').innerHTML=
-    [{lv:'green',label:'🟢 Consolidadas'},{lv:'yellow',label:'🟡 Funcionales'},
-     {lv:'amber',label:'🟠 Frágiles'},{lv:'red',label:'🔴 Declarativas'}]
-    .map(g=>{
-      const n=NLVL[g.lv];
-      const caps=CAPS.filter(c=>state.capacidades[c.id]===g.lv);
-      const rows=caps.length
-        ?caps.map(c=>{
-            const obs=state.obstaculos[c.id]||'';
-            return `<div class="nivel-cap-row">
-              <div style="flex:1">
-                <div class="nivel-cap-name">${c.name}</div>
-                ${obs?`<div class="nivel-cap-obs nivel-group ${n.cls}">⚠ ${obs}</div>`:`<span class="no-obs">Sin obstáculo registrado</span>`}
-              </div>
-            </div>`;
-          }).join('')
-        :`<div class="empty-nivel">Ninguna capacidad en este nivel</div>`;
-      return `<div class="nivel-group ${n.cls}">
-        <div class="nivel-hdr"><span>${g.label}</span><span class="nivel-count">${caps.length} capacidad${caps.length!==1?'es':''}</span></div>
-        ${rows}
-      </div>`;
-    }).join('');
-}
-function resetB2(){state.capacidades={};state.obstaculos={};initB2();document.getElementById('prog2').style.width='0%';updateResumen();persist();showToast('Bloque 2 reiniciado');}
-
-// ── B3 ──
-const CAP_INST=[
-  'Gestionar la Estrategia Institucional',
-  'Gestionar Proyectos de Inversión',
-  'Gestionar el Conocimiento del Recurso Natural',
-  'Promocionar y Fomentar Exploración y Explotación del Recurso Natural',
-  'Gestionar UpStream (E&P - Generación)',
-  'Gestionar el control de operaciones y fiscalización',
-  'Análisis de Información de producción y reservas de hidrocarburos',
-  'Gestionar Regalías y Derechos Económicos',
-  'Implementar el Desarrollo Sostenible',
-  'Gestionar el Talento Humano',
-  'Participación Ciudadana en la Gestión Pública',
-  'Gestión Presupuestal y Eficiencia del Gasto Público',
-  'Gobierno y Gestión de TI',
-  'Gestionar la defensa legal',
-  'Gestionar Contratos y Convenios',
-  'Gestionar Recursos Institucionales',
-  'Gestión Documental',
-  'Administrar Sistemas Integrados de Gestión',
-  'Gestionar la mejora continua',
-];
-const DIM_CAPS={
-  'Alineación Estratégica':CAP_INST,
-  'Cumplimiento y Ejecución':CAP_INST,
-  'Gobierno y Gestión':CAP_INST,
-  'Arquitectura y Cap. TI':CAP_INST,
-  'Gestión de Información':CAP_INST,
-  'Talento y Cap. Operativa':CAP_INST,
-};
-
-function obsResumen(){
-  const grid=document.getElementById('obs-resumen-grid');if(!grid)return;
-  const items=CAPS.map(c=>({name:c.name,obs:state.obstaculos[c.id]||''})).filter(x=>x.obs.trim());
-  if(!items.length){grid.innerHTML='<div style="font-size:12px;color:var(--muted);font-style:italic">Cuando registre obstáculos en el Bloque 2 aparecerán aquí automáticamente.</div>';return;}
-  grid.innerHTML=items.map(x=>`<div class="obs-dim-chip"><div class="obs-dim-name">${x.name}</div><div class="obs-dim-val">"${x.obs}"</div></div>`).join('');
-}
-
-function addBrecha(restored){
-  state.brechaCount++;
-  const id=state.brechaCount;
-  const div=document.createElement('div');
-  div.className='brecha-card';div.id=`brecha-${id}`;
-  const dimOpts=Object.keys(DIM_CAPS).map(d=>`<option value="${d}">${d}</option>`).join('');
-  div.innerHTML=`
-    <div class="brecha-hdr">
-      <div class="brecha-num">${id}</div>
-      <div class="brecha-hdr-title">Brecha ${id}</div>
-      <button class="brecha-del" onclick="removeBrecha(${id})">✕ Eliminar</button>
+      ${!selected ? '<p class="skip-note">Seleccione una opción para continuar</p>' : ''}
     </div>
-    <div class="b3-steps">
-      <!-- PASO 1 -->
-      <div class="b3-step">
-        <div class="step-tag">Paso 1 · Agrupar obstáculos</div>
-        <div class="step-q">Tome los obstáculos del Bloque 2. ¿Cuáles corresponden a la misma dimensión? Agréguelos aquí.</div>
-        <div class="obs-pills" id="pills-${id}"></div>
-        <div class="obs-add-row">
-          <input class="obs-add-inp" id="obs-inp-${id}" placeholder="Escribir obstáculo y Enter..." onkeydown="if(event.key==='Enter'){addPill(${id});event.preventDefault();}">
-          <button class="obs-add-btn" onclick="addPill(${id})">+ Agregar</button>
-        </div>
-      </div>
-      <!-- PASO 2 -->
-      <div class="b3-step">
-        <div class="step-tag">Paso 2 · Causa estructural</div>
-        <div class="step-q">¿Qué factor estructural explica todos esos obstáculos juntos? No el síntoma — la raíz.</div>
-        <div class="fg"><label>Causa estructural</label>
-          <textarea class="obs-add-inp" id="b${id}-causa" rows="3" style="width:100%;resize:none"
-            placeholder="Ej: Fragmentación tecnológica y falta de interoperabilidad entre sistemas..."
-            oninput="previewB(${id});debouncedSave()"></textarea></div>
-      </div>
-      <!-- PASO 3 -->
-      <div class="b3-step">
-        <div class="step-tag">Paso 3 · Dimensión y capacidades afectadas</div>
-        <div class="step-q">Seleccione la dimensión del PETI y las capacidades institucionales que están siendo impactadas.</div>
-        <div class="fg" style="margin-bottom:10px"><label>Dimensión del PETI</label>
-          <select class="fsel" id="b${id}-dim" onchange="onDimChange(${id});previewB(${id});debouncedSave()">
-            <option value="">— seleccionar dimensión —</option>${dimOpts}
-          </select></div>
-        <div class="fg"><label>Capacidades institucionales impactadas</label>
-          <div class="cap-inst-list" id="caplist-${id}"></div>
-          <button class="cap-add-btn" onclick="addCapInst(${id})">+ Agregar capacidad</button>
-        </div>
-      </div>
-      <!-- PASO 4 -->
-      <div class="b3-step">
-        <div class="step-tag">Paso 4 · Redacción de la brecha</div>
-        <div class="step-q">Se genera automáticamente. Puede editar el texto final si lo necesita.</div>
-        <textarea class="obs-add-inp" id="b${id}-redaccion" rows="5" style="width:100%;resize:none;font-style:italic"
-          placeholder="Se completará automáticamente al llenar los pasos anteriores..."
-          oninput="state.brechas.find(x=>x.id===${id}).redaccion=this.value;debouncedSave()"></textarea>
-      </div>
-      <!-- PREVIEW -->
-      <div class="b-preview-full">
-        <div class="b-preview-lbl">Brecha formulada</div>
-        <div class="b-preview-txt" id="bpt-${id}"><span class="blank">Complete los pasos anteriores...</span></div>
-      </div>
-    </div>`;
-  document.getElementById('brechas-cont').appendChild(div);
-  if(!restored){
-    state.brechas.push({id, pills:[], causa:'', dim:'', caps:[], redaccion:''});
-    // Agregar 1 campo de capacidad por defecto
-    addCapInst(id);
+  `;
+}
+
+function selectVote(val) {
+  const cap = CAPS[currentIndex];
+  currentVotes[cap.id] = val;
+  renderVoteCard();
+  // Auto advance after short delay
+  setTimeout(() => {
+    if (currentIndex < CAPS.length - 1) {
+      nextCard();
+    }
+  }, 400);
+}
+
+function nextCard() {
+  const cap = CAPS[currentIndex];
+  if (!currentVotes[cap.id]) { showToast('Seleccione una opción primero'); return; }
+  if (currentIndex === CAPS.length - 1) {
+    submitVotes();
+  } else {
+    currentIndex++;
+    renderVoteCard();
+    window.scrollTo(0, 0);
   }
 }
 
-function onDimChange(id){
-  previewB(id);debouncedSave();
-}
-
-function addCapInst(id, val=''){
-  const list=document.getElementById(`caplist-${id}`);if(!list)return;
-  const opts=CAP_INST.map(c=>`<option value="${c}"${c===val?' selected':''}>${c}</option>`).join('');
-  const row=document.createElement('div');
-  row.className='cap-inst-row';
-  row.innerHTML=`<select class="fsel" style="flex:1"
-    onchange="syncCaps(${id});previewB(${id});debouncedSave()">
-    <option value="">— seleccionar capacidad —</option>${opts}
-  </select>
-  <button class="cap-inst-del" onclick="this.parentElement.remove();syncCaps(${id});previewB(${id});debouncedSave()">✕</button>`;
-  list.appendChild(row);
-}
-
-function syncCaps(id){
-  id=parseInt(id);
-  const list=document.getElementById(`caplist-${id}`);if(!list)return;
-  const vals=[...list.querySelectorAll('select')].map(s=>s.value.trim()).filter(Boolean);
-  const b=state.brechas.find(x=>parseInt(x.id)===id);if(b)b.caps=vals;
-}
-
-function addPill(id){
-  id=parseInt(id);
-  const inp=document.getElementById(`obs-inp-${id}`);if(!inp)return;
-  const val=inp.value.trim();if(!val)return;
-  let b=state.brechas.find(x=>parseInt(x.id)===id);
-  if(!b){b={id,pills:[],causa:'',dim:'',caps:[],redaccion:''};state.brechas.push(b);}
-  if(!b.pills)b.pills=[];
-  if(!b.pills.includes(val))b.pills.push(val);
-  renderPills(id);
-  inp.value='';previewB(id);debouncedSave();
-}
-
-function removePill(id,val){
-  id=parseInt(id);
-  const b=state.brechas.find(x=>parseInt(x.id)===id);
-  if(b)b.pills=b.pills.filter(p=>p!==val);
-  renderPills(id);previewB(id);debouncedSave();
-}
-
-function renderPills(id){
-  id=parseInt(id);
-  const cont=document.getElementById(`pills-${id}`);if(!cont)return;
-  const b=state.brechas.find(x=>parseInt(x.id)===id);if(!b)return;
-  cont.innerHTML=(b.pills||[]).map(p=>`<span class="obs-pill">${p.replace(/</g,'&lt;')}<button onclick="removePill(${id},decodeURIComponent('${encodeURIComponent(p)}'))">✕</button></span>`).join('');
-}
-
-function restoreBrechas(){
-  state.brechaCount=0;document.getElementById('brechas-cont').innerHTML='';
-  const saved=[...state.brechas];state.brechas=[];
-  if(!saved.length){addBrecha();return;}
-  saved.forEach(b=>{
-    state.brechaCount=b.id-1;addBrecha(true);state.brechas.push(b);
-    setTimeout(()=>{
-      renderPills(b.id);
-      const causa=document.getElementById(`b${b.id}-causa`);if(causa)causa.value=b.causa||'';
-      const dim=document.getElementById(`b${b.id}-dim`);if(dim){dim.value=b.dim||'';onDimChange(b.id);}
-      const list=document.getElementById(`caplist-${b.id}`);
-      if(list){list.innerHTML='';(b.caps||[]).forEach(c=>addCapInst(b.id,c));if(!(b.caps||[]).length)addCapInst(b.id);}
-      const red=document.getElementById(`b${b.id}-redaccion`);if(red)red.value=b.redaccion||'';
-      previewB(b.id);
-    },0);
-  });
-}
-
-function removeBrecha(id){id=parseInt(id);document.getElementById(`brecha-${id}`).remove();state.brechas=state.brechas.filter(b=>parseInt(b.id)!==id);debouncedSave();}
-
-function previewB(id){
-  id=parseInt(id);
-  const b=state.brechas.find(x=>parseInt(x.id)===id);if(!b)return;
-  // sync state
-  const causa=document.getElementById(`b${id}-causa`)?.value||'';
-  const dim=document.getElementById(`b${id}-dim`)?.value||'';
-  b.causa=causa;b.dim=dim;
-  syncCaps(id);
-  const caps=b.caps||[];
-  const el=document.getElementById(`bpt-${id}`);if(!el)return;
-  const hD=dim&&dim!=='',hCa=causa.trim().length>0,hC=caps.length>0;
-  if(!hD&&!hCa&&!hC){el.innerHTML='<span class="blank">Complete los pasos anteriores...</span>';return;}
-  const capStr=caps.length>1?caps.map((c,i)=>`<span class="fill">${c}</span>`).join(' y '):caps.length===1?`<span class="fill">${caps[0]}</span>`:'<span class="blank">[capacidad institucional]</span>';
-  el.innerHTML=`Se identifica una brecha en la dimensión de ${hD?`<span class="fill">${dim}</span>`:'<span class="blank">[dimensión]</span>'} que impacta la capacidad de ${capStr}, como consecuencia de ${hCa?`<span class="fill">${causa}</span>`:'<span class="blank">[causa estructural]</span>'}.`;
-  // Auto-fill redacción si está vacía
-  const redEl=document.getElementById(`b${id}-redaccion`);
-  if(redEl&&!b.redaccion){
-    const capTxt=caps.length>1?caps.join(' y '):caps[0]||'[capacidad]';
-    redEl.value=hD&&hCa&&hC?`Se identifica una brecha en la dimensión de ${dim} que impacta la capacidad de ${capTxt}, como consecuencia de ${causa}.`:'';
+function prevCard() {
+  if (currentIndex > 0) {
+    currentIndex--;
+    renderVoteCard();
+    window.scrollTo(0, 0);
   }
 }
 
-// ── B4 ──
-function initB4(){
-  document.getElementById('momento-grid').innerHTML=MOMENTOS.map(m=>`
-    <div class="momento-card">
-      <div class="m-hdr"><span class="m-icon">${m.icon}</span><span class="m-title">${m.n}. ${m.title}</span></div>
-      <div class="m-body">
-        <div class="m-q">${m.q}</div>
-        <input class="m-input" id="m-${m.n}" placeholder="Nombre del participante..."
-          oninput="state.momentos['${m.n}']=this.value;chipM('${m.n}');debouncedSave()">
-        <div class="m-chip vacio" id="chip-${m.n}">Sin asignar</div>
-      </div>
-    </div>`).join('');
-}
-function restoreB4(){
-  Object.entries(state.momentos).forEach(([n,name])=>{const el=document.getElementById(`m-${n}`);if(el){el.value=name;chipM(n);}});
-  const rt=document.getElementById('relato-txt');if(rt&&state.relatoTxt)rt.value=state.relatoTxt;
-}
-function chipM(n){
-  const val=document.getElementById(`m-${n}`)?.value.trim();
-  const chip=document.getElementById(`chip-${n}`);if(!chip)return;
-  chip.textContent=val?'📹 '+val:'Sin asignar';chip.className='m-chip '+(val?'asig':'vacio');
-}
-function refrescarBrechaSel(){
-  const sel=document.getElementById('brecha-sel');const cur=sel.value;
-  sel.innerHTML='<option value="">— seleccionar —</option>';
-  state.brechas.forEach((b,i)=>{
-    const dim=document.getElementById(`b${b.id}-dim`)?.value||b.dim||'';
-    if(dim)sel.innerHTML+=`<option value="${b.id}">${i+1}. ${dim}</option>`;
-  });
-  sel.value=cur;actualizarBrecha();
-}
-function actualizarBrecha(){
-  const id=parseInt(document.getElementById('brecha-sel').value);
-  const el=document.getElementById('brecha-txt');
-  if(!id){el.textContent='Seleccione una brecha del Bloque 3';el.style.fontStyle='italic';return;}
-  const b=state.brechas.find(x=>x.id===id);
-  const dim=document.getElementById(`b${id}-dim`)?.value||b?.dim||'';
-  const causa=document.getElementById(`b${id}-causa`)?.value||b?.causa||'';
-  const caps=(b?.caps||[]).join(' y ')||'';
-  el.style.color='var(--navy)';el.style.fontStyle='normal';
-  el.textContent=`Se identifica una brecha en la dimensión de ${dim} que impacta la capacidad de ${caps}, como consecuencia de ${causa}.`;
+function submitVotes() {
+  const data = loadData();
+  // Remove previous votes from same voter if re-voting
+  if (data.votes[currentVoter]) delete data.votes[currentVoter];
+  if (!data.voters.includes(currentVoter)) data.voters.push(currentVoter);
+  data.votes[currentVoter] = currentVotes;
+  saveData(data);
+  showView('view-done');
 }
 
-// ── PLENARIA ──
-function abrirPlenaria(){
-  persist();
-  // Tapete
-  const zonaInfo={green:{lbl:'🟢 Desempeño Adecuado',cls:'plg'},yellow:{lbl:'🟡 Parcial / En Riesgo',cls:'ply'},red:{lbl:'🔴 Crítico',cls:'plr'}};
-  const tapeteHtml=['green','yellow','red'].map(lv=>{
-    const zi=zonaInfo[lv];
-    const dims=DIMS.filter(d=>state.semaforo[d.id]===lv);
-    return `<div class="pl-zone ${zi.cls}">
-      <div class="pl-zone-hdr">${zi.lbl}</div>
-      ${dims.length?dims.map(d=>`<div class="pl-dim-item">
-        <div class="pl-dim-name">${d.name}</div>
-        ${state.evidencias[d.id]?`<div class="pl-dim-ev">"${state.evidencias[d.id]}"</div>`:''}
-      </div>`).join(''):'<p style="font-size:12px;color:#bbb;text-align:center;font-style:italic">Ninguna</p>'}
-    </div>`;
+// ══════════════════════════════════════
+// ADMIN LOGIN
+// ══════════════════════════════════════
+function goAdminLogin() { showView('view-admin-login'); }
+
+function checkAdmin() {
+  const pwd = document.getElementById('input-pwd').value;
+  if (pwd === ADMIN_PWD) {
+    showView('view-admin');
+    refreshAdmin();
+    adminRefreshInterval = setInterval(refreshAdmin, 10000);
+  } else {
+    showToast('Clave incorrecta');
+    document.getElementById('input-pwd').value = '';
+  }
+}
+
+document.getElementById('input-pwd').addEventListener('keydown', e => {
+  if (e.key === 'Enter') checkAdmin();
+});
+
+// ══════════════════════════════════════
+// ADMIN DASHBOARD
+// ══════════════════════════════════════
+function refreshAdmin() {
+  const data = loadData();
+  const voters = data.voters || [];
+  const votes = data.votes || {};
+
+  // Count votes per capacity
+  const counts = {}; // { c01: { green:0, red:0 } }
+  CAPS.forEach(c => counts[c.id] = { green: 0, red: 0 });
+
+  let totalVotes = 0;
+  Object.values(votes).forEach(voterVotes => {
+    Object.entries(voterVotes).forEach(([cid, val]) => {
+      if (counts[cid] && (val === 'green' || val === 'red')) {
+        counts[cid][val]++;
+        totalVotes++;
+      }
+    });
+  });
+
+  // Stats
+  document.getElementById('stat-voters').textContent = voters.length;
+  document.getElementById('stat-votes').textContent = totalVotes;
+
+  let redMajority = 0, greenMajority = 0;
+  CAPS.forEach(c => {
+    const { green, red } = counts[c.id];
+    if (red > green) redMajority++;
+    else if (green > red && (green + red) > 0) greenMajority++;
+  });
+  document.getElementById('stat-reds').textContent = redMajority;
+  document.getElementById('stat-greens').textContent = greenMajority;
+
+  // All caps grid
+  const grid = document.getElementById('caps-grid');
+  grid.innerHTML = CAPS.map(c => {
+    const { green, red } = counts[c.id];
+    const total = green + red;
+    const greenPct = total > 0 ? Math.round(green / total * 100) : 0;
+    const redPct = total > 0 ? Math.round(red / total * 100) : 0;
+    let badge = '', badgeClass = '';
+    if (total === 0) { badge = 'Sin votos'; badgeClass = 'pending'; }
+    else if (red > green) { badge = '🔴 Mayoría roja'; badgeClass = 'red'; }
+    else if (green > red) { badge = '🟢 Mayoría verde'; badgeClass = 'green'; }
+    else { badge = '⚖ Empate'; badgeClass = 'tie'; }
+
+    return `
+      <div class="cap-result-card">
+        <div class="cap-result-header">
+          <div class="cap-result-num">${c.n}</div>
+          <div class="cap-result-name">${c.name}</div>
+        </div>
+        ${total > 0 ? `
+        <div class="vote-bar">
+          ${greenPct > 0 ? `<div class="vote-bar-green" style="width:${greenPct}%">${greenPct > 12 ? greenPct+'%' : ''}</div>` : ''}
+          ${redPct > 0 ? `<div class="vote-bar-red" style="width:${redPct}%">${redPct > 12 ? redPct+'%' : ''}</div>` : ''}
+        </div>
+        <div class="vote-counts">
+          <span class="green-count">🟢 ${green} votos (${greenPct}%)</span>
+          <span class="red-count">🔴 ${red} votos (${redPct}%)</span>
+        </div>
+        ` : `<div class="vote-bar"><div class="vote-bar-empty">Sin votos aún</div></div>`}
+        <span class="majority-badge ${badgeClass}">${badge}</span>
+      </div>
+    `;
   }).join('');
 
-  // Galería agrupada por nivel
-  const galeriaHtml=[{lv:'green',label:'🟢 Consolidadas'},{lv:'yellow',label:'🟡 Funcionales'},{lv:'amber',label:'🟠 Frágiles'},{lv:'red',label:'🔴 Declarativas'}]
-    .map(g=>{
-      const n=NLVL[g.lv];
-      const caps=CAPS.filter(c=>state.capacidades[c.id]===g.lv);
-      const rows=caps.length
-        ?caps.map(c=>{
-            const obs=state.obstaculos[c.id]||'';
-            return `<div class="pl-cap-row">
-              <div style="flex:1">
-                <div class="pl-cap-name">${c.name}</div>
-                ${obs?`<div class="pl-cap-obs pl-nivel-group ${n.cls}">⚠ ${obs}</div>`:`<span class="pl-no-obs">Sin obstáculo registrado</span>`}
-              </div>
-            </div>`;
-          }).join('')
-        :`<div style="padding:10px 15px;font-size:12px;color:var(--muted);font-style:italic;background:var(--bg)">Ninguna capacidad en este nivel</div>`;
-      return `<div class="pl-nivel-group ${n.cls}">
-        <div class="pl-nivel-hdr"><span>${g.label}</span><span class="pl-nivel-cnt">${caps.length} capacidad${caps.length!==1?'es':''}</span></div>
-        ${rows}
-      </div>`;
-    }).join('');
+  // Priority list (red majority, sorted by red %)
+  const reds = CAPS
+    .map(c => {
+      const { green, red } = counts[c.id];
+      const total = green + red;
+      const redPct = total > 0 ? Math.round(red / total * 100) : 0;
+      return { ...c, green, red, total, redPct };
+    })
+    .filter(c => c.red > c.green && c.total > 0)
+    .sort((a, b) => b.redPct - a.redPct);
 
-  // Brechas
-  const brechasHtml=state.brechas.map((b,i)=>{
-    const dim=document.getElementById(`b${b.id}-dim`)?.value||b.dim||'';
-    const caps=(b.caps||[]);
-    const causa=document.getElementById(`b${b.id}-causa`)?.value||b.causa||'';
-    if(!dim&&!caps.length&&!causa)return'';
-    const capStr=caps.length?caps.join(' y '):'___';
-    return `<div class="pl-brecha">
-      <div class="pl-brecha-num">Brecha ${i+1} · ${dim||'Dimensión sin definir'}</div>
-      <div class="pl-brecha-txt">Se identifica una brecha en la dimensión de <span class="fill">${dim||'___'}</span> que impacta la capacidad de <span class="fill">${capStr}</span>, como consecuencia de <span class="fill">${causa||'___'}</span>.</div>
-    </div>`;
-  }).join('');
+  const pl = document.getElementById('priority-list');
+  if (reds.length === 0) {
+    pl.innerHTML = '<div style="color:var(--muted);font-size:14px;font-style:italic;padding:20px 0;">Aún no hay capacidades con mayoría roja.</div>';
+  } else {
+    pl.innerHTML = reds.map((c, i) => `
+      <div class="priority-item">
+        <div class="priority-rank">${i + 1}</div>
+        <div class="priority-info">
+          <div class="priority-name">${c.n}. ${c.name}</div>
+          <div class="priority-stat">${c.red} votos rojos de ${c.total} totales</div>
+        </div>
+        <div class="priority-pct">${c.redPct}%</div>
+      </div>
+    `).join('');
+  }
 
-  document.getElementById('modal-body').innerHTML=`
-    <div class="modal-sec">
-      <div class="modal-sec-title">Bloque 1 · Semáforo de dimensiones</div>
-      <div class="pl-tapete">${tapeteHtml}</div>
-    </div>
-    <div class="modal-sec">
-      <div class="modal-sec-title">Bloque 2 · Capacidades agrupadas por nivel</div>
-      ${galeriaHtml}
-    </div>
-    <div class="modal-sec">
-      <div class="modal-sec-title">Bloque 3 · Brechas formuladas</div>
-      ${brechasHtml||'<p style="color:var(--muted);font-size:13px;font-style:italic">Aún no hay brechas formuladas.</p>'}
-    </div>`;
-  document.getElementById('modal-plenaria').classList.add('open');
+  // Voters list
+  const vl = document.getElementById('voters-list');
+  if (voters.length === 0) {
+    vl.innerHTML = '<div style="color:var(--muted);font-size:14px;font-style:italic;">Ningún participante aún.</div>';
+  } else {
+    vl.innerHTML = voters.map(v => `
+      <div style="background:white;border:1.5px solid var(--border);border-radius:10px;padding:8px 14px;font-size:13px;font-weight:500;color:var(--navy);">
+        ${v}
+      </div>
+    `).join('');
+  }
 }
-function cerrarPlenaria(){document.getElementById('modal-plenaria').classList.remove('open');}
 
-// ── EXPORTAR ──
-function exportar(num){
-  persist();
-  const sep='='.repeat(52),dash='-'.repeat(40);
-  const lines=['TALLER PETI 2027 — RESULTADO GRUPO VIRTUAL',sep,`Exportado: ${new Date().toLocaleString('es-CO')}`,''];
-  if(num>=1){
-    lines.push('BLOQUE 1 · DIAGNÓSTICO — SEMÁFORO',dash);
-    DIMS.forEach(d=>{const lv=state.semaforo[d.id];lines.push(`${d.name}: ${lv?SLV[lv]:'Sin respuesta'}`);const ev=state.evidencias[d.id];if(ev?.trim())lines.push(`  Evidencia: ${ev}`);});
-    lines.push('');
-  }
-  if(num>=2){
-    lines.push('BLOQUE 2 · CAPACIDADES — AGRUPADAS POR NIVEL',dash);
-    ['green','yellow','amber','red'].forEach(lv=>{
-      const caps=CAPS.filter(c=>state.capacidades[c.id]===lv);if(!caps.length)return;
-      lines.push(`\n${NLVL[lv].icon} ${NLVL[lv].label.toUpperCase()}:`);
-      caps.forEach(c=>{lines.push(`  ${c.name}`);const obs=state.obstaculos[c.id];if(obs?.trim())lines.push(`    Obstáculo: ${obs}`);});
-    });
-    lines.push('');
-  }
-  if(num>=3){
-    lines.push('BLOQUE 3 · BRECHAS FORMULADAS',dash);
-    state.brechas.forEach((b,i)=>{
-      const dim=document.getElementById(`b${b.id}-dim`)?.value||b.dim||'';
-      const caps=(b.caps||[]);
-      const causa=document.getElementById(`b${b.id}-causa`)?.value||b.causa||'';
-      if(!dim&&!caps.length&&!causa)return;
-      const capStr=caps.join(' / ')||'(sin capacidad)';
-      lines.push(`Brecha ${i+1}: ${dim}`);
-      if(b.pills?.length)lines.push(`  Obstáculos agrupados: ${b.pills.join(' | ')}`);
-      lines.push(`  Causa estructural: ${causa}`);
-      lines.push(`  Capacidades institucionales impactadas: ${capStr}`);
-      lines.push(`  → Se identifica una brecha en la dimensión de ${dim} que impacta la capacidad de ${capStr}, como consecuencia de ${causa}.`,'');
-    });
-  }
-  if(num>=4){
-    lines.push('BLOQUE 4 · RELATO ESTRATÉGICO',dash);
-    MOMENTOS.forEach(m=>lines.push(`Momento ${m.n} — ${m.title}: ${state.momentos[m.n]||'Sin asignar'}`));
-    const rt=document.getElementById('relato-txt')?.value||'';
-    if(rt)lines.push('','Relato:',rt);
-    lines.push('');
-  }
-  lines.push(sep,'Taller PETI 2027 · ANH OTI · Grupo Virtual');
-  const blob=new Blob([lines.join('\n')],{type:'text/plain;charset=utf-8'});
-  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
-  a.download=`PETI2027_grupo_virtual_${num===4?'completo':'bloque'+num}.txt`;a.click();
-  showToast('✓ Archivo descargado');
+function switchTab(tabId) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(tabId).classList.add('active');
+  event.target.classList.add('active');
 }
-function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800);}
 
-// ── INIT ──
-load();
-initB1();restoreB1();
-initB2();restoreB2();
-restoreBrechas();
-initB4();restoreB4();
+function confirmReset() {
+  const overlay = document.createElement('div');
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:9999;display:flex;align-items:center;justify-content:center;padding:24px;';
+  overlay.innerHTML = `
+    <div style="background:white;border-radius:20px;padding:36px 32px;max-width:360px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+      <div style="font-size:40px;margin-bottom:16px;">⚠️</div>
+      <div style="font-family:'DM Serif Display',serif;font-size:20px;color:#0F2A47;margin-bottom:10px;">¿Reiniciar todos los datos?</div>
+      <div style="font-size:13px;color:#64748B;margin-bottom:28px;line-height:1.6;">Se borrarán todos los votos y participantes registrados. Esta acción no se puede deshacer.</div>
+      <div style="display:flex;gap:12px;">
+        <button onclick="this.closest('div[style]').remove()" style="flex:1;padding:13px;border-radius:12px;border:1.5px solid #E2E8F0;background:white;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;color:#0F2A47;">Cancelar</button>
+        <button id="btn-confirm-reset" style="flex:1;padding:13px;border-radius:12px;border:none;background:#DC2626;color:white;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;">Sí, reiniciar</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+  document.getElementById('btn-confirm-reset').onclick = function() {
+    saveData({ voters: [], votes: {} });
+    overlay.remove();
+    refreshAdmin();
+    showToast('✓ Datos reiniciados correctamente');
+  };
+}
+
+function exitAdmin() {
+  if (adminRefreshInterval) { clearInterval(adminRefreshInterval); adminRefreshInterval = null; }
+  document.getElementById('input-pwd').value = '';
+  showView('view-landing');
+}
+
+function exportResults() {
+  const data = loadData();
+  const counts = {};
+  CAPS.forEach(c => counts[c.id] = { green: 0, red: 0 });
+  Object.values(data.votes || {}).forEach(voterVotes => {
+    Object.entries(voterVotes).forEach(([cid, val]) => {
+      if (counts[cid]) counts[cid][val]++;
+    });
+  });
+
+  let csv = 'N,Capacidad,Votos Verde,Votos Rojo,Total,% Rojo,Mayoría\n';
+  CAPS.forEach(c => {
+    const { green, red } = counts[c.id];
+    const total = green + red;
+    const redPct = total > 0 ? Math.round(red / total * 100) : 0;
+    const maj = total === 0 ? 'Sin votos' : red > green ? 'ROJO' : green > red ? 'VERDE' : 'EMPATE';
+    csv += `${c.n},"${c.name}",${green},${red},${total},${redPct}%,${maj}\n`;
+  });
+
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url;
+  a.download = 'resultados_bloque2_peti.csv';
+  a.click(); URL.revokeObjectURL(url);
+  showToast('CSV exportado');
+}
+
+// ══════════════════════════════════════
+// TOAST
+// ══════════════════════════════════════
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// ══════════════════════════════════════
+// INIT
+// ══════════════════════════════════════
+// Clean up admin interval if leaving admin
+window.addEventListener('beforeunload', () => {
+  if (adminRefreshInterval) clearInterval(adminRefreshInterval);
+});
 </script>
 </body>
 </html>
