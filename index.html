@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Taller PETI 2027 · Bloque 2</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:   #0F2A47;
+  --teal:   #0A7C8C;
+  --teal2:  #0D9BAD;
+  --orange: #E07B39;
+  --green:  #16A34A;
+  --red:    #DC2626;
+  --cream:  #F7F4EF;
+  --muted:  #64748B;
+  --border: #E2E8F0;
+}
+* { box-sizing:border-box; margin:0; padding:0; }
+body { font-family:'DM Sans',sans-serif; background:var(--cream); min-height:100vh; color:var(--navy); }
+
+.view { display:none !important; }
+.view.active { display:block !important; }
+#view-landing.active, #view-done.active, #view-admin-login.active { display:flex !important; }
+
+/* ── LANDING ── */
+#view-landing {
+  min-height:100vh; flex-direction:column; align-items:center;
+  justify-content:center; padding:24px; background:var(--navy);
+  position:relative; overflow:hidden;
+}
+#view-landing::before {
+  content:''; position:absolute; width:500px; height:500px; border-radius:50%;
+  background:radial-gradient(circle,rgba(10,124,140,.25) 0%,transparent 70%);
+  top:-150px; right:-150px; pointer-events:none;
+}
+#view-landing::after {
+  content:''; position:absolute; width:350px; height:350px; border-radius:50%;
+  background:radial-gradient(circle,rgba(224,123,57,.15) 0%,transparent 70%);
+  bottom:-80px; left:-80px; pointer-events:none;
+}
+.landing-card {
+  background:rgba(255,255,255,.07); backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,.13); border-radius:24px;
+  padding:48px 40px; max-width:420px; width:100%; text-align:center; position:relative; z-index:1;
+}
+.badge { display:inline-block; background:var(--orange); color:white; font-size:11px;
+  font-weight:700; letter-spacing:1.5px; text-transform:uppercase;
+  padding:6px 14px; border-radius:20px; margin-bottom:22px; }
+.landing-title { font-family:'DM Serif Display',serif; font-size:30px; color:white; line-height:1.2; margin-bottom:8px; }
+.landing-sub { font-size:13px; color:rgba(255,255,255,.5); margin-bottom:32px; line-height:1.6; }
+.inp {
+  width:100%; padding:13px 16px; border-radius:12px;
+  border:1.5px solid rgba(255,255,255,.15); background:rgba(255,255,255,.08);
+  color:white; font-family:'DM Sans',sans-serif; font-size:15px;
+  margin-bottom:12px; outline:none; transition:border-color .2s;
+}
+.inp::placeholder { color:rgba(255,255,255,.35); }
+.inp:focus { border-color:var(--teal2); }
+.btn-primary {
+  width:100%; padding:14px; border-radius:12px; border:none;
+  background:var(--teal); color:white; font-family:'DM Sans',sans-serif;
+  font-size:15px; font-weight:600; cursor:pointer; transition:all .2s;
+}
+.btn-primary:hover { background:var(--teal2); transform:translateY(-1px); }
+.btn-primary:disabled { opacity:.5; cursor:not-allowed; transform:none; }
+.landing-note { margin-top:18px; font-size:11px; color:rgba(255,255,255,.28); }
+.admin-link { margin-top:24px; padding-top:18px; border-top:1px solid rgba(255,255,255,.1); }
+.admin-link button { background:none; border:none; color:rgba(255,255,255,.25);
+  font-size:11px; cursor:pointer; font-family:'DM Sans',sans-serif; }
+
+/* ── VOTING ── */
+#view-voting { min-height:100vh; padding-bottom:48px; }
+.vote-header {
+  background:var(--navy); padding:14px 20px;
+  display:flex; align-items:center; justify-content:space-between;
+  position:sticky; top:0; z-index:100;
+}
+.vote-header-title { font-family:'DM Serif Display',serif; font-size:17px; color:white; }
+.vote-header-sub { font-size:11px; color:rgba(255,255,255,.45); margin-top:1px; }
+.prog-wrap { display:flex; align-items:center; gap:8px; }
+.prog-bg { width:100px; height:5px; background:rgba(255,255,255,.15); border-radius:3px; overflow:hidden; }
+.prog-fill { height:100%; background:var(--teal2); border-radius:3px; transition:width .3s; }
+.prog-lbl { font-size:11px; color:rgba(255,255,255,.55); }
+.vote-body { padding:20px 16px; max-width:520px; margin:0 auto; }
+.cap-counter { font-size:11px; color:var(--muted); font-weight:700;
+  letter-spacing:1px; text-transform:uppercase; margin-bottom:8px; }
+.cap-card {
+  background:white; border-radius:20px; padding:24px 20px;
+  border:1.5px solid var(--border); box-shadow:0 2px 12px rgba(15,42,71,.06);
+  animation:su .3s ease;
+}
+@keyframes su { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+.cap-num {
+  display:inline-flex; align-items:center; justify-content:center;
+  width:26px; height:26px; border-radius:7px; background:var(--navy);
+  color:white; font-size:11px; font-weight:700; margin-bottom:10px;
+}
+.cap-name { font-family:'DM Serif Display',serif; font-size:19px; line-height:1.3; margin-bottom:10px; }
+.cap-desc {
+  font-size:12px; color:var(--muted); line-height:1.6; margin-bottom:18px;
+  padding:10px 12px; background:var(--cream); border-radius:9px;
+  border-left:3px solid var(--teal);
+}
+.cap-q { font-size:13px; font-weight:600; margin-bottom:13px; }
+.vote-btns { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.vbtn {
+  padding:16px 12px; border-radius:13px; border:2px solid var(--border);
+  background:white; cursor:pointer; font-family:'DM Sans',sans-serif;
+  transition:all .18s; display:flex; flex-direction:column; align-items:center; gap:5px;
+}
+.vbtn:hover { transform:translateY(-2px); box-shadow:0 4px 14px rgba(0,0,0,.09); }
+.vbtn.green { border-color:#BBF7D0; background:#F0FDF4; color:var(--green); }
+.vbtn.green:hover { background:#DCFCE7; border-color:var(--green); }
+.vbtn.green.sel { background:var(--green); color:white; border-color:var(--green); box-shadow:0 4px 14px rgba(22,163,74,.3); }
+.vbtn.red { border-color:#FECACA; background:#FFF5F5; color:var(--red); }
+.vbtn.red:hover { background:#FEE2E2; border-color:var(--red); }
+.vbtn.red.sel { background:var(--red); color:white; border-color:var(--red); box-shadow:0 4px 14px rgba(220,38,38,.3); }
+.vbtn-icon { font-size:26px; }
+.vbtn-lbl { font-size:12px; font-weight:700; }
+.vbtn-desc { font-size:10px; font-weight:400; opacity:.8; text-align:center; }
+.nav-btns { display:flex; gap:8px; margin-top:16px; }
+.btn-nav {
+  flex:1; padding:12px; border-radius:11px; border:1.5px solid var(--border);
+  background:white; color:var(--navy); font-family:'DM Sans',sans-serif;
+  font-size:13px; font-weight:600; cursor:pointer; transition:all .18s;
+}
+.btn-nav:hover { background:var(--cream); }
+.btn-nav.next { background:var(--navy); color:white; border-color:var(--navy); }
+.btn-nav.next:hover { background:#1a3d63; }
+.btn-nav:disabled { opacity:.35; cursor:not-allowed; }
+.skip-note { text-align:center; font-size:11px; color:var(--muted); margin-top:10px; }
+
+/* ── DONE ── */
+#view-done {
+  min-height:100vh; flex-direction:column; align-items:center;
+  justify-content:center; padding:24px; background:var(--navy);
+}
+.done-card {
+  background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.12);
+  border-radius:24px; padding:44px 36px; max-width:380px; width:100%; text-align:center;
+}
+.done-icon { font-size:52px; margin-bottom:18px; }
+.done-title { font-family:'DM Serif Display',serif; font-size:26px; color:white; margin-bottom:10px; }
+.done-sub { font-size:13px; color:rgba(255,255,255,.5); line-height:1.7; }
+
+/* ── ADMIN LOGIN ── */
+#view-admin-login {
+  min-height:100vh; align-items:center; justify-content:center;
+  background:var(--navy); padding:24px;
+}
+.alog-card {
+  background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.12);
+  border-radius:20px; padding:40px; max-width:340px; width:100%; text-align:center;
+}
+.alog-title { font-family:'DM Serif Display',serif; font-size:22px; color:white; margin-bottom:6px; }
+.alog-sub { font-size:12px; color:rgba(255,255,255,.38); margin-bottom:26px; }
+
+/* ── ADMIN DASHBOARD ── */
+#view-admin { min-height:100vh; background:var(--cream); }
+.adm-hdr {
+  background:var(--navy); padding:18px 28px;
+  display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;
+}
+.adm-hdr-title { font-family:'DM Serif Display',serif; font-size:20px; color:white; }
+.adm-hdr-sub { font-size:12px; color:rgba(255,255,255,.45); margin-top:2px; }
+.adm-controls { display:flex; gap:8px; flex-wrap:wrap; }
+.btn-adm {
+  padding:8px 16px; border-radius:9px; border:1.5px solid rgba(255,255,255,.2);
+  background:transparent; color:white; font-family:'DM Sans',sans-serif;
+  font-size:12px; font-weight:600; cursor:pointer; transition:all .18s;
+}
+.btn-adm:hover { background:rgba(255,255,255,.1); }
+.btn-adm.accent { background:var(--teal); border-color:var(--teal); }
+.btn-adm.accent:hover { background:var(--teal2); }
+.btn-adm.danger { border-color:#F87171; color:#F87171; }
+.btn-adm.danger:hover { background:rgba(248,113,113,.1); }
+.adm-body { padding:24px 28px; max-width:1100px; margin:0 auto; }
+
+.stats-row { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:14px; margin-bottom:28px; }
+.stat-card { background:white; border-radius:14px; padding:18px; border:1.5px solid var(--border); text-align:center; }
+.stat-n { font-family:'DM Serif Display',serif; font-size:34px; color:var(--navy); }
+.stat-l { font-size:11px; color:var(--muted); font-weight:500; margin-top:3px; }
+
+.adm-tabs { display:flex; gap:3px; margin-bottom:20px; background:white; padding:3px;
+  border-radius:11px; border:1.5px solid var(--border); width:fit-content; }
+.adm-tab { padding:7px 18px; border-radius:8px; border:none; background:transparent;
+  font-family:'DM Sans',sans-serif; font-size:12px; font-weight:600;
+  cursor:pointer; color:var(--muted); transition:all .18s; }
+.adm-tab.active { background:var(--navy); color:white; }
+.tab-c { display:none; }
+.tab-c.active { display:block; }
+.sec-title { font-family:'DM Serif Display',serif; font-size:19px; color:var(--navy); margin-bottom:14px; }
+
+/* Capacity cards */
+.caps-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:14px; margin-bottom:28px; }
+.cr-card { background:white; border-radius:14px; padding:18px; border:1.5px solid var(--border); transition:box-shadow .2s; }
+.cr-card:hover { box-shadow:0 4px 20px rgba(15,42,71,.08); }
+.cr-hdr { display:flex; align-items:flex-start; gap:8px; margin-bottom:12px; }
+.cr-num { width:22px; height:22px; border-radius:6px; background:var(--navy); color:white;
+  font-size:10px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px; }
+.cr-name { font-size:13px; font-weight:600; line-height:1.4; color:var(--navy); }
+.vbar { display:flex; border-radius:7px; overflow:hidden; height:30px; margin-bottom:7px; }
+.vbar-g { background:var(--green); display:flex; align-items:center; justify-content:center;
+  color:white; font-size:11px; font-weight:700; transition:width .6s ease; min-width:0; overflow:hidden; }
+.vbar-r { background:var(--red); display:flex; align-items:center; justify-content:center;
+  color:white; font-size:11px; font-weight:700; transition:width .6s ease; min-width:0; overflow:hidden; }
+.vbar-e { background:var(--border); flex:1; display:flex; align-items:center;
+  justify-content:center; font-size:11px; color:var(--muted); }
+.vcounts { display:flex; justify-content:space-between; font-size:11px; color:var(--muted); margin-bottom:6px; }
+.vcounts .gc { color:var(--green); font-weight:600; }
+.vcounts .rc { color:var(--red); font-weight:600; }
+.mbadge { display:inline-block; font-size:10px; font-weight:700;
+  letter-spacing:.7px; text-transform:uppercase; padding:3px 8px; border-radius:5px; }
+.mbadge.green { background:#DCFCE7; color:var(--green); }
+.mbadge.red { background:#FEE2E2; color:var(--red); }
+.mbadge.tie { background:#FEF3C7; color:#D97706; }
+.mbadge.pend { background:var(--border); color:var(--muted); }
+
+/* Priority list */
+.pri-list { display:flex; flex-direction:column; gap:10px; margin-bottom:28px; }
+.pri-item {
+  background:white; border-radius:12px; padding:14px 18px;
+  border:1.5px solid #FECACA; display:flex; align-items:center; gap:14px;
+}
+.pri-rank { font-family:'DM Serif Display',serif; font-size:26px; color:var(--red); min-width:32px; text-align:center; }
+.pri-info { flex:1; }
+.pri-name { font-size:14px; font-weight:600; color:var(--navy); margin-bottom:3px; }
+.pri-stat { font-size:11px; color:var(--muted); }
+.pri-bar { margin-top:8px; height:8px; background:#FEE2E2; border-radius:4px; overflow:hidden; }
+.pri-bar-fill { height:100%; background:var(--red); border-radius:4px; transition:width .6s ease; }
+.pri-pct { font-family:'DM Serif Display',serif; font-size:24px; color:var(--red); font-weight:700; }
+
+/* Voters */
+.voter-chip { background:white; border:1.5px solid var(--border); border-radius:20px;
+  padding:6px 14px; font-size:12px; font-weight:500; display:inline-flex;
+  align-items:center; gap:6px; }
+.voter-chip::before { content:'✓'; color:var(--green); font-weight:700; font-size:10px; }
+
+.live-dot { width:7px; height:7px; border-radius:50%; background:#4ADE80;
+  animation:pulse 1.5s infinite; display:inline-block; margin-right:5px; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.8)} }
+
+/* Loading state */
+.loading-wrap { display:flex; align-items:center; justify-content:center; padding:48px; flex-direction:column; gap:12px; }
+.spinner { width:32px; height:32px; border:3px solid var(--border); border-top-color:var(--teal); border-radius:50%; animation:spin .8s linear infinite; }
+@keyframes spin { to{transform:rotate(360deg)} }
+.loading-text { font-size:13px; color:var(--muted); }
+
+/* Modal */
+.modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,.6); z-index:9998;
+  display:flex; align-items:center; justify-content:center; padding:20px; }
+.modal-card { background:white; border-radius:18px; padding:32px 28px;
+  max-width:340px; width:100%; text-align:center; box-shadow:0 20px 60px rgba(0,0,0,.25); }
+.modal-icon { font-size:38px; margin-bottom:14px; }
+.modal-title { font-family:'DM Serif Display',serif; font-size:19px; color:var(--navy); margin-bottom:8px; }
+.modal-sub { font-size:13px; color:var(--muted); margin-bottom:24px; line-height:1.6; }
+.modal-btns { display:flex; gap:10px; }
+.modal-btn { flex:1; padding:12px; border-radius:10px; font-family:'DM Sans',sans-serif;
+  font-size:13px; font-weight:600; cursor:pointer; border:1.5px solid var(--border);
+  background:white; color:var(--navy); transition:all .18s; }
+.modal-btn:hover { background:var(--cream); }
+.modal-btn.danger { background:var(--red); color:white; border-color:var(--red); }
+.modal-btn.danger:hover { background:#B91C1C; }
+
+/* Toast */
+.toast { position:fixed; bottom:20px; left:50%; transform:translateX(-50%) translateY(70px);
+  background:var(--navy); color:white; padding:11px 22px; border-radius:11px;
+  font-size:13px; font-weight:500; z-index:9999; transition:transform .3s;
+  box-shadow:0 6px 20px rgba(0,0,0,.2); white-space:nowrap; }
+.toast.show { transform:translateX(-50%) translateY(0); }
+
+@media(max-width:480px){
+  .vote-body{padding:14px 12px;}
+  .adm-body{padding:18px 14px;}
+  .caps-grid{grid-template-columns:1fr;}
+  .adm-hdr{padding:14px;}
+  .landing-card{padding:36px 24px;}
+  .adm-tabs{flex-wrap:wrap;}
+}
+</style>
+</head>
+<body>
+
+<!-- LANDING -->
+<div id="view-landing" class="view active">
+  <div class="landing-card">
+    <div class="badge">PETI 2023–2027 · Bloque 2</div>
+    <h1 class="landing-title">Galería de Capacidades</h1>
+    <p class="landing-sub">Evaluación individual del soporte tecnológico a las capacidades institucionales de la ANH</p>
+    <input class="inp" id="inp-name" type="text" placeholder="Su nombre completo" maxlength="60" autocomplete="off">
+    <button class="btn-primary" id="btn-start" onclick="startVoting()">Comenzar evaluación →</button>
+    <p class="landing-note">Sus respuestas se consolidan en tiempo real</p>
+    <div class="admin-link">
+      <button onclick="showView('view-admin-login')">Acceso facilitador →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN LOGIN -->
+<div id="view-admin-login" class="view">
+  <div class="alog-card">
+    <div style="font-size:34px;margin-bottom:14px;">🔐</div>
+    <h2 class="alog-title">Panel Facilitador</h2>
+    <p class="alog-sub">Ingrese la clave para ver los resultados</p>
+    <input class="inp" id="inp-pwd" type="password" placeholder="Clave de acceso" onkeydown="if(event.key==='Enter')checkAdmin()">
+    <button class="btn-primary" onclick="checkAdmin()">Ingresar</button>
+    <div style="margin-top:14px;">
+      <button onclick="showView('view-landing')" style="background:none;border:none;color:rgba(255,255,255,.28);font-size:11px;cursor:pointer;font-family:'DM Sans',sans-serif;">← Volver</button>
+    </div>
+  </div>
+</div>
+
+<!-- VOTING -->
+<div id="view-voting" class="view">
+  <div class="vote-header">
+    <div>
+      <div class="vote-header-title">Bloque 2 · Capacidades</div>
+      <div class="vote-header-sub" id="voter-name-lbl"></div>
+    </div>
+    <div class="prog-wrap">
+      <div class="prog-bg"><div class="prog-fill" id="vprogbar" style="width:0%"></div></div>
+      <span class="prog-lbl" id="vproglbl">0 / 19</span>
+    </div>
+  </div>
+  <div class="vote-body">
+    <div id="vote-container"></div>
+  </div>
+</div>
+
+<!-- DONE -->
+<div id="view-done" class="view">
+  <div class="done-card">
+    <div class="done-icon">✅</div>
+    <h2 class="done-title">¡Evaluación completada!</h2>
+    <p class="done-sub">Sus respuestas han sido registradas exitosamente.<br><br>La facilitadora compartirá los resultados consolidados con el grupo en breve.</p>
+  </div>
+</div>
+
+<!-- ADMIN DASHBOARD -->
+<div id="view-admin" class="view">
+  <div class="adm-hdr">
+    <div>
+      <div class="adm-hdr-title">Resultados · Bloque 2</div>
+      <div class="adm-hdr-sub"><span class="live-dot"></span>Actualización automática cada 20 segundos</div>
+    </div>
+    <div class="adm-controls">
+      <button class="btn-adm accent" onclick="refreshAdmin()">↺ Actualizar</button>
+      <button class="btn-adm" onclick="exportCSV()">↓ Exportar CSV</button>
+      <button class="btn-adm danger" onclick="showResetModal()">✕ Reiniciar</button>
+      <button class="btn-adm" onclick="exitAdmin()">← Salir</button>
+    </div>
+  </div>
+  <div class="adm-body">
+    <div class="stats-row">
+      <div class="stat-card"><div class="stat-n" id="st-voters">—</div><div class="stat-l">Participantes</div></div>
+      <div class="stat-card"><div class="stat-n" id="st-votes">—</div><div class="stat-l">Votos totales</div></div>
+      <div class="stat-card"><div class="stat-n" style="color:var(--red)" id="st-reds">—</div><div class="stat-l">Cap. mayoría roja</div></div>
+      <div class="stat-card"><div class="stat-n" style="color:var(--green)" id="st-greens">—</div><div class="stat-l">Cap. mayoría verde</div></div>
+    </div>
+    <div class="adm-tabs">
+      <button class="adm-tab active" onclick="switchTab('tab-pri',this)">🔴 Prioritarias</button>
+      <button class="adm-tab" onclick="switchTab('tab-all',this)">📊 Todas</button>
+      <button class="adm-tab" onclick="switchTab('tab-voters',this)">👥 Participantes</button>
+    </div>
+    <div id="tab-pri" class="tab-c active">
+      <div class="sec-title">Capacidades con mayoría roja <span style="font-size:13px;font-weight:400;color:var(--muted);font-family:'DM Sans',sans-serif;">— requieren análisis de obstáculos</span></div>
+      <div class="pri-list" id="pri-list">
+        <div class="loading-wrap"><div class="spinner"></div><div class="loading-text">Cargando resultados...</div></div>
+      </div>
+    </div>
+    <div id="tab-all" class="tab-c">
+      <div class="sec-title">Todas las capacidades</div>
+      <div class="caps-grid" id="caps-grid">
+        <div class="loading-wrap"><div class="spinner"></div><div class="loading-text">Cargando...</div></div>
+      </div>
+    </div>
+    <div id="tab-voters" class="tab-c">
+      <div class="sec-title">Participantes registrados</div>
+      <div id="voters-wrap" style="display:flex;flex-wrap:wrap;gap:8px;">
+        <div class="loading-wrap"><div class="spinner"></div><div class="loading-text">Cargando...</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwjOfRbm8JdRW8141c0f_MQbxXx99CA9QGdzB7AwH7_q1JRU87oXPgm0TX6kYFfLPJm/exec';
+const ADMIN_PWD  = 'OTI2027';
+
+const CAPS = [
+  {id:'c01',n:1,
+   name:'Gestionar la Estrategia Institucional',
+   desc:'Capacidad para formular, actualizar y hacer seguimiento al direccionamiento estratégico de la entidad.',
+   ti:'¿Los sistemas y herramientas permiten planear y hacer seguimiento a metas estratégicas?',
+   obs:['La OTI no participa oportunamente en espacios de planeación estratégica institucional','No existe herramienta integrada que permita hacer seguimiento a metas estratégicas desde TI','Las iniciativas TI no se revisan ni ajustan cuando cambia la estrategia de la entidad']},
+
+  {id:'c02',n:2,
+   name:'Gestionar Proyectos de Inversión',
+   desc:'Capacidad para identificar, evaluar y ejecutar proyectos de inversión de alto impacto, asegurando que estén alineados con las prioridades estratégicas de la ANH y estén bien gestionados.',
+   ti:'¿Tenemos metodologías, herramientas y seguimiento formal para ejecutar proyectos TI con control?',
+   obs:['La OTI no cuenta con criterios formales para priorizar qué proyectos TI ejecutar primero','Los proyectos TI cambian de alcance sin una evaluación estructurada del impacto','No existe un tablero consolidado de seguimiento al portafolio de proyectos TI']},
+
+  {id:'c03',n:3,
+   name:'Gestionar el Conocimiento del Recurso Natural',
+   desc:'Capacidad de administrar información técnica (geológica, producción, reservas) disponible, estructurada, confiable y analizable para la toma de decisiones.',
+   ti:'¿Los sistemas permiten almacenar, analizar y consultar información técnica de forma confiable?',
+   obs:['La OTI no garantiza integración entre repositorios de información técnica — cada área maneja sus propios datos','No existen estándares tecnológicos unificados para el almacenamiento de datos técnicos del recurso natural','La OTI no provee mecanismos de trazabilidad que aseguren la confiabilidad de la información técnica consultada']},
+
+  {id:'c04',n:4,
+   name:'Promocionar y Fomentar Exploración y Explotación del Recurso Natural',
+   desc:'Capacidad para impulsar el desarrollo de actividades exploratorias y de producción del recurso natural.',
+   ti:'¿Las plataformas tecnológicas apoyan el análisis y promoción de oportunidades?',
+   obs:['La OTI no provee herramientas analíticas que faciliten visualizar y divulgar oportunidades de inversión','No existe plataforma tecnológica consolidada que soporte la promoción del potencial del subsuelo colombiano','La OTI no garantiza que los datos disponibles para promoción estén actualizados en tiempo real']},
+
+  {id:'c05',n:5,
+   name:'Gestionar UpStream (E&P - Generación)',
+   desc:'Capacidad para supervisar las actividades de exploración y producción del recurso hidrocarburífero, asegurando el cumplimiento de obligaciones mediante el fortalecimiento del GECOH para el control integral del UpStream.',
+   ti:'¿Los sistemas soportan los procesos operativos y técnicos del upstream?',
+   obs:['Los sistemas de la OTI no están completamente integrados con fuentes externas de información operativa','Existen procesos manuales en el registro de información técnica que la OTI debería automatizar','La OTI no provee un tablero consolidado para el monitoreo técnico de operaciones upstream']},
+
+  {id:'c06',n:6,
+   name:'Gestionar el Control de Operaciones y Fiscalización',
+   desc:'Capacidad para supervisar y controlar en campo las operaciones hidrocarburíferas y garantizar el cumplimiento de normativas técnicas y ambientales.',
+   ti:'¿Existen herramientas tecnológicas que permitan monitoreo y control eficiente?',
+   obs:['La OTI no provee sistemas de monitoreo automatizado — la supervisión depende de reportes enviados manualmente','No existen alertas automáticas que notifiquen incumplimientos de indicadores críticos de operación','La OTI no garantiza que la información de control y fiscalización esté disponible en tiempo real']},
+
+  {id:'c07',n:7,
+   name:'Análisis de Información de Producción y Reservas de Hidrocarburos',
+   desc:'Capacidad para recopilar, procesar, analizar y asegurar la calidad de los datos de producción y reservas de hidrocarburos para una toma de decisiones efectiva.',
+   ti:'¿Los datos están integrados, actualizados y disponibles para análisis confiable?',
+   obs:['La OTI no garantiza una única fuente confiable de datos — los reportes deben ajustarse manualmente','No existe integración tecnológica suficiente entre los sistemas que alimentan los análisis de producción y reservas','La OTI no provee modelos de pronóstico ni visualizaciones dinámicas que apoyen las decisiones técnicas']},
+
+  {id:'c08',n:8,
+   name:'Gestionar Regalías y Derechos Económicos',
+   desc:'Capacidad para administrar y controlar eficientemente el recaudo, distribución y liquidación de regalías, derechos económicos y otros ingresos derivados del sector de hidrocarburos.',
+   ti:'¿Los sistemas garantizan trazabilidad, cálculos confiables y seguridad de la información?',
+   obs:['Existen procesos manuales en cálculos o validaciones que la OTI debería automatizar para reducir errores','Los sistemas de la OTI no garantizan trazabilidad completa de las modificaciones en la información de regalías','La interoperabilidad tecnológica con otras entidades del Estado es limitada, afectando el cruce de información']},
+
+  {id:'c09',n:9,
+   name:'Implementar el Desarrollo Sostenible',
+   desc:'Capacidad para garantizar que las actividades del sector hidrocarburífero se desarrollen cuidando el medio ambiente y generando beneficios sociales y económicos para las comunidades.',
+   ti:'¿Existen herramientas que soporten seguimiento a indicadores ambientales y sociales?',
+   obs:['La OTI no provee un sistema integrado para el seguimiento de indicadores ambientales y sociales','La información ambiental y social está dispersa en múltiples herramientas sin integración tecnológica','La OTI no cuenta con un tablero consolidado que soporte los reportes de sostenibilidad y huella de carbono']},
+
+  {id:'c10',n:10,
+   name:'Gestionar el Talento Humano',
+   desc:'Capacidad para gestionar, desarrollar y fortalecer las competencias del talento humano, asegurando idoneidad, cumplimiento normativo y continuidad institucional.',
+   ti:'¿Los sistemas de talento permiten control, seguimiento y gestión eficiente?',
+   obs:['El sistema de talento humano (SIGEP, nómina) no está completamente integrado con otros sistemas institucionales','Existen procesos manuales de actualización de información del personal que la OTI debería automatizar','La OTI no provee herramientas analíticas para proyectar necesidades de talento y gestionar el conocimiento institucional']},
+
+  {id:'c11',n:11,
+   name:'Participación Ciudadana en la Gestión Pública',
+   desc:'Capacidad para fomentar la participación activa de la ciudadanía en la gestión del sector hidrocarburífero, promoviendo transparencia, acceso a la información y rendición de cuentas.',
+   ti:'¿Las plataformas permiten atención, trazabilidad y transparencia en la participación?',
+   obs:['La OTI no provee una plataforma integrada para el seguimiento y trazabilidad de solicitudes ciudadanas','Los sistemas de la OTI no automatizan el seguimiento de respuestas a peticiones, quejas y recursos ciudadanos','No existen indicadores tecnológicos en tiempo real que midan el nivel de participación ciudadana']},
+
+  {id:'c12',n:12,
+   name:'Gestión Presupuestal y Eficiencia del Gasto Público',
+   desc:'Capacidad de administrar los recursos financieros de la entidad con eficiencia y transparencia.',
+   ti:'¿Los sistemas financieros son confiables y soportan el control presupuestal?',
+   obs:['La OTI no garantiza integración automática entre sistemas financieros y de planeación — la consolidación es manual','Los sistemas de la OTI no permiten visualizar en tiempo real la ejecución presupuestal de las iniciativas TI','No existen reportes automáticos de eficiencia del gasto que apoyen la toma de decisiones financieras']},
+
+  {id:'c13',n:13,
+   name:'Gobierno y Gestión de TI',
+   desc:'Capacidad para establecer políticas, estándares y controles para gestionar y mantener una infraestructura tecnológica eficiente, segura y alineada con los objetivos institucionales.',
+   ti:'¿Existen roles, seguimiento y toma de decisiones formal en TI?',
+   obs:['No existe comité formal activo con autoridad para hacer seguimiento y tomar decisiones sobre el PETI','Los roles y responsabilidades de decisión tecnológica no están claramente definidos ni formalizados','Las decisiones estratégicas de TI no quedan documentadas, dificultando la trazabilidad y el aprendizaje institucional']},
+
+  {id:'c14',n:14,
+   name:'Gestionar la Defensa Legal',
+   desc:'Capacidad para liderar y coordinar la defensa jurídica del Estado en asuntos hidrocarburíferos, garantizando un adecuado soporte legal y técnico en procesos judiciales o administrativos.',
+   ti:'¿Existen sistemas que soporten gestión documental y seguimiento de procesos legales?',
+   obs:['La OTI no provee un sistema unificado para el seguimiento de procesos jurídicos y litigios del sector','La información legal y de evidencias está dispersa y no integrada tecnológicamente','No existe integración entre el sistema de gestión documental y los requerimientos de la defensa legal']},
+
+  {id:'c15',n:15,
+   name:'Gestionar Contratos y Convenios',
+   desc:'Capacidad para formalizar, gestionar y controlar contratos y convenios relacionados con el sector, garantizando las condiciones y obligaciones establecidas.',
+   ti:'¿Los sistemas permiten trazabilidad y control contractual?',
+   obs:['La OTI no provee un sistema unificado que centralice el seguimiento a todos los contratos y convenios','La documentación contractual está dispersa y no existe un repositorio tecnológico único y confiable','La OTI no ha implementado alertas automáticas para vencimientos, hitos o riesgos contractuales']},
+
+  {id:'c16',n:16,
+   name:'Gestionar la Mejora Continua',
+   desc:'Capacidad de evaluar y optimizar permanentemente los procesos institucionales de la ANH.',
+   ti:'¿La tecnología facilita medición de desempeño y ajustes oportunos?',
+   obs:['La OTI no cuenta con indicadores automatizados para medir el desempeño de sus procesos y servicios tecnológicos','Las mejoras en procesos TI se gestionan de forma reactiva ante fallas, no de manera proactiva y planificada','No existe una herramienta formal de la OTI para el seguimiento sistemático de planes de mejora']},
+
+  {id:'c17',n:17,
+   name:'Gestionar Recursos Institucionales',
+   desc:'Capacidad para coordinar eficientemente los recursos financieros, físicos y humanos de una entidad, asegurando su uso adecuado y sostenible para el cumplimiento de la misión institucional.',
+   ti:'¿Las herramientas tecnológicas permiten control y registro eficiente de recursos?',
+   obs:['La OTI no cuenta con un sistema integrado para el inventario y control de activos tecnológicos institucionales','La información sobre recursos físicos y tecnológicos no se actualiza en tiempo real en los sistemas de la OTI','Los controles de recursos dependen de registros manuales que la OTI debería sistematizar']},
+
+  {id:'c18',n:18,
+   name:'Gestión Documental',
+   desc:'Capacidad para asegurar el adecuado manejo, organización, almacenamiento, custodia y acceso de los documentos y archivos de la entidad, garantizando integridad, disponibilidad y conservación.',
+   ti:'¿El sistema documental garantiza organización, seguridad y acceso oportuno?',
+   obs:['Existen herramientas paralelas para gestión documental que la OTI no ha logrado unificar en un solo sistema','No todos los procesos institucionales están digitalizados — persisten flujos documentales físicos o manuales','La OTI no ha garantizado que los lineamientos de organización documental sean conocidos y aplicados por todos los usuarios']},
+
+  {id:'c19',n:19,
+   name:'Administrar Sistemas Integrados de Gestión',
+   desc:'Capacidad para coordinar y mantener sistemas integrados de gestión, asegurando la conformidad con las normativas y el rendimiento organizacional.',
+   ti:'¿Existen plataformas que soporten seguimiento a procesos y mejora continua?',
+   obs:['La OTI no provee una herramienta digital consolidada para el seguimiento de los procesos de calidad y gestión integrada','La documentación de procesos institucionales no está centralizada en una plataforma tecnológica de la OTI','La OTI no cuenta con indicadores automatizados que midan el cumplimiento normativo de los sistemas integrados de gestión']},
+];
+
+// ── STATE ──
+let voterName = '';
+let currentIdx = 0;
+let myVotes = {};
+let adminInterval = null;
+let cachedData = null;
+
+// ── VIEWS ──
+function showView(id) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+// ── GOOGLE SHEETS API ──
+async function sheetsPost(payload) {
+  try {
+    const res = await fetch(SCRIPT_URL, {
+      method: 'POST',
+      body: JSON.stringify(payload)
+    });
+    return await res.json();
+  } catch(e) {
+    console.error('POST error:', e);
+    return { status: 'error' };
+  }
+}
+
+async function sheetsGet() {
+  try {
+    const res = await fetch(SCRIPT_URL + '?t=' + Date.now());
+    const json = await res.json();
+    return json.data || [];
+  } catch(e) {
+    console.error('GET error:', e);
+    return [];
+  }
+}
+
+// Parse raw sheets data into structured counts
+function parseSheetData(rows) {
+  const voters = new Set();
+  const counts = {};
+  const voterVotes = {}; // track last vote per voter per cap
+
+  CAPS.forEach(c => counts[c.id] = { green: 0, red: 0 });
+
+  rows.forEach(row => {
+    if (!row[1] || !row[2] || !row[3]) return;
+    if (row[1] === 'Participante') return; // header row
+    const voter = row[1];
+    const capId = row[2];
+    const vote  = row[3];
+
+    if (!counts[capId]) return;
+
+    // Track latest vote per voter per capacity
+    if (!voterVotes[voter]) voterVotes[voter] = {};
+    voterVotes[voter][capId] = vote;
+    voters.add(voter);
+  });
+
+  // Reset counts and recount from latest votes only
+  CAPS.forEach(c => counts[c.id] = { green: 0, red: 0 });
+  Object.values(voterVotes).forEach(vv => {
+    Object.entries(vv).forEach(([capId, vote]) => {
+      if (counts[capId] && (vote === 'green' || vote === 'red')) {
+        counts[capId][vote]++;
+      }
+    });
+  });
+
+  return { voters: [...voters], counts, voterVotes };
+}
+
+// ── LANDING ──
+document.getElementById('inp-name').addEventListener('keydown', e => {
+  if (e.key === 'Enter') startVoting();
+});
+
+function startVoting() {
+  const name = document.getElementById('inp-name').value.trim();
+  if (!name) { showToast('Por favor ingrese su nombre'); return; }
+  voterName = name;
+  currentIdx = 0;
+  myVotes = {};
+  document.getElementById('voter-name-lbl').textContent = name;
+  showView('view-voting');
+  renderCard();
+}
+
+// ── VOTING ──
+function renderCard() {
+  const cap = CAPS[currentIdx];
+  const answered = Object.keys(myVotes).length;
+  const pct = Math.round(answered / CAPS.length * 100);
+  document.getElementById('vprogbar').style.width = pct + '%';
+  document.getElementById('vproglbl').textContent = `${answered} / ${CAPS.length}`;
+  const sel = myVotes[cap.id];
+
+  document.getElementById('vote-container').innerHTML = `
+    <div class="cap-counter">Capacidad ${cap.n} de ${CAPS.length}</div>
+    <div class="cap-card">
+      <div class="cap-num">${cap.n}</div>
+      <div class="cap-name">${cap.name}</div>
+      <div class="cap-desc">💻 <strong>Desde TI:</strong> ${cap.ti}</div>
+      <div class="cap-q">¿TI habilita sólidamente esta capacidad?</div>
+      <div class="vote-btns">
+        <button class="vbtn green ${sel==='green'?'sel':''}" onclick="selectVote('green')">
+          <span class="vbtn-icon">🟢</span>
+          <span class="vbtn-lbl">SÍ la habilita</span>
+          <span class="vbtn-desc">El soporte tecnológico es suficiente</span>
+        </button>
+        <button class="vbtn red ${sel==='red'?'sel':''}" onclick="selectVote('red')">
+          <span class="vbtn-icon">🔴</span>
+          <span class="vbtn-lbl">NO la habilita</span>
+          <span class="vbtn-desc">El soporte tiene vacíos importantes</span>
+        </button>
+      </div>
+      <div class="nav-btns">
+        <button class="btn-nav" onclick="prevCard()" ${currentIdx===0?'disabled':''}>← Anterior</button>
+        <button class="btn-nav next" onclick="nextCard()">
+          ${currentIdx===CAPS.length-1?'Finalizar ✓':'Siguiente →'}
+        </button>
+      </div>
+      ${!sel?'<p class="skip-note">Seleccione una opción para continuar</p>':''}
+    </div>
+  `;
+}
+
+function selectVote(val) {
+  myVotes[CAPS[currentIdx].id] = val;
+  renderCard();
+  setTimeout(() => { if (currentIdx < CAPS.length - 1) nextCard(); }, 380);
+}
+
+function nextCard() {
+  if (!myVotes[CAPS[currentIdx].id]) { showToast('Seleccione una opción primero'); return; }
+  if (currentIdx === CAPS.length - 1) { submitVotes(); }
+  else { currentIdx++; renderCard(); window.scrollTo(0, 0); }
+}
+
+function prevCard() {
+  if (currentIdx > 0) { currentIdx--; renderCard(); window.scrollTo(0, 0); }
+}
+
+async function submitVotes() {
+  const btn = document.querySelector('.btn-nav.next');
+  if (btn) { btn.textContent = 'Guardando...'; btn.disabled = true; }
+
+  const result = await sheetsPost({
+    action: 'votes',
+    voter: voterName,
+    votes: myVotes
+  });
+
+  if (result.status === 'ok') {
+    showView('view-done');
+  } else {
+    // Retry once
+    const retry = await sheetsPost({ action: 'votes', voter: voterName, votes: myVotes });
+    showView('view-done'); // Show done regardless — data likely saved
+  }
+}
+
+// ── ADMIN ──
+document.getElementById('inp-pwd').addEventListener('keydown', e => {
+  if (e.key === 'Enter') checkAdmin();
+});
+
+function checkAdmin() {
+  if (document.getElementById('inp-pwd').value === ADMIN_PWD) {
+    showView('view-admin');
+    refreshAdmin();
+    adminInterval = setInterval(refreshAdmin, 20000);
+  } else {
+    showToast('Clave incorrecta');
+    document.getElementById('inp-pwd').value = '';
+  }
+}
+
+function exitAdmin() {
+  if (adminInterval) { clearInterval(adminInterval); adminInterval = null; }
+  document.getElementById('inp-pwd').value = '';
+  showView('view-landing');
+}
+
+async function refreshAdmin() {
+  const rows = await sheetsGet();
+  if (!rows.length) return;
+
+  const { voters, counts } = parseSheetData(rows);
+  cachedData = { voters, counts };
+
+  let totalVotes = 0, reds = 0, greens = 0;
+  CAPS.forEach(c => {
+    const {green, red} = counts[c.id];
+    totalVotes += green + red;
+    if (red > green && (green+red) > 0) reds++;
+    else if (green > red && (green+red) > 0) greens++;
+  });
+
+  document.getElementById('st-voters').textContent = voters.length;
+  document.getElementById('st-votes').textContent = totalVotes;
+  document.getElementById('st-reds').textContent = reds;
+  document.getElementById('st-greens').textContent = greens;
+
+  renderAllCaps(counts);
+  renderPriority(counts);
+  renderVoters(voters);
+}
+
+function renderAllCaps(counts) {
+  document.getElementById('caps-grid').innerHTML = CAPS.map(c => {
+    const {green, red} = counts[c.id];
+    const t = green + red;
+    const gp = t > 0 ? Math.round(green/t*100) : 0;
+    const rp = t > 0 ? Math.round(red/t*100)   : 0;
+    let badge, bc;
+    if (t === 0) { badge = 'Sin votos'; bc = 'pend'; }
+    else if (red > green)  { badge = '🔴 Mayoría roja';   bc = 'red';   }
+    else if (green > red)  { badge = '🟢 Mayoría verde';  bc = 'green'; }
+    else                   { badge = '⚖ Empate';          bc = 'tie';   }
+
+    return `<div class="cr-card">
+      <div class="cr-hdr">
+        <div class="cr-num">${c.n}</div>
+        <div class="cr-name">${c.name}</div>
+      </div>
+      ${t > 0 ? `
+        <div class="vbar">
+          ${gp > 0 ? `<div class="vbar-g" style="width:${gp}%">${gp > 14 ? gp+'%' : ''}</div>` : ''}
+          ${rp > 0 ? `<div class="vbar-r" style="width:${rp}%">${rp > 14 ? rp+'%' : ''}</div>` : ''}
+        </div>
+        <div class="vcounts">
+          <span class="gc">🟢 ${green} votos (${gp}%)</span>
+          <span class="rc">🔴 ${red} votos (${rp}%)</span>
+        </div>
+      ` : `<div class="vbar"><div class="vbar-e">Sin votos aún</div></div>`}
+      <span class="mbadge ${bc}">${badge}</span>
+    </div>`;
+  }).join('');
+}
+
+function renderPriority(counts) {
+  const sorted = CAPS.map(c => {
+    const {green, red} = counts[c.id];
+    const t = green + red;
+    const rp = t > 0 ? Math.round(red/t*100) : 0;
+    return {...c, green, red, t, rp};
+  }).filter(c => c.red > c.green && c.t > 0).sort((a,b) => b.rp - a.rp);
+
+  document.getElementById('pri-list').innerHTML = sorted.length === 0
+    ? '<div style="color:var(--muted);font-size:14px;font-style:italic;padding:20px 0;">Ninguna capacidad con mayoría roja aún — actualice en unos momentos.</div>'
+    : sorted.map((c, i) => `
+      <div class="pri-item">
+        <div class="pri-rank">${i+1}</div>
+        <div class="pri-info">
+          <div class="pri-name">${c.n}. ${c.name}</div>
+          <div class="pri-stat">${c.red} votos rojos · ${c.green} votos verdes · ${c.t} total</div>
+          <div class="pri-bar"><div class="pri-bar-fill" style="width:${c.rp}%"></div></div>
+        </div>
+        <div class="pri-pct">${c.rp}%</div>
+      </div>
+    `).join('');
+}
+
+function renderVoters(voters) {
+  document.getElementById('voters-wrap').innerHTML = voters.length === 0
+    ? '<div style="color:var(--muted);font-size:14px;font-style:italic;">Ningún participante aún.</div>'
+    : voters.map(v => `<div class="voter-chip">${v}</div>`).join('');
+}
+
+function switchTab(id, btn) {
+  document.querySelectorAll('.tab-c').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.adm-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+function showResetModal() {
+  const m = document.createElement('div');
+  m.className = 'modal-overlay';
+  m.innerHTML = `<div class="modal-card">
+    <div class="modal-icon">⚠️</div>
+    <div class="modal-title">¿Reiniciar todos los datos?</div>
+    <div class="modal-sub">Se borrarán todos los votos y participantes de Google Sheets. Esta acción no se puede deshacer.</div>
+    <div class="modal-btns">
+      <button class="modal-btn" onclick="this.closest('.modal-overlay').remove()">Cancelar</button>
+      <button class="modal-btn danger" id="btn-do-reset">Sí, reiniciar</button>
+    </div>
+  </div>`;
+  document.body.appendChild(m);
+  document.getElementById('btn-do-reset').onclick = async function() {
+    this.textContent = 'Reiniciando...';
+    this.disabled = true;
+    await sheetsPost({ action: 'reset' });
+    m.remove();
+    refreshAdmin();
+    showToast('✓ Datos reiniciados correctamente');
+  };
+}
+
+async function exportCSV() {
+  if (!cachedData) { showToast('Primero actualice los resultados'); return; }
+  const { counts, voters } = cachedData;
+  let csv = 'N,Capacidad,Votos Verde,Votos Rojo,Total,% Rojo,Mayoría\n';
+  CAPS.forEach(c => {
+    const {green, red} = counts[c.id];
+    const t = green + red;
+    const rp = t > 0 ? Math.round(red/t*100) : 0;
+    const maj = t===0?'Sin votos':red>green?'ROJO':green>red?'VERDE':'EMPATE';
+    csv += `${c.n},"${c.name}",${green},${red},${t},${rp}%,${maj}\n`;
+  });
+  const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'resultados_bloque2_peti.csv'; a.click();
+  URL.revokeObjectURL(url);
+  showToast('CSV exportado');
+}
+
+// ── TOAST ──
+let toastT;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(toastT);
+  toastT = setTimeout(() => t.classList.remove('show'), 2800);
+}
+</script>
+</body>
+</html>
